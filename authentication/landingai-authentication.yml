@@ -1,0 +1,55 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/landingai-ade-v1-openapi-original.json, openapi/landingai-vision-tools-openapi-original.json
+docs: https://docs.landing.ai/dpt3/agentic-api-key
+summary:
+  types: [http]
+  http_schemes: [bearer]
+  api_key_in: []
+  oauth2_flows: []
+  oauth: false
+  note: >-
+    LandingAI ADE authenticates with a single API key presented as an HTTP bearer
+    token. There is no OAuth 2.0 authorization surface and therefore no scope
+    model, so no scopes/ artifact is produced for this provider. SAML 2.0 and
+    OpenID Connect exist only as SSO into the ADE web application on Enterprise
+    plans, not as an API authorization mechanism.
+schemes:
+- name: Basic Auth
+  type: http
+  scheme: bearer
+  bearerFormat: Basic
+  description: >-
+    Your unique API key for authentication. Get your API key here:
+    https://va.landing.ai/settings/api-key. If using the EU endpoint, get your
+    API key here: https://va.eu-west-1.landing.ai/settings/api-key.
+  header: Authorization
+  value_format: Bearer <API_KEY>
+  sources:
+  - openapi/landingai-ade-v1-openapi-original.json
+  - openapi/landingai-vision-tools-openapi-original.json
+  naming_note: >-
+    The scheme is named "Basic Auth" and declares bearerFormat "Basic" in the
+    published specs, but its type/scheme is http/bearer and the documented usage
+    is an Authorization: Bearer header. The name is a misnomer in the provider's
+    spec, not actual HTTP Basic authentication — this is a good candidate for a
+    spec-quality issue to file upstream.
+spec_gaps:
+- spec: openapi/landingai-ade-v2-openapi-original.json
+  gap: >-
+    The curated ADE v2 OpenAPI declares no components.securitySchemes and no
+    security requirement, even though the documented v2 API requires the same
+    bearer API key. Captured in overlays/landingai-ade-v2-overlay.yaml.
+- spec: openapi/landingai-landinglens-openapi-original.json
+  gap: >-
+    The LandingLens OpenAPI declares no components.securitySchemes, though the
+    API requires an API key.
+key_management:
+  us: https://ade.landing.ai/
+  eu: https://va.eu-west-1.landing.ai/settings/api-key
+  docs: https://docs.landing.ai/dpt3/agentic-api-key
+sso:
+  supported: true
+  scope: ADE web application (Enterprise plans), not API authorization
+  protocols: [SAML 2.0, OpenID Connect]
+  docs: https://docs.landing.ai/ade/ade-sso
