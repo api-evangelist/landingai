@@ -1,0 +1,592 @@
+openapi: 3.1.0
+info:
+  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Image API'
+  version: 0.1.0
+  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+servers:
+- url: https://api.va.landing.ai
+  description: Production vision tools API
+tags:
+- name: Image
+paths:
+  /v1/projects/{project_id}/images/{image_id}:
+    get:
+      tags:
+      - Image
+      summary: Get Project Metadata
+      operationId: get_project_metadata_v1_projects__project_id__images__image_id__get
+      parameters:
+      - name: image_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Image Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_ImageDetail_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/images:
+    post:
+      tags:
+      - Image
+      summary: Upload Image
+      operationId: upload_image_v1_projects__project_id__images_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_upload_image_v1_projects__project_id__images_post'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_Image_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/images/metadata:
+    post:
+      tags:
+      - Image
+      summary: Append Metadata To Media List
+      operationId: append_metadata_to_media_list_v1_projects__project_id__images_metadata_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageMetadataAssign'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_list_ImageMetadata__'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/images/{image_id}/metadata:
+    post:
+      tags:
+      - Image
+      summary: Replace image metadata
+      operationId: update_media_metadata_v1_projects__project_id__images__image_id__metadata_post
+      parameters:
+      - name: image_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Image Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageMetadataReplace'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_ImageMetadata_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/images/tags:
+    post:
+      tags:
+      - Image
+      summary: Append Tags To Media List
+      operationId: append_tags_to_media_list_v1_projects__project_id__images_tags_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageTagAssign'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_list_TagItem__'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TagItem:
+      properties:
+        name:
+          type: string
+          title: Name
+        id:
+          type: integer
+          title: Id
+        orgId:
+          type: integer
+          title: Orgid
+        isArchived:
+          type: boolean
+          title: Isarchived
+        createdAt:
+          type: string
+          title: Createdat
+        updatedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updatedat
+        color:
+          type: string
+          title: Color
+      type: object
+      required:
+      - name
+      - id
+      - orgId
+      - isArchived
+      - createdAt
+      - updatedAt
+      - color
+      title: TagItem
+    BaseResponse_ImageDetail_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ImageDetail'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[ImageDetail]
+    ImageDetail:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        uploadTime:
+          type: string
+          title: Uploadtime
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Metadata
+        tagIds:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Tagids
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      - metadata
+      - tagIds
+      title: ImageDetail
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SplitEnum:
+      type: string
+      enum:
+      - train
+      - dev
+      - test
+      title: SplitEnum
+    ImageMetadataReplace:
+      properties:
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: boolean
+            - type: string
+            - type: integer
+            - items:
+                type: string
+              type: array
+            - items:
+                type: integer
+              type: array
+          type: object
+          title: Metadata
+      type: object
+      required:
+      - metadata
+      title: ImageMetadataReplace
+    BaseResponse_list_ImageMetadata__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ImageMetadata'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[ImageMetadata]]
+    ImageTagAssign:
+      properties:
+        tagNames:
+          items:
+            type: string
+          type: array
+          title: Tagnames
+        mediaIds:
+          items:
+            type: integer
+          type: array
+          title: Mediaids
+        allMedia:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allmedia
+          default: false
+      type: object
+      required:
+      - tagNames
+      - mediaIds
+      title: ImageTagAssign
+    BaseResponse_ImageMetadata_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ImageMetadata'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[ImageMetadata]
+    Image:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        uploadTime:
+          type: string
+          title: Uploadtime
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      title: Image
+    ImageMetadata:
+      properties:
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: boolean
+            - type: string
+            - type: integer
+            - items:
+                type: string
+              type: array
+            - items:
+                type: integer
+              type: array
+          type: object
+          title: Metadata
+        mediaId:
+          type: integer
+          title: Mediaid
+      type: object
+      required:
+      - metadata
+      - mediaId
+      title: ImageMetadata
+    ImageMetadataAssign:
+      properties:
+        metadataAppend:
+          additionalProperties:
+            anyOf:
+            - type: boolean
+            - type: string
+            - type: integer
+            - items:
+                type: string
+              type: array
+            - items:
+                type: integer
+              type: array
+          type: object
+          title: Metadataappend
+        mediaIds:
+          items:
+            type: integer
+          type: array
+          title: Mediaids
+        allMedia:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allmedia
+          default: false
+      type: object
+      required:
+      - metadataAppend
+      - mediaIds
+      title: ImageMetadataAssign
+    BaseResponse_Image_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/Image'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[Image]
+    BaseResponse_list_TagItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TagItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TagItem]]
+    Body_upload_image_v1_projects__project_id__images_post:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+        name:
+          type: string
+          title: Name
+        label:
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
+          title: Label
+        split:
+          anyOf:
+          - $ref: '#/components/schemas/SplitEnum'
+          - type: 'null'
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        nothing_to_label:
+          type: boolean
+          title: Nothing To Label
+          default: false
+        metadata:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - file
+      - name
+      title: Body_upload_image_v1_projects__project_id__images_post
+  securitySchemes:
+    Basic Auth:
+      type: http
+      description: 'Your unique API key for authentication.
+
+
+        Get your API key here: https://va.landing.ai/settings/api-key.
+
+
+        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
+      scheme: bearer
+      bearerFormat: Basic

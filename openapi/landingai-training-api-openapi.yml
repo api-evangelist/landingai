@@ -1,0 +1,762 @@
+openapi: 3.1.0
+info:
+  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Training API'
+  version: 0.1.0
+  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+servers:
+- url: https://api.va.landing.ai
+  description: Production vision tools API
+tags:
+- name: Training
+paths:
+  /v1/projects/{project_id}/train:
+    post:
+      tags:
+      - Training
+      summary: Create Training Job
+      operationId: create_training_job_v1_projects__project_id__train_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/TrainItem'
+              - type: 'null'
+              title: Training Config Request
+            examples:
+              classification:
+                summary: train classification model
+                value:
+                  model:
+                    architecture: ConvNext-[16M]
+                    hyperParams:
+                      epochs: 20
+                  transforms:
+                    preprocessing:
+                    - rescaleWithPadding:
+                        height: 896
+                        width: 1280
+                        paddingValue: 0
+                    augmentations:
+                    - horizontalFlip:
+                        p: 0.5
+                    - randAugment:
+                        numberTransforms: 2
+                        magnitude: 4
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_TrainingResponseData_'
+              example:
+                data: edcfea45-33b5-4a52-8625-94d156e63fb3
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Training
+      summary: Get Training List
+      operationId: get_training_list_v1_projects__project_id__train_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_list_TrainingItem__'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/train/{training_id}/status:
+    get:
+      tags:
+      - Training
+      summary: Get Training Status
+      operationId: get_training_status_v1_projects__project_id__train__training_id__status_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: training_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Training Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_TrainingStatus_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/train/architectures:
+    get:
+      tags:
+      - Training
+      summary: Get Train Archs
+      operationId: get_train_archs_v1_projects__project_id__train_architectures_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_list_ArchItem__'
+              examples:
+                classification:
+                  summary: classification project
+                  value:
+                    data:
+                    - name: ConvNext-[16M]
+                    - name: ConvNext-[29M]
+                object_detection:
+                  summary: object detection project
+                  value:
+                    data:
+                    - name: RtmDet-[9M]
+                    - name: RepPoints-[20M]
+                    - name: RepPoints-[37M]
+                segmentation:
+                  summary: segmentation project
+                  value:
+                    data:
+                    - name: SegFormer-[14M]
+                    - name: FastVit-[14M]
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/autosplit:
+    post:
+      tags:
+      - Training
+      summary: Auto Split
+      operationId: auto_split_v1_projects__project_id__autosplit_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoSplitBody'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/train/{training_id}/results/metrics:
+    get:
+      tags:
+      - Training
+      summary: Get Metrics Summary For All Splits
+      operationId: get_metrics_summary_for_all_splits_v1_projects__project_id__train__training_id__results_metrics_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: training_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid4
+          title: Training Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsSummaryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/train/{training_id}/results/confusion-matrix:
+    get:
+      tags:
+      - Training
+      summary: Get Confusion Matrix For All Splits
+      operationId: get_confusion_matrix_for_all_splits_v1_projects__project_id__train__training_id__results_confusion_matrix_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: training_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid4
+          title: Training Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfusionMetricsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    TrainingResponseData:
+      properties:
+        trainingId:
+          type: string
+          title: Trainingid
+      type: object
+      required:
+      - trainingId
+      title: TrainingResponseData
+    BaseResponse_list_TrainingItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TrainingItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TrainingItem]]
+    PredictionItem:
+      properties:
+        count:
+          type: integer
+          title: Count
+        groundTruthClassId:
+          type: integer
+          title: Groundtruthclassid
+        predictedClassId:
+          type: integer
+          title: Predictedclassid
+      type: object
+      required:
+      - count
+      - groundTruthClassId
+      - predictedClassId
+      title: PredictionItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TrainingItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      type: object
+      required:
+      - id
+      - status
+      title: TrainingItem
+    AutoSplitOptions:
+      type: string
+      enum:
+      - all-labeled
+      - without-split
+      title: AutoSplitOptions
+    ConfusionMetricsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ConfusionMatrix'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ConfusionMetricsResponse
+    BaseResponse_TrainingResponseData_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingResponseData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[TrainingResponseData]
+    TrainItemModel:
+      properties:
+        architecture:
+          type: string
+          title: Architecture
+        hyperParams:
+          type: object
+          title: Hyperparams
+      type: object
+      required:
+      - architecture
+      - hyperParams
+      title: TrainItemModel
+    TrainItemTransforms:
+      properties:
+        preprocessing:
+          items:
+            additionalProperties:
+              type: object
+            type: object
+          type: array
+          title: Preprocessing
+        augmentations:
+          anyOf:
+          - items:
+              additionalProperties:
+                type: object
+              type: object
+            type: array
+          - type: 'null'
+          title: Augmentations
+      type: object
+      required:
+      - preprocessing
+      title: TrainItemTransforms
+    MetricsSummary:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The split name
+        classes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ClassMetrics'
+            type: array
+          - type: 'null'
+          title: Classes
+        metrics:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Metric'
+            type: array
+          - type: 'null'
+          title: Metrics
+      type: object
+      required:
+      - name
+      - classes
+      - metrics
+      title: MetricsSummary
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ClassMetrics:
+      properties:
+        id:
+          type: integer
+          title: Id
+          description: The class id
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - id
+      - performance
+      - recall
+      - precision
+      title: ClassMetrics
+    BaseResponse_list_ArchItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ArchItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[ArchItem]]
+    ConfusionMatrix:
+      properties:
+        name:
+          type: string
+          title: Name
+        correctPredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Correctpredictions
+        falseNegativePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsenegativepredictions
+        falsePositivePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsepositivepredictions
+        misclassifications:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Misclassifications
+      type: object
+      required:
+      - name
+      - correctPredictions
+      - falseNegativePredictions
+      - falsePositivePredictions
+      - misclassifications
+      title: ConfusionMatrix
+    TrainingStatus:
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      type: object
+      required:
+      - status
+      title: TrainingStatus
+    TrainItem:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        model:
+          $ref: '#/components/schemas/TrainItemModel'
+        transforms:
+          $ref: '#/components/schemas/TrainItemTransforms'
+      type: object
+      required:
+      - model
+      - transforms
+      title: TrainItem
+    AutoSplitBody:
+      properties:
+        splitPercentages:
+          $ref: '#/components/schemas/SplitPercentages'
+        selectOption:
+          allOf:
+          - $ref: '#/components/schemas/AutoSplitOptions'
+          description: '`all-labeled` takes all labeled images, whether they have a split or not.
+
+            This option modifies the splits, which can be risky and inconvenient if you manually assigned the splits, as it will override your work.
+
+
+            `without-split` only takes the labeled images that do not yet have a split. It does not modify the splits already assigned to the images that previously had splits.'
+      type: object
+      required:
+      - splitPercentages
+      - selectOption
+      title: AutoSplitBody
+    Metric:
+      properties:
+        name:
+          type: string
+          title: Name
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - name
+      - performance
+      - recall
+      - precision
+      title: Metric
+    SplitPercentages:
+      properties:
+        train:
+          type: integer
+          title: Train
+        dev:
+          type: integer
+          title: Dev
+        test:
+          type: integer
+          title: Test
+      type: object
+      required:
+      - train
+      - dev
+      - test
+      title: SplitPercentages
+    JobStatus:
+      type: string
+      enum:
+      - CREATED
+      - STARTING
+      - TRAINING
+      - EVALUATING
+      - PUBLISHING
+      - SUCCEEDED
+      - FAILED
+      title: JobStatus
+    ArchItem:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: ArchItem
+    BaseResponse_TrainingStatus_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingStatus'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[TrainingStatus]
+    MetricsSummaryResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MetricsSummary'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: MetricsSummaryResponse
+  securitySchemes:
+    Basic Auth:
+      type: http
+      description: 'Your unique API key for authentication.
+
+
+        Get your API key here: https://va.landing.ai/settings/api-key.
+
+
+        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
+      scheme: bearer
+      bearerFormat: Basic

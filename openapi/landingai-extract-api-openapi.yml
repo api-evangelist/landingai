@@ -1,0 +1,754 @@
+openapi: 3.1.0
+info:
+  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, , Classify, Split, Section Classes Extract API'
+  version: 0.1.0
+  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+servers:
+- url: https://api.va.landing.ai
+  description: Production vision tools API
+tags:
+- name: Extract
+paths:
+  /v2/extract:
+    post:
+      tags:
+      - Extract
+      summary: ADE Extract
+      description: Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs synchronously and returns the result inline.
+      operationId: v2-extract_run_sync
+      responses:
+        '200':
+          description: v2-extract result
+          content:
+            application/json:
+              schema:
+                description: 'Result returned by V2ExtractOperationWorkflow — the ``/v2/extract``
+
+                  response body (``docs/extract-v2-proposal.md`` → Response).
+
+
+                  ``extraction`` and ``extraction_metadata`` mirror each other structurally:
+
+                  leaf values in ``extraction`` are replaced by ``ExtractionFieldMetadata``
+
+                  objects in ``extraction_metadata``.'
+                properties:
+                  extraction:
+                    additionalProperties: true
+                    description: Extracted values conforming to the request ``schema``.
+                    title: Extraction
+                    type: object
+                  extraction_metadata:
+                    additionalProperties: true
+                    description: Per-field metadata, mirroring ``extraction`` with leaf values replaced by ``{value, ranges}`` objects.
+                    title: Extraction Metadata
+                    type: object
+                  markdown:
+                    description: Echoed input markdown.
+                    title: Markdown
+                    type: string
+                  metadata:
+                    $ref: '#/components/schemas/V2ExtractMetadata'
+                    description: Request metadata (job_id, model_version, duration_ms, doc_id, billing).
+                  schema_violation_error:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                    default: null
+                    description: Set when ``options.strict`` is false and the schema contained fields the model could not extract — the extraction is partial.
+                    title: Schema Violation Error
+                  warnings:
+                    description: Non-fatal warnings emitted during extraction.
+                    items:
+                      additionalProperties: true
+                      type: object
+                    title: Warnings
+                    type: array
+                required:
+                - extraction
+                - extraction_metadata
+                - markdown
+                - metadata
+                title: V2ExtractResult
+                type: object
+        '422':
+          description: Request validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: 'Input to V2ExtractOperationWorkflow.
+
+
+                Provide the markdown as an inline ``markdown`` string, as a multipart file
+
+                part named ``markdown`` (for large inputs — the gateway stages the upload
+
+                internally), or via a public ``markdown_url``. Exactly one source must be
+
+                supplied.'
+              properties:
+                schema:
+                  additionalProperties: true
+                  description: JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions.
+                  example:
+                    properties:
+                      revenue:
+                        description: Q1 revenue figure
+                        type: string
+                      summary:
+                        description: Executive summary
+                        type: string
+                    type: object
+                  title: Schema
+                  type: object
+                markdown:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: Markdown string to extract from, or a multipart FILE part carrying the markdown (large inputs — uploads are staged by the gateway). Can come from any source — LandingAI parse output, a third-party parser, or hand-authored text. When the markdown was produced by ``POST /v2/parse``, it ends with a ``<!-- doc_id=<id> -->`` comment that the service reads automatically and echoes as ``metadata.doc_id``.
+                  title: Markdown
+                markdown_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time.
+                  title: Markdown Url
+                model:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: The version of the model to use for extraction. Use ``extract-latest`` to use the latest version.
+                  title: Model
+                options:
+                  anyOf:
+                  - $ref: '#/components/schemas/V2ExtractOptions'
+                  - type: 'null'
+                  default: null
+                  description: Extraction options (``strict``). Omit for defaults.
+              required:
+              - schema
+              title: V2ExtractRequest
+              type: object
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                schema:
+                  additionalProperties: true
+                  description: JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.
+                  example:
+                    properties:
+                      revenue:
+                        description: Q1 revenue figure
+                        type: string
+                      summary:
+                        description: Executive summary
+                        type: string
+                    type: object
+                  title: Schema
+                  type: object
+                markdown:
+                  anyOf:
+                  - type: string
+                    description: Markdown string to extract from, or a multipart FILE part carrying the markdown (large inputs — uploads are staged by the gateway). Can come from any source — LandingAI parse output, a third-party parser, or hand-authored text. When the markdown was produced by ``POST /v2/parse``, it ends with a ``<!-- doc_id=<id> -->`` comment that the service reads automatically and echoes as ``metadata.doc_id``.
+                  - type: string
+                    format: binary
+                    description: File upload.
+                markdown_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.
+                  title: Markdown Url
+                model:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.
+                  title: Model
+                options:
+                  anyOf:
+                  - $ref: '#/components/schemas/V2ExtractOptions'
+                  - type: 'null'
+                  default: null
+                  description: Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.
+              required:
+              - schema
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl -X POST 'https://api.ade.landing.ai/v2/extract' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'markdown=@parse-output.md' \\\n  -F 'schema={\"type\":\"object\",\"properties\":{\"revenue\":{\"type\":\"string\",\"description\":\"Q1 2024 revenue\"}}}'"
+      - lang: Python
+        label: Python
+        source: "import json\nimport requests\n\nurl = 'https://api.ade.landing.ai/v2/extract'\nheaders = {'Authorization': 'Bearer YOUR_API_KEY'}\n\nfiles = {'markdown': open('parse-output.md', 'rb')}\ndata = {\n    'schema': json.dumps({\n        'type': 'object',\n        'properties': {\n            'revenue': {'type': 'string', 'description': 'Q1 2024 revenue'}\n        }\n    })\n}\n\nresponse = requests.post(url, headers=headers, files=files, data=data)\nprint(response.json())"
+      - lang: JavaScript
+        label: Node.js
+        source: "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('parse-output.md'));\nform.append('schema', JSON.stringify({\n  type: 'object',\n  properties: {\n    revenue: { type: 'string', description: 'Q1 2024 revenue' }\n  }\n}));\n\naxios.post('https://api.ade.landing.ai/v2/extract', form, {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY', ...form.getHeaders() }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
+  /v2/extract/jobs:
+    post:
+      tags:
+      - Extract
+      summary: ADE Extract Jobs
+      operationId: v2-extract_create_job
+      responses:
+        '202':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                    description: 'The unique identifier for this v2-extract job. Format: ``extract-<26-character Crockford base32 ULID>`` (``[0-9a-hjkmnp-tv-z]{26}`` tail). Opaque, server-minted, and stable for the life of the job — the same id is returned on the sync response, the async 202, and every poll. Treat it as opaque; older id formats remain accepted indefinitely and are never re-issued.'
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - processing
+                    - completed
+                    - failed
+                  created_at:
+                    type:
+                    - string
+                    - 'null'
+        '422':
+          description: Request validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      description: Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs asynchronously and returns a job ID; use it to poll for status and retrieve the result once processing completes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: 'Input to V2ExtractOperationWorkflow.
+
+
+                Provide the markdown as an inline ``markdown`` string, as a multipart file
+
+                part named ``markdown`` (for large inputs — the gateway stages the upload
+
+                internally), or via a public ``markdown_url``. Exactly one source must be
+
+                supplied.'
+              properties:
+                schema:
+                  additionalProperties: true
+                  description: JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions.
+                  example:
+                    properties:
+                      revenue:
+                        description: Q1 revenue figure
+                        type: string
+                      summary:
+                        description: Executive summary
+                        type: string
+                    type: object
+                  title: Schema
+                  type: object
+                markdown:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: Markdown string to extract from, or a multipart FILE part carrying the markdown (large inputs — uploads are staged by the gateway). Can come from any source — LandingAI parse output, a third-party parser, or hand-authored text. When the markdown was produced by ``POST /v2/parse``, it ends with a ``<!-- doc_id=<id> -->`` comment that the service reads automatically and echoes as ``metadata.doc_id``.
+                  title: Markdown
+                markdown_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time.
+                  title: Markdown Url
+                model:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: The version of the model to use for extraction. Use ``extract-latest`` to use the latest version.
+                  title: Model
+                options:
+                  anyOf:
+                  - $ref: '#/components/schemas/V2ExtractOptions'
+                  - type: 'null'
+                  default: null
+                  description: Extraction options (``strict``). Omit for defaults.
+                output_save_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to save the result to — e.g. a presigned S3 PUT URL. Async jobs only. When set, the finished result is delivered (HTTP PUT) to this URL and the completed job reports ``output_url`` instead of an inline ``result``. Must be a public http(s) URL; private/loopback IPs are rejected at submit time.
+                  title: Output Save Url
+                service_tier:
+                  anyOf:
+                  - type: string
+                    enum:
+                    - standard
+                    - priority
+                  - type: 'null'
+                  description: Async service tier. ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``.
+              required:
+              - schema
+              title: V2ExtractRequest
+              type: object
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                schema:
+                  additionalProperties: true
+                  description: JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.
+                  example:
+                    properties:
+                      revenue:
+                        description: Q1 revenue figure
+                        type: string
+                      summary:
+                        description: Executive summary
+                        type: string
+                    type: object
+                  title: Schema
+                  type: object
+                markdown:
+                  anyOf:
+                  - type: string
+                    description: Markdown string to extract from, or a multipart FILE part carrying the markdown (large inputs — uploads are staged by the gateway). Can come from any source — LandingAI parse output, a third-party parser, or hand-authored text. When the markdown was produced by ``POST /v2/parse``, it ends with a ``<!-- doc_id=<id> -->`` comment that the service reads automatically and echoes as ``metadata.doc_id``.
+                  - type: string
+                    format: binary
+                    description: File upload.
+                markdown_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.
+                  title: Markdown Url
+                model:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.
+                  title: Model
+                options:
+                  anyOf:
+                  - $ref: '#/components/schemas/V2ExtractOptions'
+                  - type: 'null'
+                  default: null
+                  description: Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.
+                output_save_url:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  default: null
+                  description: URL to save the result to — e.g. a presigned S3 PUT URL. Async jobs only. When set, the finished result is delivered (HTTP PUT) to this URL and the completed job reports ``output_url`` instead of an inline ``result``. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.
+                  title: Output Save Url
+                service_tier:
+                  anyOf:
+                  - type: string
+                    enum:
+                    - standard
+                    - priority
+                  - type: 'null'
+                  description: Async service tier. ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``.
+              required:
+              - schema
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl -X POST 'https://api.ade.landing.ai/v2/extract/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'markdown=@parse-output.md' \\\n  -F 'schema={\"type\":\"object\",\"properties\":{\"revenue\":{\"type\":\"string\",\"description\":\"Q1 2024 revenue\"}}}'"
+      - lang: Python
+        label: Python
+        source: "import json\nimport requests\n\nurl = 'https://api.ade.landing.ai/v2/extract/jobs'\nheaders = {'Authorization': 'Bearer YOUR_API_KEY'}\n\nfiles = {'markdown': open('parse-output.md', 'rb')}\ndata = {\n    'schema': json.dumps({\n        'type': 'object',\n        'properties': {\n            'revenue': {'type': 'string', 'description': 'Q1 2024 revenue'}\n        }\n    })\n}\n\nresponse = requests.post(url, headers=headers, files=files, data=data)\nprint(response.json())"
+      - lang: JavaScript
+        label: Node.js
+        source: "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('parse-output.md'));\nform.append('schema', JSON.stringify({\n  type: 'object',\n  properties: {\n    revenue: { type: 'string', description: 'Q1 2024 revenue' }\n  }\n}));\n\naxios.post('https://api.ade.landing.ai/v2/extract/jobs', form, {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY', ...form.getHeaders() }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
+    get:
+      tags:
+      - Extract
+      summary: ADE List Extract Jobs
+      operationId: v2-extract_list_jobs
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          description: Page number (0-indexed).
+          default: 0
+          title: Page
+        description: Page number (0-indexed).
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          description: Number of items per page.
+          default: 10
+          title: Page Size
+        description: Number of items per page.
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by job status.
+          title: Status
+        description: Filter by job status.
+      responses:
+        '200':
+          description: The caller's jobs, newest first
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        job_id:
+                          type: string
+                          description: 'The unique identifier for this v2-extract job. Format: ``extract-<26-character Crockford base32 ULID>`` (``[0-9a-hjkmnp-tv-z]{26}`` tail). Opaque, server-minted, and stable for the life of the job — the same id is returned on the sync response, the async 202, and every poll. Treat it as opaque; older id formats remain accepted indefinitely and are never re-issued.'
+                        status:
+                          type: string
+                          enum:
+                          - pending
+                          - processing
+                          - completed
+                          - failed
+                        created_at:
+                          type:
+                          - string
+                          - 'null'
+                        completed_at:
+                          type:
+                          - string
+                          - 'null'
+                        model_version:
+                          type:
+                          - string
+                          - 'null'
+                        failure_reason:
+                          type:
+                          - string
+                          - 'null'
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  has_more:
+                    type: boolean
+        '422':
+          description: Request validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      description: List your Extract jobs, newest first.
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl 'https://api.ade.landing.ai/v2/extract/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+      - lang: Python
+        label: Python
+        source: 'import requests
+
+
+          url = ''https://api.ade.landing.ai/v2/extract/jobs''
+
+          headers = {''Authorization'': ''Bearer YOUR_API_KEY''}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.json())'
+      - lang: JavaScript
+        label: Node.js
+        source: "const axios = require('axios');\n\naxios.get('https://api.ade.landing.ai/v2/extract/jobs', {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
+  /v2/extract/jobs/{job_id}:
+    get:
+      tags:
+      - Extract
+      summary: ADE Get Extract Jobs
+      description: Get the status of an async Extract job, including its result once the job has completed.
+      operationId: v2-extract_get_job
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The identifier of the job to retrieve, as returned by the create-job request.
+          title: Job Id
+        description: The identifier of the job to retrieve, as returned by the create-job request.
+      responses:
+        '200':
+          description: Job status / result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                    description: 'The unique identifier for this v2-extract job. Format: ``extract-<26-character Crockford base32 ULID>`` (``[0-9a-hjkmnp-tv-z]{26}`` tail). Opaque, server-minted, and stable for the life of the job — the same id is returned on the sync response, the async 202, and every poll. Treat it as opaque; older id formats remain accepted indefinitely and are never re-issued.'
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - processing
+                    - completed
+                    - failed
+                  created_at:
+                    type:
+                    - string
+                    - 'null'
+                  completed_at:
+                    type: string
+                    description: Present once the job is terminal.
+                  progress:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                    description: Job completion as a decimal from 0 (not started) to 1 (complete). Present while ``processing``.
+                  result:
+                    anyOf:
+                    - description: 'Result returned by V2ExtractOperationWorkflow — the ``/v2/extract``
+
+                        response body (``docs/extract-v2-proposal.md`` → Response).
+
+
+                        ``extraction`` and ``extraction_metadata`` mirror each other structurally:
+
+                        leaf values in ``extraction`` are replaced by ``ExtractionFieldMetadata``
+
+                        objects in ``extraction_metadata``.'
+                      properties:
+                        extraction:
+                          additionalProperties: true
+                          description: Extracted values conforming to the request ``schema``.
+                          title: Extraction
+                          type: object
+                        extraction_metadata:
+                          additionalProperties: true
+                          description: Per-field metadata, mirroring ``extraction`` with leaf values replaced by ``{value, ranges}`` objects.
+                          title: Extraction Metadata
+                          type: object
+                        markdown:
+                          description: Echoed input markdown.
+                          title: Markdown
+                          type: string
+                        metadata:
+                          $ref: '#/components/schemas/V2ExtractMetadata'
+                          description: Request metadata (job_id, model_version, duration_ms, doc_id, billing).
+                        schema_violation_error:
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                          default: null
+                          description: Set when ``options.strict`` is false and the schema contained fields the model could not extract — the extraction is partial.
+                          title: Schema Violation Error
+                        warnings:
+                          description: Non-fatal warnings emitted during extraction.
+                          items:
+                            additionalProperties: true
+                            type: object
+                          title: Warnings
+                          type: array
+                      required:
+                      - extraction
+                      - extraction_metadata
+                      - markdown
+                      - metadata
+                      title: V2ExtractResult
+                      type: object
+                    - type: 'null'
+                    description: Present once status is ``completed`` and ``output_save_url`` was not set. When ``output_save_url`` was set, the result is delivered there and ``output_url`` is returned instead.
+                  error:
+                    type: object
+                    description: Present once status is ``failed``.
+                    properties:
+                      code:
+                        type: string
+                        description: Stable error code (``internal_error`` when unmapped).
+                      message:
+                        type: string
+                  output_url:
+                    type:
+                    - string
+                    - 'null'
+                    description: The URL the result was delivered to. Present once the job has ``completed`` and ``output_save_url`` was set, instead of inline ``result``.
+        '404':
+          description: Not found (e.g. no such job).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Request validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl 'https://api.ade.landing.ai/v2/extract/jobs/JOB_ID' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+      - lang: Python
+        label: Python
+        source: 'import requests
+
+
+          url = ''https://api.ade.landing.ai/v2/extract/jobs/JOB_ID''
+
+          headers = {''Authorization'': ''Bearer YOUR_API_KEY''}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.json())'
+      - lang: JavaScript
+        label: Node.js
+        source: "const axios = require('axios');\n\naxios.get('https://api.ade.landing.ai/v2/extract/jobs/JOB_ID', {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
+components:
+  schemas:
+    V2Billing:
+      description: 'Billing summary: the service tier the request ran in and the credits
+
+        charged.'
+      properties:
+        service_tier:
+          anyOf:
+          - enum:
+            - standard
+            - priority
+            type: string
+          - type: 'null'
+          default: null
+          description: 'The service tier the request ran in: `standard` or `priority`. A sync request reports `priority` (same lane, same price).'
+          title: Service Tier
+        total_credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          default: null
+          description: Credits charged for this request.
+          title: Total Credits
+      title: V2Billing
+      type: object
+    V2ExtractMetadata:
+      description: Response metadata for a v2 extract call.
+      properties:
+        job_id:
+          description: Gateway job id (workflow id). Matches the ``x-request-id`` the gateway minted for this request and the billing row id in vision-agent.
+          title: Job Id
+          type: string
+        model_version:
+          description: Resolved model version.
+          title: Model Version
+          type: string
+        duration_ms:
+          description: End-to-end request duration in milliseconds.
+          title: Duration Ms
+          type: integer
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Present when the input markdown contained a ``<!-- doc_id=<id> -->`` comment (embedded by ``POST /v2/parse``). Links this extract call to the originating parse job.
+          title: Doc Id
+        range_units:
+          const: unicode_codepoints
+          default: unicode_codepoints
+          description: Units of every `range` offset in the response. Always `"unicode_codepoints"` (Unicode code points into `markdown`). Declared explicitly so consumers know how to slice the string — e.g. JavaScript strings are UTF-16, so a naive `.slice()` drifts when the markdown contains astral characters.
+          title: Range Units
+          type: string
+        input_markdown_chars:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: null
+          description: Characters (Unicode code points) in the input markdown as submitted — the input basis of the credit charge.
+          title: Input Markdown Chars
+        output_extraction_chars:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: null
+          description: Characters in the serialized extraction output — the output basis of the credit charge.
+          title: Output Extraction Chars
+        openapi_spec:
+          type: string
+          description: URL of the OpenAPI spec covering this API, for inspection and client generation.
+        billing:
+          anyOf:
+          - $ref: '#/components/schemas/V2Billing'
+          - type: 'null'
+          description: 'Billing summary: the service tier the request ran in and the credits charged.'
+      required:
+      - job_id
+      - model_version
+      - duration_ms
+      - openapi_spec
+      - range_units
+      title: V2ExtractMetadata
+      type: object
+    V2ExtractOptions:
+      additionalProperties: false
+      description: Extraction options (``docs/extract-v2-proposal.md`` → Options).
+      properties:
+        strict:
+          default: false
+          description: 'When ``true``, a schema containing fields the model cannot extract fails with a validation error — HTTP 422 on the sync route, or a failed job (``status: "failed"``) on the async ``/jobs`` route. When ``false`` (default), unsupported fields are skipped and extraction continues.'
+          title: Strict
+          type: boolean
+      title: V2ExtractOptions
+      type: object
+    ErrorResponse:
+      type: object
+      title: ErrorResponse
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Stable snake_case error code (e.g. ``validation_error``, ``unknown_model_version``, ``invalid_url``, ``invalid_api_key``, ``rate_limit_exceeded``).
+        message:
+          type: string
+          description: Human-readable detail.
+  securitySchemes:
+    Basic Auth:
+      type: http
+      description: 'Your unique API key for authentication.
+
+
+        Get your API key here: https://va.landing.ai/settings/api-key.
+
+
+        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
+      scheme: bearer
+      bearerFormat: Basic

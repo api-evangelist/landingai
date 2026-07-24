@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Metrics API'
+  version: 0.1.0
+  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+servers:
+- url: https://api.va.landing.ai
+  description: Production vision tools API
+tags:
+- name: Metrics
+paths:
+  /metrics:
+    get:
+      summary: Metrics
+      operationId: metrics_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - Basic Auth: []
+      tags:
+      - Metrics
+components:
+  securitySchemes:
+    Basic Auth:
+      type: http
+      description: 'Your unique API key for authentication.
+
+
+        Get your API key here: https://va.landing.ai/settings/api-key.
+
+
+        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
+      scheme: bearer
+      bearerFormat: Basic

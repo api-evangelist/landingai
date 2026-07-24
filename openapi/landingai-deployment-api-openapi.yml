@@ -1,0 +1,432 @@
+openapi: 3.1.0
+info:
+  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Deployment API'
+  version: 0.1.0
+  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+servers:
+- url: https://api.va.landing.ai
+  description: Production vision tools API
+tags:
+- name: Deployment
+paths:
+  /v1/projects/{project_id}/deployments:
+    post:
+      tags:
+      - Deployment
+      summary: Create Deployment
+      description: 'This endpoint creates a deployment, which is an instance for running a
+
+        model and performing predictions.
+
+
+        To create a deployment, you only need to provide a unique name. Upon
+
+        successful creation, the endpoint will return an HTTP URL where you can
+
+        send requests for predictions (also known as inferences).
+
+
+        The deployment name cannot be changed after creation.
+
+
+        Here''s a breakdown of the deployment creation options:
+
+
+        **Model** (Optional): You can either:
+
+
+        - Provide the model data during deployment creation, making it ready to use
+
+        immediately.
+
+        - Upload a model to the deployment later and then use it for predictions.
+
+
+
+        **Threshold** (Optional):
+
+
+        - Specify a custom threshold value for your
+
+        predictions.
+
+        - If not provided, the default value used during model training will be
+
+        applied.'
+      operationId: create_deployment_v1_projects__project_id__deployments_post
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentInput'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_DeploymentItem_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Deployment
+      summary: Get Deployments
+      operationId: get_deployments_v1_projects__project_id__deployments_get
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_list_DeploymentItem__'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/deployments/{deployment_id}:
+    put:
+      tags:
+      - Deployment
+      summary: Update Deployment
+      description: 'You can update a deployment by providing one or both of the following:
+
+        - A new model to be used for predictions.
+
+        - A new threshold value to be used for classifying predictions.
+
+
+        At least one of these values must be provided for a successful update.
+
+
+        Updating the threshold value with a model already deployed has the
+
+        following behavior:
+
+        - If you specify a new threshold value, it will override the model''s
+
+        default threshold.
+
+        - If you don''t specify a new threshold value, the model''s default
+
+        threshold will be used.
+
+
+        Updating the deployment with a new model affects the threshold value as
+
+        follows:
+
+        - If you specify a new threshold value along with the new model, the new
+
+        threshold will be used.
+
+        - If you don''t specify a new threshold value, the threshold associated
+
+        with the new model will be used.'
+      operationId: update_deployment_v1_projects__project_id__deployments__deployment_id__put
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Project Id
+      - name: deployment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid4
+          title: Deployment Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentUpdateInput'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_DeploymentItem_'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Bad Request
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Deployment
+      summary: Get Single Deployment
+      operationId: get_single_deployment_v1_projects__project_id__deployments__deployment_id__get
+      parameters:
+      - name: deployment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid4
+          title: Deployment Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 60
+          title: Timeout
+      - name: apikey
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Apikey
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse_DeploymentItem_'
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    BaseResponse_DeploymentItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/DeploymentItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[DeploymentItem]
+    BaseResponse_list_DeploymentItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DeploymentItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[DeploymentItem]]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DeploymentInput:
+      properties:
+        name:
+          type: string
+          title: Name
+        modelId:
+          anyOf:
+          - type: string
+            format: uuid4
+          - type: 'null'
+          title: Modelid
+        threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Threshold
+      type: object
+      required:
+      - name
+      title: DeploymentInput
+    DeploymentItem:
+      properties:
+        id:
+          type: string
+          format: uuid4
+          title: Id
+        predictionUrl:
+          type: string
+          title: Predictionurl
+        name:
+          type: string
+          title: Name
+        modelId:
+          anyOf:
+          - type: string
+            format: uuid4
+          - type: 'null'
+          title: Modelid
+        threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Threshold
+      type: object
+      required:
+      - id
+      - predictionUrl
+      - name
+      title: DeploymentItem
+    DeploymentUpdateInput:
+      properties:
+        modelId:
+          anyOf:
+          - type: string
+            format: uuid4
+          - type: 'null'
+          title: Modelid
+        threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Threshold
+      type: object
+      title: DeploymentUpdateInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ErrorMessage:
+      properties:
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - message
+      title: ErrorMessage
+  securitySchemes:
+    Basic Auth:
+      type: http
+      description: 'Your unique API key for authentication.
+
+
+        Get your API key here: https://va.landing.ai/settings/api-key.
+
+
+        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
+      scheme: bearer
+      bearerFormat: Basic
