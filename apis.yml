@@ -1,26 +1,475 @@
 aid: landingai
 name: Landing.ai
-description: Landing.ai is a company surfaced as a portfolio company of insight-partners and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  LandingAI, founded by Andrew Ng, builds production AI for visual and document
+  understanding. Its flagship product is Agentic Document Extraction (ADE),
+  which converts real-world documents — PDFs, images, Office files and
+  spreadsheets — into structured, auditable data. ADE exposes a family of REST
+  APIs: Parse (document to reading-order Markdown plus hierarchical blocks with
+  per-block visual grounding), Extract (schema-driven field extraction with
+  character-span grounding back into the source), Build Extract Schema, and the
+  preview Classify, Section and Split APIs, each available synchronously or as
+  asynchronous Jobs for large files. The current generation runs on the DPT-3
+  document pre-trained transformer. LandingAI also operates LandingLens, a
+  computer-vision platform API for creating projects, uploading images, defining
+  classes, training models and deploying them to LandingAI-hosted cloud
+  endpoints, plus a Vision Tools API surfacing OWLv2, Florence-2, SAM2,
+  CountGD, Depth Anything, PaddleOCR and other vision models as HTTP tools. The
+  company ships official Python and TypeScript ADE libraries, a hosted remote MCP
+  server, published Agent Skills, an llms.txt agent surface, US and EU data
+  residency, and SOC 2 Type II, HIPAA and GDPR compliance with a zero data
+  retention option.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://landing.ai/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/landingai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - insight-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Machine Learning
+- Document Extraction
+- Document Processing
+- Computer Vision
+- OCR
+- Data Extraction
+- Agents
+- Developer Tools
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: landingai:landingai-classes-api
+  name: Landing.ai Classes API
+  description: The Classes API from Landing.ai — 1 operation(s) for classes.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Classes
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-classes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-deployment-api
+  name: Landing.ai Deployment API
+  description: The Deployment API from Landing.ai — 2 operation(s) for deployment.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Deployment
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-deployment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-extract-api
+  name: Landing.ai Extract API
+  description: The Extract API from Landing.ai — 3 operation(s) for extract.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Extract
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-extract-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-image-api
+  name: Landing.ai Image API
+  description: The Image API from Landing.ai — 5 operation(s) for image.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Image
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-image-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-metadata-api
+  name: Landing.ai Metadata API
+  description: The Metadata API from Landing.ai — 2 operation(s) for metadata.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-metrics-api
+  name: Landing.ai Metrics API
+  description: The Metrics API from Landing.ai — 1 operation(s) for metrics.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-model-api
+  name: Landing.ai Model API
+  description: The Model API from Landing.ai — 3 operation(s) for model.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Model
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-model-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-parse-api
+  name: Landing.ai Parse API
+  description: The Parse API from Landing.ai — 3 operation(s) for parse.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Parse
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-parse-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-project-api
+  name: Landing.ai Project API
+  description: The Project API from Landing.ai — 3 operation(s) for project.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Project
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-project-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-snapshot-api
+  name: Landing.ai Snapshot API
+  description: The Snapshot API from Landing.ai — 3 operation(s) for snapshot.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Snapshot
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-snapshot-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-tags-api
+  name: Landing.ai Tags API
+  description: The Tags API from Landing.ai — 2 operation(s) for tags.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-tools-api
+  name: Landing.ai Tools API
+  description: The Tools API from Landing.ai — 50 operation(s) for tools.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Tools
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-tools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
+- aid: landingai:landingai-training-api
+  name: Landing.ai Training API
+  description: The Training API from Landing.ai — 6 operation(s) for training.
+  humanURL: https://docs.landing.ai/dpt3/overview
+  baseURL: https://api.ade.landing.ai
+  tags:
+  - Training
+  properties:
+  - type: OpenAPI
+    url: openapi/landingai-training-api-openapi.yml
+  - type: Documentation
+    url: https://docs.landing.ai/dpt3/overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/parse/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/dpt3/quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/ade/ade-overview
+  - type: APIReference
+    url: https://docs.landing.ai/api-reference/tools/ade-parse
+  - type: GettingStarted
+    url: https://docs.landing.ai/ade/ade-quickstart
+  - type: Documentation
+    url: https://docs.landing.ai/
+  - type: Documentation
+    url: https://docs.landing.ai/landinglens-landingedge
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/landingai/overview
 - type: Website
   url: https://landing.ai/
+- type: DeveloperPortal
+  url: https://docs.landing.ai/
+- type: Documentation
+  url: https://docs.landing.ai/
+- type: APIReference
+  url: https://docs.landing.ai/api-reference/parse/ade-parse
+- type: GettingStarted
+  url: https://docs.landing.ai/dpt3/quickstart
+- type: Support
+  url: https://www.landing.ai/support
+- type: Blog
+  url: https://www.landing.ai/resources
+- type: GitHubOrganization
+  url: https://github.com/landing-ai
+- type: Pricing
+  url: https://www.landing.ai/pricing-agentic-apis
+- type: SignUp
+  url: https://ade.landing.ai/
+- type: TermsOfService
+  url: https://www.landing.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.landing.ai/privacy-policy
+- type: StatusPage
+  url: https://status.landing.ai/
+- type: TrustCenter
+  url: https://trust.landing.ai/
+- type: Compliance
+  url: https://trust.landing.ai/
+- type: Security
+  url: https://www.landing.ai/security-at-landingai
+- type: Sandbox
+  url: sandbox/landingai-sandbox.yml
+- type: Packages
+  url: packages/landingai-packages.yml
+- type: SDKs
+  url: packages/landingai-packages.yml
+- type: MCPServer
+  url: mcp/landingai-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/landingai-llms.txt
+- type: Authentication
+  url: authentication/landingai-authentication.yml
+- type: Conventions
+  url: conventions/landingai-conventions.yml
+- type: ErrorCatalog
+  url: errors/landingai-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/landingai-lifecycle.yml
+- type: Deprecation
+  url: https://docs.landing.ai/ade/ade-overview-legacy
+- type: ChangeLog
+  url: changelog/landingai-changelog.yml
+- type: Conformance
+  url: conformance/landingai-conformance.yml
+- type: DataModel
+  url: data-model/landingai-data-model.yml
+- type: RateLimits
+  url: rate-limits/landingai-rate-limits.yml
+- type: Plans
+  url: plans/landingai-plans.yml
+- type: WellKnown
+  url: well-known/landingai-well-known.yml
+- type: DomainSecurity
+  url: security/landingai-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
