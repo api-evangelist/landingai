@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: searched
+description: >-
+  Probed the standard /.well-known/ discovery surface across every LandingAI web
+  and API host found in apis.yml and in the harvested OpenAPI servers[]. No
+  document returned HTTP 200 on any host. This is a recorded negative result, not
+  a gap in the probe.
+hosts_probed:
+- https://landing.ai
+- https://www.landing.ai
+- https://docs.landing.ai
+- https://api.landing.ai
+- https://api.va.landing.ai
+- https://api.ade.landing.ai
+paths_probed:
+- /.well-known/security.txt
+- /.well-known/openid-configuration
+- /.well-known/oauth-authorization-server
+- /.well-known/api-catalog
+- /.well-known/ai-plugin.json
+documents: []
+findings:
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+notes: >-
+  No RFC 9116 security.txt is published, despite LandingAI operating a public
+  trust center and a security page. No OIDC discovery document is exposed on the
+  API hosts, consistent with the API being API-key/bearer only (SAML/OIDC exist
+  only for application SSO). LandingAI does publish agent-native discovery, but
+  through llms.txt and a hosted MCP server rather than /.well-known/ — see
+  llms/landingai-llms.txt and mcp/landingai-mcp.yml.

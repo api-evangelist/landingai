@@ -1,0 +1,3109 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section",
+    "version": "0.1.0",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai"
+  },
+  "servers": [
+    {
+      "url": "https://api.va.landing.ai",
+      "description": "Production vision tools API"
+    }
+  ],
+  "paths": {
+    "/v1/ade/parse": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Parse",
+        "description": "Parse a document or spreadsheet.\n\nThis endpoint parses documents (PDF, images)\n    and spreadsheets (XLSX, CSV) into structured Markdown, chunks, and metadata.\n    \n\n For EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/parse`.",
+        "operationId": "tool_ade_parse_v1_ade_parse_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ParseRequestWithEncryptedPassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParseResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "There were some pages that failed to be parsed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParseResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/parse' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'document=@document.pdf' \\\n  -F 'model=dpt-2-latest'  # Set the model (optional)"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nimport json\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/parse'\n\n# Set the model (optional)\ndata = {\n    'model': 'dpt-2-latest'\n}\n\n# Upload a document \ndocument = open('document.pdf', 'rb')\nfiles = {'document': document}\n\nresponse = requests.post(url, files=files, data=data, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('document', fs.createReadStream('document.pdf'));\n\n// Set the model (optional)\nform.append('model', 'dpt-2-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/parse', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/extract": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Extract",
+        "description": "Extract structured data from Markdown using a JSON schema.\n\nThis endpoint\n    processes Markdown content and extracts structured data according to the provided\n    JSON schema.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/extract`.",
+        "operationId": "tool_ade_extract_v1_ade_extract_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtractRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtractResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Extraction completed with success but there was a schema validation error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtractResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/extract' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'schema={\"type\": \"object\", \"properties\": {\"field1\": {\"type\": \"string\"}, \"field2\": {\"type\": \"string\"}}}' \\\n  -F 'markdown=@markdown.md' \\\n  -F 'model=extract-latest'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/extract'\n\n# Read the schema file as a string\nwith open('schema.json', 'r') as f:\n    schema_content = f.read()\n\n# Prepare files and data\nfiles = {'markdown': open('markdown.md', 'rb')}\ndata = {\n    'schema': schema_content,\n    'model': 'extract-latest'\n}\n\n# Run extraction\nresponse = requests.post(url, files=files, data=data, headers=headers)\n\n# Return the results\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('markdown.md'));\nform.append('schema', fs.readFileSync('schema.json', 'utf8'));\nform.append('model', 'extract-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/extract', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/extract/jobs": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Extract Jobs",
+        "description": "Extract structured data asynchronously.\n\nThis endpoint creates a job that handles the processing for large markdown\ndocuments.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs`.",
+        "operationId": "tool_ade_extract_jobs_v1_ade_extract_jobs_post",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AsyncExtractRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Job queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobCreationResponse"
+                },
+                "example": {
+                  "job_id": "12345678-1234-1234-1234-123456789012"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/extract/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'schema={\"type\": \"object\", \"properties\": {\"field1\": {\"type\": \"string\"}, \"field2\": {\"type\": \"string\"}}}' \\\n  -F 'markdown=@markdown.md' \\\n  -F 'model=extract-latest'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/extract/jobs'\n\n# Read the schema file as a string\nwith open('schema.json', 'r') as f:\n    schema_content = f.read()\n\n# Prepare files and data\nfiles = {'markdown': open('markdown.md', 'rb')}\ndata = {\n    'schema': schema_content,\n    'model': 'extract-latest'\n}\n\nresponse = requests.post(url, files=files, data=data, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('markdown.md'));\nform.append('schema', fs.readFileSync('schema.json', 'utf8'));\nform.append('model', 'extract-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/extract/jobs', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE List Extract Jobs",
+        "description": "List all async extract jobs associated with your API key.\n\nReturns the list of jobs or an error response. For EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs`.",
+        "operationId": "tool_ade_list_extract_jobs_v1_ade_extract_jobs_get",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Page number (0-indexed)",
+              "default": 0,
+              "title": "Page"
+            },
+            "description": "Page number (0-indexed)"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Number of items per page",
+              "default": 10,
+              "title": "Pagesize"
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "cancelled",
+                    "completed",
+                    "failed",
+                    "pending",
+                    "processing"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by job status.",
+              "title": "Status"
+            },
+            "description": "Filter by job status."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X GET 'https://api.va.landing.ai/v1/ade/extract/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/extract/jobs'\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\n\nconst url = 'https://api.va.landing.ai/v1/ade/extract/jobs';\n\naxios.get(url, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/extract/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Get Extract Jobs",
+        "description": "Get the status for an async extract job.\n\nReturns the job status or an error\n   response. For EU users, use this endpoint:\n\n\n   `https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs/{job_id}`.",
+        "operationId": "tool_ade_get_extract_jobs_v1_ade_extract_jobs__job_id__get",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtractJobStatusResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Extraction completed with success but there was a schema validation error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtractJobStatusResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job ID not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X GET 'https://api.va.landing.ai/v1/ade/extract/jobs/{job_id}' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = f'https://api.va.landing.ai/v1/ade/extract/jobs/{job_id}'\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\n\nconst url = `https://api.va.landing.ai/v1/ade/extract/jobs/{jobId}`;\n\naxios.get(url, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/extract/build-schema": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Build Extract Schema",
+        "description": "Generate a JSON schema from Markdown using AI.\n\nThis endpoint analyzes Markdown\n    content and generates a JSON schema suitable for use with the extract endpoint.\n    It can also refine an existing schema based on new documents or iterate on a schema\n    based on prompt instructions.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/extract/build-schema`.",
+        "operationId": "tool_ade_build_schema_v1_ade_extract_build_schema_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildSchemaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildSchemaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/extract/build-schema' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'markdowns=@markdown.md' \\\n  -F 'model=extract-latest' \\\n  -F 'prompt=Extract invoice fields including vendor, date, and total amount'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/extract/build-schema'\n\n# Prepare files and data\nfiles = [('markdowns', open('markdown.md', 'rb'))]\ndata = {\n    'model': 'extract-latest',\n    'prompt': 'Extract invoice fields including vendor, date, and total amount'\n}\n\nresponse = requests.post(url, files=files, data=data, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdowns', fs.createReadStream('markdown.md'));\nform.append('model', 'extract-latest');\nform.append('prompt', 'Extract invoice fields including vendor, date, and total amount');\n\naxios.post('https://api.va.landing.ai/v1/ade/extract/build-schema', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/split": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Split",
+        "description": "Split classification for documents.\n\nThis endpoint classifies document sections\n    based on markdown content and split options.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/split`.",
+        "operationId": "tool_ade_split_v1_ade_split_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SplitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SplitResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/split' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'markdown=@markdown.md' \\\n  -F 'split_class=[{\"name\": \"split type name\", \"description\": \"description of split type\", \"identifier\": \"unique identifier field\"}]' \\\n  -F 'model=split-latest'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nimport json\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/split'\n\n# Prepare split classes\nsplit_class = [\n    {\n        'name': 'split type name',\n        'description': 'description of split type',\n        'identifier': 'unique identifier field'\n    }\n]\n\n# Prepare files and data\nfiles = {'markdown': open('markdown.md', 'rb')}\ndata = {\n    'split_class': json.dumps(split_class),\n    'model': 'split-latest'\n}\n\n# Run split classification\nresponse = requests.post(url, files=files, data=data, headers=headers)\n\n# Return the results\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('markdown.md'));\n\nconst splitClass = [\n  {\n    name: 'split type name',\n    description: 'description of split type',\n    identifier: 'unique identifier field'\n  }\n];\n\nform.append('split_class', JSON.stringify(splitClass));\nform.append('model', 'split-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/split', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/section": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Section",
+        "description": "Section parsed markdown into a hierarchical table of contents.\n\nThis endpoint accepts the markdown output from /ade/parse\n(with reference anchors) and returns a flat, reading-order list of\nsections with hierarchy levels and reference ranges.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/section`.",
+        "operationId": "tool_ade_section_v1_ade_section_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/section' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'markdown=@parsed_output.md' \\\n  -F 'model=section-latest'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/section'\n\n# Prepare files and data\nfiles = {'markdown': open('parsed_output.md', 'rb')}\ndata = {\n    'model': 'section-latest'\n}\n\n# Run section classification\nresponse = requests.post(url, files=files, data=data, headers=headers)\n\n# Return the results\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('markdown', fs.createReadStream('parsed_output.md'));\nform.append('model', 'section-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/section', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/classify": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Classify",
+        "description": "Classify the pages of a document into classes you define.\n\nThis endpoint accepts PDFs, images, and other supported file types\n(either as a `document` upload or `document_url`) together with a\nlist of `classes`, and returns a classification result for each page.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/classify`.",
+        "operationId": "tool_ade_classify_v1_ade_classify_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassifyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/classify' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'classes=[{\"class\":\"Class 1\",\"description\":\"Description of Class 1\"},{\"class\":\"Class 2\",\"description\":\"Description of Class 2\"}]' \\\n  -F 'document=@document.pdf'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nimport json\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/classify'\n\nclasses = [\n    {'class': 'Class 1', 'description': 'Description of Class 1'},\n    {'class': 'Class 2', 'description': 'Description of Class 2'}\n]\n\nfiles = {'document': open('document.pdf', 'rb')}\ndata = {'classes': json.dumps(classes)}\n\nresponse = requests.post(url, files=files, data=data, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('document', fs.createReadStream('document.pdf'));\n\nconst classes = [\n  { class: 'Class 1', description: 'Description of Class 1' },\n  { class: 'Class 2', description: 'Description of Class 2' }\n];\nform.append('classes', JSON.stringify(classes));\n\naxios.post('https://api.va.landing.ai/v1/ade/classify', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/parse/jobs": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Parse Jobs",
+        "description": "Parse documents asynchronously.\n\nThis endpoint creates a job that handles the\n    processing for both large documents and large batches of documents.\n\n For EU\n    users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs`.",
+        "operationId": "tool_ade_parse_jobs_v1_ade_parse_jobs_post",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AsyncParseRequestWithEncryptedPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Job queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobCreationResponse"
+                },
+                "example": {
+                  "job_id": "12345678-1234-1234-1234-123456789012"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST 'https://api.va.landing.ai/v1/ade/parse/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -F 'document=@document.pdf' \\\n  -F 'model=dpt-2-latest'  # Set the model (optional)"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nimport json\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/parse/jobs'\n\n# Set the model (optional)\ndata = {\n    'model': 'dpt-2-latest'\n}\n\n# Upload a document \ndocument = open('document.pdf', 'rb')\nfiles = {'document': document}\n\nresponse = requests.post(url, files=files, data=data, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\nconst FormData = require('form-data');\nconst fs = require('fs');\n\nconst form = new FormData();\nform.append('document', fs.createReadStream('document.pdf'));\n\n// Set the model (optional)\nform.append('model', 'dpt-2-latest');\n\naxios.post('https://api.va.landing.ai/v1/ade/parse/jobs', form, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    ...form.getHeaders()\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE List Parse Jobs",
+        "description": "List all async parse jobs associated with your API key. Returns the list of jobs\nor an error response. For EU users, use this endpoint:\n\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs`.",
+        "operationId": "tool_ade_list_parse_jobs_v1_ade_parse_jobs_get",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Page number (0-indexed)",
+              "default": 0,
+              "title": "Page"
+            },
+            "description": "Page number (0-indexed)"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Number of items per page",
+              "default": 10,
+              "title": "Pagesize"
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "cancelled",
+                    "completed",
+                    "failed",
+                    "pending",
+                    "processing"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by job status.",
+              "title": "Status"
+            },
+            "description": "Filter by job status."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X GET 'https://api.va.landing.ai/v1/ade/parse/jobs' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = 'https://api.va.landing.ai/v1/ade/parse/jobs'\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\n\nconst url = 'https://api.va.landing.ai/v1/ade/parse/jobs';\n\naxios.get(url, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    },
+    "/v1/ade/parse/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "ADE Get Parse Jobs",
+        "description": "Get the status for an async parse job.\n\nReturns the job status or an error\n   response. For EU users, use this endpoint:\n\n\n   `https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs/{job_id}`.",
+        "operationId": "tool_ade_get_parse_jobs_v1_ade_parse_jobs__job_id__get",
+        "security": [
+          {
+            "Basic Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStatusResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "There were some pages that failed to be parsed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStatusResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job ID not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X GET 'https://api.va.landing.ai/v1/ade/parse/jobs/{job_id}' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nurl = f'https://api.va.landing.ai/v1/ade/parse/jobs/{job_id}'\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\n\nconst url = `https://api.va.landing.ai/v1/ade/parse/jobs/{jobId}`;\n\naxios.get(url, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AsyncExtractRequest": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "The version of the model to use for extraction. Use `extract-latest` to use the latest version."
+          },
+          "markdown": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown",
+            "description": "The Markdown file or Markdown content to extract data from."
+          },
+          "markdown_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown Url",
+            "description": "The URL to the Markdown file to extract data from."
+          },
+          "schema": {
+            "type": "string",
+            "title": "Schema",
+            "description": "JSON schema for field extraction. This schema determines what key-values pairs are extracted from the Markdown. The schema must be a valid JSON object and will be validated before processing the document."
+          },
+          "strict": {
+            "type": "boolean",
+            "title": "Strict",
+            "description": "If True, reject schemas with unsupported fields (HTTP 422). If False, prune unsupported fields and continue. Only applies to extract versions that support schema validation.",
+            "default": false
+          },
+          "output_save_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Save Url",
+            "description": "If zero data retention (ZDR) is enabled, you must enter a URL for the extracted output to be saved to. When ZDR is enabled, the extracted content will not be in the API response."
+          }
+        },
+        "type": "object",
+        "required": [
+          "schema"
+        ],
+        "title": "AsyncExtractRequest",
+        "description": "Request model for async extract endpoint.\n\nExtends ExtractRequest with output_save_url for ZDR support."
+      },
+      "AsyncParseRequestWithEncryptedPassword": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "The version of the model to use for parsing."
+          },
+          "document": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document",
+            "description": "A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided."
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url",
+            "description": "The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided."
+          },
+          "split": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SplitType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page."
+          },
+          "password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Password",
+            "description": "Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents."
+          },
+          "custom_prompts": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/json",
+                "contentSchema": {
+                  "$ref": "#/components/schemas/CustomPrompts"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Prompts",
+            "description": "Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{\"figure\":\"Describe axis labels in detail.\"}'."
+          },
+          "output_save_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Save Url",
+            "description": "If zero data retention (ZDR) is enabled, you must enter a URL for the parsed output to be saved to. When ZDR is enabled, the parsed content will not be in the API response."
+          }
+        },
+        "type": "object",
+        "title": "AsyncParseRequestWithEncryptedPassword"
+      },
+      "BuildSchemaMetadata": {
+        "properties": {
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms",
+            "default": 0
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage",
+            "default": 0
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "default": ""
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/ExtractWarning"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "description": "Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings."
+          }
+        },
+        "type": "object",
+        "title": "BuildSchemaMetadata"
+      },
+      "BuildSchemaRequest": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "The version of the model to use for schema generation. Use `extract-latest` to use the latest version."
+          },
+          "markdowns": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdowns",
+            "description": "Markdown files or inline content strings to analyze for schema generation. Multiple documents can be provided for better schema coverage."
+          },
+          "markdown_urls": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown Urls",
+            "description": "URLs to Markdown files to analyze for schema generation."
+          },
+          "prompt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt",
+            "description": "Instructions for how to generate or modify the schema."
+          },
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schema",
+            "description": "Existing JSON schema to iterate on or refine."
+          }
+        },
+        "type": "object",
+        "title": "BuildSchemaRequest"
+      },
+      "BuildSchemaResponse": {
+        "properties": {
+          "extraction_schema": {
+            "type": "string",
+            "title": "Extraction Schema",
+            "description": "The generated JSON schema as a string."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/BuildSchemaMetadata",
+            "description": "The metadata for the schema generation process."
+          }
+        },
+        "type": "object",
+        "required": [
+          "extraction_schema",
+          "metadata"
+        ],
+        "title": "BuildSchemaResponse"
+      },
+      "ClassificationItem": {
+        "properties": {
+          "class": {
+            "type": "string",
+            "title": "Class",
+            "description": "Predicted class label or 'unknown'."
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "Reason for the classification (for debugging).",
+            "default": ""
+          },
+          "suggested_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggested Class",
+            "description": "Proposed class when the prediction is 'unknown'."
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page",
+            "description": "Page number (0-based)."
+          }
+        },
+        "type": "object",
+        "required": [
+          "class",
+          "page"
+        ],
+        "title": "ClassificationItem",
+        "description": "A single page-level classification result."
+      },
+      "ClassifyClass": {
+        "properties": {
+          "class": {
+            "type": "string",
+            "title": "Class",
+            "description": "Name of the class."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Detailed description of what this class represents."
+          }
+        },
+        "type": "object",
+        "required": [
+          "class"
+        ],
+        "title": "ClassifyClass",
+        "description": "A single classification option: a class name plus optional description."
+      },
+      "ClassifyMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "page_count": {
+            "type": "integer",
+            "title": "Page Count"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "default": ""
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "page_count",
+          "duration_ms",
+          "credit_usage"
+        ],
+        "title": "ClassifyMetadata",
+        "description": "Metadata for the classify response."
+      },
+      "ClassifyRequest": {
+        "properties": {
+          "classes": {
+            "items": {
+              "$ref": "#/components/schemas/ClassifyClass"
+            },
+            "type": "array",
+            "title": "Classes",
+            "description": "The possible classes that can be assigned to pages in the document. Each entry is an object with a `class` name and an optional `description`. Only one class is assigned per page; unclassifiable pages receive 'unknown'. Can be provided as a JSON string in form data."
+          },
+          "document": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document",
+            "description": "A file to be classified. Either this parameter or the `document_url` parameter must be provided."
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url",
+            "description": "The URL of the document to be classified. Either this parameter or the `document` parameter must be provided."
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "Classification model version. Defaults to the latest."
+          }
+        },
+        "type": "object",
+        "required": [
+          "classes"
+        ],
+        "title": "ClassifyRequest"
+      },
+      "ClassifyResponse": {
+        "properties": {
+          "classification": {
+            "items": {
+              "$ref": "#/components/schemas/ClassificationItem"
+            },
+            "type": "array",
+            "title": "Classification"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ClassifyMetadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "classification",
+          "metadata"
+        ],
+        "title": "ClassifyResponse",
+        "description": "Response model for the classify endpoint."
+      },
+      "CustomPrompts": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object",
+        "title": "CustomPrompts",
+        "description": "Map of chunk type to custom prompt string."
+      },
+      "ExtractJobStatusResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "description": "A unique identifier for this extract job."
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "The current state of the job: `pending`, `processing`, `completed`, `failed`, or `cancelled`."
+          },
+          "received_at": {
+            "type": "integer",
+            "title": "Received At",
+            "description": "Unix timestamp (in seconds) for when the job was received."
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "Created At",
+            "description": "Unix timestamp (in seconds) for when the job was created.",
+            "default": 0
+          },
+          "progress": {
+            "type": "number",
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Progress",
+            "description": "Job completion. Either 0.0 (not yet complete) or 1.0 (complete)."
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id",
+            "description": "Organization ID."
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version",
+            "description": "The exact model snapshot used for the extraction."
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExtractResponse"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The extraction results, returned here when the job is complete and you did not set an `output_save_url`. Large results are returned through `output_url` instead."
+          },
+          "output_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Url",
+            "description": "A URL to download the extraction results. Provided when the job is complete and either you set an `output_save_url` or the result is larger than 1 MB. URLs for large results are temporary and expire one hour after you request the job."
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExtractMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Information about the extraction, such as the model version, duration, credit usage, and any schema warnings."
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason",
+            "description": "If the job failed, a message describing what went wrong."
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "received_at",
+          "progress"
+        ],
+        "title": "ExtractJobStatusResponse",
+        "description": "The status of an extract job, plus the results once it completes."
+      },
+      "ExtractMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "schema_violation_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schema Violation Error",
+            "description": "A detailed error message shows why the extracted data does not fully conform to the input schema. Null means the extraction result is consistent with the input schema."
+          },
+          "fallback_model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fallback Model Version",
+            "description": "The extract model that was actually used to extract the data when the initial extraction attempt failed with the requested version."
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/ExtractWarning"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "description": "Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings."
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "org_id",
+          "duration_ms",
+          "credit_usage",
+          "job_id",
+          "version"
+        ],
+        "title": "ExtractMetadata"
+      },
+      "ExtractRequest": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "The version of the model to use for extraction. Use `extract-latest` to use the latest version."
+          },
+          "markdown": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown",
+            "description": "The Markdown file or Markdown content to extract data from."
+          },
+          "markdown_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown Url",
+            "description": "The URL to the Markdown file to extract data from."
+          },
+          "schema": {
+            "type": "string",
+            "title": "Schema",
+            "description": "JSON schema for field extraction. This schema determines what key-values pairs are extracted from the Markdown. The schema must be a valid JSON object and will be validated before processing the document."
+          },
+          "strict": {
+            "type": "boolean",
+            "title": "Strict",
+            "description": "If True, reject schemas with unsupported fields (HTTP 422). If False, prune unsupported fields and continue. Only applies to extract versions that support schema validation.",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "schema"
+        ],
+        "title": "ExtractRequest"
+      },
+      "ExtractResponse": {
+        "properties": {
+          "extraction": {
+            "type": "object",
+            "title": "Extraction",
+            "description": "The extracted key-value pairs."
+          },
+          "extraction_metadata": {
+            "type": "object",
+            "title": "Extraction Metadata",
+            "description": "The extracted key-value pairs and the chunk_reference for each one."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ExtractMetadata",
+            "description": "The metadata for the extraction process."
+          }
+        },
+        "type": "object",
+        "required": [
+          "extraction",
+          "extraction_metadata",
+          "metadata"
+        ],
+        "title": "ExtractResponse"
+      },
+      "ExtractWarning": {
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ExtractWarningCode",
+            "description": "The type of warning, used to translate to a status code downstream"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Msg",
+            "description": "Human-readable description of the warning with more details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "msg"
+        ],
+        "title": "ExtractWarning"
+      },
+      "ExtractWarningCode": {
+        "type": "string",
+        "enum": [
+          "nonconformant_schema",
+          "nonconformant_output"
+        ],
+        "title": "ExtractWarningCode"
+      },
+      "GroundingType": {
+        "type": "string",
+        "enum": [
+          "chunkLogo",
+          "chunkCard",
+          "chunkAttestation",
+          "chunkScanCode",
+          "chunkForm",
+          "chunkTable",
+          "chunkFigure",
+          "chunkText",
+          "chunkMarginalia",
+          "chunkTitle",
+          "chunkPageHeader",
+          "chunkPageFooter",
+          "chunkPageNumber",
+          "chunkKeyValue",
+          "table",
+          "tableCell"
+        ],
+        "title": "GroundingType"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "JobCreationResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id"
+        ],
+        "title": "JobCreationResponse"
+      },
+      "JobStatusResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "received_at": {
+            "type": "integer",
+            "title": "Received At"
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "Created At",
+            "description": "Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.",
+            "default": 0
+          },
+          "progress": {
+            "type": "number",
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Progress",
+            "description": "Job completion progress as a decimal from 0 to 1, where 0 is not started, 1 is finished, and values between 0 and 1 indicate work in progress."
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParseResponse"
+              },
+              {
+                "$ref": "#/components/schemas/SpreadsheetParseResponse"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data",
+            "description": "The parsed output (ParseResponse for documents, SpreadsheetParseResponse for spreadsheets), if the job is complete and the `output_save_url` parameter was not used."
+          },
+          "output_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Url",
+            "description": "The URL to the parsed content. This field contains a URL when the job is complete and either you specified the `output_save_url` parameter or the result is larger than 1MB. When the result exceeds 1MB, the URL is a presigned S3 URL that expires after 1 hour. Each time you GET the job, a new presigned URL is generated."
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParseMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "received_at",
+          "progress"
+        ],
+        "title": "JobStatusResponse",
+        "description": "Unified response for job status endpoint."
+      },
+      "JobSummary": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "received_at": {
+            "type": "integer",
+            "title": "Received At"
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "Created At",
+            "description": "Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.",
+            "default": 0
+          },
+          "progress": {
+            "type": "number",
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Progress",
+            "description": "Job completion as a decimal from 0 (not started) to 1 (complete)."
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "received_at",
+          "progress"
+        ],
+        "title": "JobSummary",
+        "description": "Summary of a job for listing."
+      },
+      "JobsListResponse": {
+        "properties": {
+          "jobs": {
+            "items": {
+              "$ref": "#/components/schemas/JobSummary"
+            },
+            "type": "array",
+            "title": "Jobs"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "has_more": {
+            "type": "boolean",
+            "title": "Has More",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "jobs"
+        ],
+        "title": "JobsListResponse",
+        "description": "Response for listing jobs."
+      },
+      "ParseChunk": {
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "title": "Markdown"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "grounding": {
+            "$ref": "#/components/schemas/ParseGrounding"
+          }
+        },
+        "type": "object",
+        "required": [
+          "markdown",
+          "type",
+          "id",
+          "grounding"
+        ],
+        "title": "ParseChunk"
+      },
+      "ParseGrounding": {
+        "properties": {
+          "box": {
+            "$ref": "#/components/schemas/ParseGroundingBox"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          }
+        },
+        "type": "object",
+        "required": [
+          "box",
+          "page"
+        ],
+        "title": "ParseGrounding"
+      },
+      "ParseGroundingBox": {
+        "properties": {
+          "left": {
+            "type": "number",
+            "title": "Left"
+          },
+          "top": {
+            "type": "number",
+            "title": "Top"
+          },
+          "right": {
+            "type": "number",
+            "title": "Right"
+          },
+          "bottom": {
+            "type": "number",
+            "title": "Bottom"
+          }
+        },
+        "type": "object",
+        "required": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ],
+        "title": "ParseGroundingBox"
+      },
+      "ParseMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "page_count": {
+            "type": "integer",
+            "title": "Page Count"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "failed_pages": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Failed Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "org_id",
+          "page_count",
+          "duration_ms",
+          "credit_usage",
+          "job_id",
+          "version"
+        ],
+        "title": "ParseMetadata"
+      },
+      "ParseRequestWithEncryptedPassword": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "The version of the model to use for parsing."
+          },
+          "document": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document",
+            "description": "A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided."
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url",
+            "description": "The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided."
+          },
+          "split": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SplitType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page."
+          },
+          "password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Password",
+            "description": "Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents."
+          },
+          "custom_prompts": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/json",
+                "contentSchema": {
+                  "$ref": "#/components/schemas/CustomPrompts"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Prompts",
+            "description": "Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{\"figure\":\"Describe axis labels in detail.\"}'."
+          }
+        },
+        "type": "object",
+        "title": "ParseRequestWithEncryptedPassword"
+      },
+      "ParseResponse": {
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "title": "Markdown"
+          },
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/ParseChunk"
+            },
+            "type": "array",
+            "title": "Chunks"
+          },
+          "splits": {
+            "items": {
+              "$ref": "#/components/schemas/ParseSplit"
+            },
+            "type": "array",
+            "title": "Splits"
+          },
+          "grounding": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ParseResponseGrounding"
+                },
+                {
+                  "$ref": "#/components/schemas/ParseResponseTableCellGrounding"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Grounding"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ParseMetadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "markdown",
+          "chunks",
+          "splits",
+          "metadata"
+        ],
+        "title": "ParseResponse"
+      },
+      "ParseResponseGrounding": {
+        "properties": {
+          "box": {
+            "$ref": "#/components/schemas/ParseGroundingBox"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "type": {
+            "$ref": "#/components/schemas/GroundingType"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "low_confidence_spans": {
+            "items": {
+              "$ref": "#/components/schemas/Patch"
+            },
+            "type": "array",
+            "title": "Low Confidence Spans"
+          }
+        },
+        "type": "object",
+        "required": [
+          "box",
+          "page",
+          "type"
+        ],
+        "title": "ParseResponseGrounding"
+      },
+      "ParseResponseTableCellGrounding": {
+        "properties": {
+          "box": {
+            "$ref": "#/components/schemas/ParseGroundingBox"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "type": {
+            "$ref": "#/components/schemas/GroundingType"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParseResponseTableCellGroundingPosition"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "box",
+          "page",
+          "type"
+        ],
+        "title": "ParseResponseTableCellGrounding"
+      },
+      "ParseResponseTableCellGroundingPosition": {
+        "properties": {
+          "row": {
+            "type": "integer",
+            "title": "Row"
+          },
+          "col": {
+            "type": "integer",
+            "title": "Col"
+          },
+          "rowspan": {
+            "type": "integer",
+            "title": "Rowspan"
+          },
+          "colspan": {
+            "type": "integer",
+            "title": "Colspan"
+          },
+          "chunk_id": {
+            "type": "string",
+            "title": "Chunk Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "row",
+          "col",
+          "rowspan",
+          "colspan",
+          "chunk_id"
+        ],
+        "title": "ParseResponseTableCellGroundingPosition"
+      },
+      "ParseSplit": {
+        "properties": {
+          "class": {
+            "type": "string",
+            "title": "Class"
+          },
+          "identifier": {
+            "type": "string",
+            "title": "Identifier"
+          },
+          "pages": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Pages"
+          },
+          "markdown": {
+            "type": "string",
+            "title": "Markdown"
+          },
+          "chunks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Chunks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "class",
+          "identifier",
+          "pages",
+          "markdown",
+          "chunks"
+        ],
+        "title": "ParseSplit"
+      },
+      "Patch": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "span": {
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Span"
+          },
+          "confidence": {
+            "type": "number",
+            "title": "Confidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "span",
+          "confidence"
+        ],
+        "title": "Patch"
+      },
+      "SectionMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "default": ""
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "duration_ms",
+          "credit_usage"
+        ],
+        "title": "SectionMetadata",
+        "description": "Public metadata for section response."
+      },
+      "SectionRequest": {
+        "properties": {
+          "markdown": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown",
+            "description": "Parsed markdown with reference anchors (<a id='...'></a>). This is the markdown field from a parse response."
+          },
+          "markdown_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown Url",
+            "description": "URL to fetch the markdown from."
+          },
+          "guidelines": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guidelines",
+            "description": "Natural-language instructions to control hierarchy. Examples: 'Group by topic', 'Treat each numbered section as a top-level entry'."
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "Section model version. Defaults to latest."
+          }
+        },
+        "type": "object",
+        "title": "SectionRequest",
+        "description": "Request model for section endpoint."
+      },
+      "SectionResponse": {
+        "properties": {
+          "table_of_contents": {
+            "items": {
+              "$ref": "#/components/schemas/SectionTOCEntry"
+            },
+            "type": "array",
+            "title": "Table Of Contents"
+          },
+          "table_of_contents_md": {
+            "type": "string",
+            "title": "Table Of Contents Md"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/SectionMetadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "table_of_contents",
+          "table_of_contents_md",
+          "metadata"
+        ],
+        "title": "SectionResponse",
+        "description": "Response model for section endpoint."
+      },
+      "SectionTOCEntry": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          },
+          "section_number": {
+            "type": "string",
+            "title": "Section Number"
+          },
+          "start_reference": {
+            "type": "string",
+            "title": "Start Reference"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "level",
+          "section_number",
+          "start_reference"
+        ],
+        "title": "SectionTOCEntry",
+        "description": "A single entry in the flat table of contents."
+      },
+      "SplitClass": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of the split classification type"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Detailed description of what this split type represents"
+          },
+          "identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identifier",
+            "description": "Identifier to partition/group the splits by"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "SplitClass",
+        "description": "Model for split classification option."
+      },
+      "SplitData": {
+        "properties": {
+          "classification": {
+            "type": "string",
+            "title": "Classification"
+          },
+          "identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identifier"
+          },
+          "pages": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Pages"
+          },
+          "markdowns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Markdowns"
+          }
+        },
+        "type": "object",
+        "required": [
+          "classification",
+          "identifier",
+          "pages",
+          "markdowns"
+        ],
+        "title": "SplitData",
+        "description": "Split data for split classification endpoint."
+      },
+      "SplitMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id",
+            "description": "Organization ID"
+          },
+          "page_count": {
+            "type": "integer",
+            "title": "Page Count"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "description": "Inference history job ID",
+            "default": ""
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version",
+            "description": "Model version used for split classification"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "page_count",
+          "duration_ms",
+          "credit_usage"
+        ],
+        "title": "SplitMetadata",
+        "description": "Metadata for split classification response."
+      },
+      "SplitRequest": {
+        "properties": {
+          "markdown": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown",
+            "description": "The Markdown file or Markdown content to split."
+          },
+          "markdown_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Markdown Url",
+            "description": "The URL to the Markdown file to split."
+          },
+          "split_class": {
+            "items": {
+              "$ref": "#/components/schemas/SplitClass"
+            },
+            "type": "array",
+            "title": "Split Class",
+            "description": "List of split classification options/configuration. Can be provided as JSON string in form data."
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "Model version to use for split classification. Defaults to the latest version.",
+            "default": "split-20251105"
+          }
+        },
+        "type": "object",
+        "required": [
+          "split_class"
+        ],
+        "title": "SplitRequest",
+        "description": "Request model for split classification endpoint."
+      },
+      "SplitResponse": {
+        "properties": {
+          "splits": {
+            "items": {
+              "$ref": "#/components/schemas/SplitData"
+            },
+            "type": "array",
+            "title": "Splits"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/SplitMetadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "splits",
+          "metadata"
+        ],
+        "title": "SplitResponse",
+        "description": "Response model for split classification endpoint."
+      },
+      "SplitType": {
+        "type": "string",
+        "enum": [
+          "page"
+        ],
+        "const": "page",
+        "title": "SplitType"
+      },
+      "SpreadsheetChunk": {
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "title": "Markdown",
+            "description": "Chunk content as HTML table with anchor tag (for tables) or parsed markdown content (for chunks from images)"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "Chunk type: 'table' for spreadsheet tables, or types from /parse (text, table, figure, form, etc.) for chunks derived from embedded images"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Chunk ID - format: '{sheet_name}-{cell_range}' for tables, '{sheet_name}-image-{index}-{anchor_cell}-chunk-{i}-{type}' for parsed image chunks"
+          },
+          "grounding": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParseGrounding"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Visual grounding coordinates from /parse API (only for chunks derived from embedded images)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "markdown",
+          "type",
+          "id"
+        ],
+        "title": "SpreadsheetChunk",
+        "description": "Chunk from spreadsheet parsing.\n\nCan represent:\n- Table chunks from spreadsheet cells\n- Parsed content chunks from embedded images (text, table, figure, etc.)"
+      },
+      "SpreadsheetParseMetadata": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename",
+            "description": "Original filename"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id",
+            "description": "Organization ID"
+          },
+          "sheet_count": {
+            "type": "integer",
+            "title": "Sheet Count",
+            "description": "Number of sheets processed"
+          },
+          "total_rows": {
+            "type": "integer",
+            "title": "Total Rows",
+            "description": "Total rows across all sheets"
+          },
+          "total_cells": {
+            "type": "integer",
+            "title": "Total Cells",
+            "description": "Total non-empty cells across all sheets"
+          },
+          "total_chunks": {
+            "type": "integer",
+            "title": "Total Chunks",
+            "description": "Total chunks (tables + images) extracted"
+          },
+          "total_images": {
+            "type": "integer",
+            "title": "Total Images",
+            "description": "Total images extracted",
+            "default": 0
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms",
+            "description": "Processing duration in milliseconds"
+          },
+          "credit_usage": {
+            "type": "number",
+            "title": "Credit Usage",
+            "description": "Credits charged",
+            "default": 0
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id",
+            "description": "Inference history job ID",
+            "default": ""
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version",
+            "description": "Model version for parsing images"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "sheet_count",
+          "total_rows",
+          "total_cells",
+          "total_chunks",
+          "duration_ms"
+        ],
+        "title": "SpreadsheetParseMetadata",
+        "description": "Metadata for spreadsheet parsing result."
+      },
+      "SpreadsheetParseResponse": {
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "title": "Markdown",
+            "description": "Full document as HTML with anchor tags and tables"
+          },
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/SpreadsheetChunk"
+            },
+            "type": "array",
+            "title": "Chunks",
+            "description": "List of table chunks (HTML)"
+          },
+          "splits": {
+            "items": {
+              "$ref": "#/components/schemas/SpreadsheetSplit"
+            },
+            "type": "array",
+            "title": "Splits",
+            "description": "Sheet-based splits"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/SpreadsheetParseMetadata",
+            "description": "Parsing metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "markdown",
+          "chunks",
+          "splits",
+          "metadata"
+        ],
+        "title": "SpreadsheetParseResponse",
+        "description": "Response from /ade/parse-spreadsheet endpoint.\n\nSimilar structure to ParseResponse but without grounding."
+      },
+      "SpreadsheetSplit": {
+        "properties": {
+          "class": {
+            "type": "string",
+            "title": "Class",
+            "description": "Split class: 'page' for per-sheet splits, 'full' for single split with all content"
+          },
+          "identifier": {
+            "type": "string",
+            "title": "Identifier",
+            "description": "Split identifier: sheet name for 'page' splits, 'full' for full split"
+          },
+          "sheets": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Sheets",
+            "description": "Sheet indices: single element for 'page' splits, all indices for 'full' split"
+          },
+          "markdown": {
+            "type": "string",
+            "title": "Markdown",
+            "description": "Combined markdown for this split"
+          },
+          "chunks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Chunks",
+            "description": "Chunk IDs in this split"
+          }
+        },
+        "type": "object",
+        "required": [
+          "class",
+          "identifier",
+          "sheets",
+          "markdown",
+          "chunks"
+        ],
+        "title": "SpreadsheetSplit",
+        "description": "Sheet-based split from spreadsheet parsing.\n\nSimilar to ParseSplit but grouped by sheet instead of page.\nSupports both 'page' (per-sheet) and 'full' (all sheets) split types."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "Basic Auth": {
+        "type": "http",
+        "description": "Your unique API key for authentication.\n\nGet your API key here: https://va.landing.ai/settings/api-key.\n\nIf using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.",
+        "scheme": "bearer",
+        "bearerFormat": "Basic"
+      }
+    }
+  }
+}

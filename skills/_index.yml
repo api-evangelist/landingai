@@ -1,0 +1,76 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/landing-ai/ade-document-processing-skills
+description: >-
+  LandingAI publishes first-party Agent Skills as a Claude Code plugin
+  marketplace. Both SKILL.md files are saved here verbatim as harvested from the
+  provider's repository — they are not API Evangelist generations.
+publisher: LandingAI
+repository: https://github.com/landing-ai/ade-document-processing-skills
+license_file: https://github.com/landing-ai/ade-document-processing-skills/blob/main/LICENSE
+docs: https://docs.landing.ai/ade/build-with-ai-agents
+install:
+- client: claude-code
+  commands:
+  - /plugin marketplace add landing-ai/ade-document-processing-skills
+  - /plugin install ade-document-processing@ade-document-processing-skills
+  - /reload-plugins
+- client: manual
+  commands:
+  - cp -R ade-document-processing-skills/plugins/ade-document-processing/skills/document-extraction
+    YOUR_PROJECT/.claude/skills/
+  - cp -R ade-document-processing-skills/plugins/ade-document-processing/skills/document-workflows
+    YOUR_PROJECT/.claude/skills/
+skills:
+- file: landingai-document-extraction.md
+  name: document-extraction
+  description: Core ADE SDK operations for parsing and extracting document content.
+  api: openapi/landingai-ade-v1-openapi-original.json
+  source: https://github.com/landing-ai/ade-document-processing-skills/blob/main/plugins/ade-document-processing/skills/document-extraction/SKILL.md
+  method: searched
+  covers:
+  - Parse
+  - Extract
+  - Split
+  - Classify
+  - Generate table of contents (Section)
+  - Process large files (Parse Jobs / Extract Jobs)
+  - Visual grounding
+  operations:
+  - tool_ade_parse_v1_ade_parse_post
+  - tool_ade_extract_v1_ade_extract_post
+  - tool_ade_build_schema_v1_ade_extract_build_schema_post
+  - tool_ade_split_v1_ade_split_post
+  - tool_ade_classify_v1_ade_classify_post
+  - tool_ade_section_v1_ade_section_post
+  - tool_ade_parse_jobs_v1_ade_parse_jobs_post
+  - tool_ade_get_parse_jobs_v1_ade_parse_jobs__job_id__get
+  - tool_ade_extract_jobs_v1_ade_extract_jobs_post
+  - tool_ade_get_extract_jobs_v1_ade_extract_jobs__job_id__get
+- file: landingai-document-workflows.md
+  name: document-workflows
+  description: End-to-end pipeline patterns that compose ADE operations into production
+    workflows.
+  api: openapi/landingai-ade-v1-openapi-original.json
+  source: https://github.com/landing-ai/ade-document-processing-skills/blob/main/plugins/ade-document-processing/skills/document-workflows/SKILL.md
+  method: searched
+  covers:
+  - Batch processing
+  - Classify-then-extract pipelines
+  - RAG preparation
+  - Export
+  - Visualization
+  - Word-level grounding
+  - Streamlit UIs
+  operations:
+  - tool_ade_classify_v1_ade_classify_post
+  - tool_ade_parse_v1_ade_parse_post
+  - tool_ade_extract_v1_ade_extract_post
+  - tool_ade_parse_jobs_v1_ade_parse_jobs_post
+  - tool_ade_list_parse_jobs_v1_ade_parse_jobs_get
+notes: >-
+  Every operationId listed above was verified verbatim against
+  openapi/landingai-ade-v1-openapi-original.json. The v2 equivalents are
+  parse_run_sync, parse_create_job, parse_get_job, parse_list_jobs,
+  v2-extract_run_sync, v2-extract_create_job, v2-extract_get_job and
+  v2-extract_list_jobs in openapi/landingai-ade-v2-openapi-original.json.

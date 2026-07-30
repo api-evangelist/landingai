@@ -1,0 +1,82 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/landingai-ade-v2-openapi-original.json, openapi/landingai-ade-v1-openapi-original.json,
+  https://docs.landing.ai/ade/ade-security.md
+description: >-
+  Cross-cutting standards conformance for the LandingAI ADE and LandingLens APIs.
+  Derived from the harvested OpenAPI documents and the provider's published
+  security and compliance claims.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: All four harvested specs declare openapi 3.1.0.
+- id: rest
+  conforms: true
+  evidence: Resource-oriented URLs, standard HTTP verbs and status codes; stated explicitly
+    in the LandingLens API description.
+- id: http-bearer-auth
+  conforms: true
+  evidence: components.securitySchemes type http, scheme bearer in the ADE v1 and Vision
+    Tools specs.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme in any harvested spec; API is bearer API key only.
+- id: oidc
+  conforms: partial
+  evidence: >-
+    OpenID Connect is supported for SSO into the ADE application on Enterprise
+    plans (https://docs.landing.ai/ade/ade-sso), not for API authorization. No
+    /.well-known/openid-configuration is published on any API host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a flat application/json envelope with `code` and `message` rather
+    than application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt returned 200 on any probed host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    Deprecations are announced via a legacy-features docs page and the dated
+    changelog with named sunset dates, but no Sunset or Deprecation response
+    headers are documented.
+- id: idempotency-keys
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or equivalent in the docs or any harvested spec;
+    safe retry is achieved via the submit-and-poll Jobs pattern instead.
+- id: async-jobs-202-polling
+  conforms: true
+  evidence: Jobs endpoints return HTTP 202 with a job_id, polled via GET /v2/parse/jobs/{job_id}.
+- id: llms-txt
+  conforms: true
+  evidence: https://docs.landing.ai/llms.txt published, plus per-page .md variants.
+- id: mcp
+  conforms: true
+  evidence: Hosted remote MCP server at https://docs.landing.ai/mcp (streamable HTTP).
+- id: soc2-type-ii
+  conforms: true
+  evidence: Named at https://docs.landing.ai/ade/ade-security.md and https://trust.landing.ai/
+- id: hipaa
+  conforms: true
+  evidence: Named at https://docs.landing.ai/ade/ade-security.md
+- id: gdpr
+  conforms: true
+  evidence: Named at https://docs.landing.ai/ade/ade-security.md; EU-hosted ADE offered
+    for data residency.
+- id: iso-27001
+  conforms: unknown
+  evidence: Not named in the docs security page; the trust center may carry additional
+    certifications behind access control.
+- id: pci-dss
+  conforms: false
+  evidence: Not a payments provider; no PCI claim published.
+- id: fhir
+  conforms: false
+- id: scim
+  conforms: false
+- id: odata
+  conforms: false
+- id: json-api
+  conforms: false

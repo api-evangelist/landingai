@@ -1,0 +1,113 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/parse.md, https://docs.landing.ai/dpt3/parse-async.md,
+  https://docs.landing.ai/dpt3/rate-limits.md, https://docs.landing.ai/dpt3/parse-troubleshoot.md
+derived_from:
+- openapi/landingai-ade-v2-openapi-original.json
+- openapi/landingai-ade-v1-openapi-original.json
+description: >-
+  Cross-cutting request/response semantics for the LandingAI ADE APIs. ADE is a
+  document-processing API rather than a resource-CRUD API, so several
+  conventional facets (idempotency keys, cursor pagination, field expansion,
+  sparse fieldsets) are genuinely absent rather than merely undocumented; they
+  are recorded here as not_supported so downstream agents do not assume them.
+authentication:
+  style: bearer-token
+  header: Authorization
+  format: Bearer <API_KEY>
+  scheme_in_spec: http bearer (declared as "Basic Auth" with bearerFormat "Basic")
+  key_management: https://ade.landing.ai/
+  eu_key_management: https://va.eu-west-1.landing.ai/settings/api-key
+  oauth: false
+  note: >-
+    Enterprise plans additionally support SSO to the ADE application via SAML 2.0
+    and OpenID Connect, but the API itself is API-key/bearer only.
+  see: authentication/landingai-authentication.yml
+idempotency:
+  supported: false
+  mechanism: none
+  note: >-
+    No Idempotency-Key header or equivalent is documented, and none appears in
+    any harvested OpenAPI. Safe retry is instead achieved through the
+    asynchronous Jobs pattern: submit once, receive a job_id, then poll that
+    job_id. Polling (GET /v2/parse/jobs/{job_id}) is naturally idempotent, and
+    error responses consume no credits, so a failed synchronous call can be
+    retried without double-billing.
+  retry_guidance: >-
+    On 429, wait and retry with exponential backoff. On 500 (all pages failed),
+    retry. Errors consume no credits.
+pagination:
+  supported: true
+  style: list-endpoint
+  endpoints:
+  - GET /v2/parse/jobs
+  - GET /v2/extract/jobs
+  ordering: newest first
+  note: >-
+    The job-list endpoints return jobs newest-first. No cursor or offset
+    parameter is documented in the v2 spec; treat the listing as a recent-window
+    view rather than a fully paginated collection.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: true
+  note: >-
+    Responses carry a `metadata` object. For Parse this includes per-page
+    processing outcomes and `failed_pages` on partial success (HTTP 206).
+    LandingLens separately exposes a first-class project metadata resource
+    (/v1/projects/{project_id}/metadata).
+grounding:
+  supported: true
+  note: >-
+    A defining ADE convention — every parsed block and every extracted field
+    carries grounding back into the source document (page plus coordinates for
+    Parse; character spans into the source Markdown for Extract). In the v2
+    response format grounding is embedded directly in the structure.
+request_tracing:
+  request_id_header: null
+  note: No request-id/correlation header is documented.
+versioning:
+  scheme: uri-path
+  current: v2
+  values: [v1, v2]
+  model_versioning:
+    parameter: model
+    style: named-latest-or-dated-snapshot
+    example: dpt-3-pro-latest
+    note: >-
+      Model version is a request parameter distinct from the API path version;
+      omit it to get latest, or pin a dated snapshot for reproducibility.
+  see: lifecycle/landingai-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{ "code": "<stable_snake_case>", "message": "<human readable>" }'
+  rfc9457: false
+  see: errors/landingai-problem-types.yml
+rate_limit_signaling:
+  status_code: 429
+  headers: null
+  basis: pages processed, measured against the plan's hourly limit
+  note: >-
+    No rate-limit headers (X-RateLimit-*, Retry-After) are documented. Clients
+    detect throttling from the 429 status alone and must apply exponential
+    backoff. Async job submissions are accepted immediately (HTTP 202) and queued
+    rather than rejected, which is the documented way to avoid rate-limit errors.
+  see: rate-limits/landingai-rate-limits.yml
+async_pattern:
+  supported: true
+  style: submit-and-poll
+  submit_status: 202
+  submit_returns: job_id
+  poll: GET /v2/parse/jobs/{job_id}
+  service_tiers: [standard, priority]
+  note: >-
+    The Jobs pattern raises the size ceilings substantially (1 GiB and 6,000
+    pages for PDFs vs 50 MiB and 100 pages synchronously) and is the recommended
+    path for bulk and large-document work.
+data_residency:
+  regions: [us, eu]
+  eu_endpoint_docs: https://docs.landing.ai/dpt3/eu.md
+  note: EU-hosted ADE is offered for data residency, GDPR compliance and lower EU latency.
+  see: security/landingai-trust-center.yml

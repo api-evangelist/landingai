@@ -1,0 +1,111 @@
+{
+  "info": {
+    "_postman_id": "83161d27-7a9a-41bd-bb29-b9541073dcbc",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Metrics API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:35.000Z",
+    "updatedAt": "2026-07-28T02:02:35.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-83161d27-7a9a-41bd-bb29-b9541073dcbc"
+  },
+  "item": [
+    {
+      "name": "metrics",
+      "item": [
+        {
+          "name": "Metrics",
+          "id": "4056abd2-5fce-493c-bc61-7fe4065f64a4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9fd41eff-c739-463f-b607-91d3f36b1fc9",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{}",
+              "createdAt": "2026-07-28T02:02:36.000Z",
+              "updatedAt": "2026-07-28T02:02:36.000Z",
+              "uid": "35240-9fd41eff-c739-463f-b607-91d3f36b1fc9"
+            }
+          ],
+          "createdAt": "2026-07-28T02:02:36.000Z",
+          "updatedAt": "2026-07-28T02:02:36.000Z",
+          "uid": "35240-4056abd2-5fce-493c-bc61-7fe4065f64a4"
+        }
+      ],
+      "id": "28ff49a6-239d-41d6-aa4e-d8e455d6dfc0",
+      "createdAt": "2026-07-28T02:02:36.000Z",
+      "updatedAt": "2026-07-28T02:02:36.000Z",
+      "uid": "35240-28ff49a6-239d-41d6-aa4e-d8e455d6dfc0"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

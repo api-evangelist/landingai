@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LandingAI ADE API v2
+  version: 1.0.0
+extends: openapi/landingai-ade-v2-openapi-original.json
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Enhancements derived from https://docs.landing.ai/dpt3/ and the artifacts in
+  this repository. The harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: landingai
+    x-apievangelist-artifacts:
+      authentication: authentication/landingai-authentication.yml
+      conventions: conventions/landingai-conventions.yml
+      errors: errors/landingai-problem-types.yml
+      lifecycle: lifecycle/landingai-lifecycle.yml
+      rate-limits: rate-limits/landingai-rate-limits.yml
+      changelog: changelog/landingai-changelog.yml
+      skills: skills/_index.yml
+      mcp: mcp/landingai-mcp.yml
+    x-apievangelist-note: >-
+      The published v2 spec declares no securitySchemes and no security
+      requirement, but the documented API requires an HTTP bearer API key. The
+      security scheme below is supplied by this overlay so generated clients and
+      agents authenticate correctly.
+- target: $.components
+  update:
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        description: >-
+          LandingAI API key presented as an HTTP bearer token in the
+          Authorization header. Create a key at https://ade.landing.ai/ (US) or
+          https://va.eu-west-1.landing.ai/settings/api-key (EU).
+        x-apievangelist-supplied: true
+- target: $.servers
+  update:
+    x-apievangelist-note: >-
+      The published spec lists only the US production host. EU-hosted ADE is
+      offered for data residency and GDPR compliance — see
+      https://docs.landing.ai/dpt3/eu.
+- target: $.info
+  update:
+    x-apievangelist-rate-limits:
+      basis: pages processed per hour, per organization, by plan
+      sync_max_size: 50 MiB
+      sync_max_pages: 100
+      async_max_size: 1 GiB
+      async_max_pages: 6000
+      throttle_status: 429
+      headers: none documented
+      guidance: exponential backoff
+    x-apievangelist-idempotency:
+      supported: false
+      note: >-
+        No idempotency key. Safe retry is achieved through the submit-and-poll
+        Jobs pattern; errors consume no credits, so retries do not double-bill.
+    x-apievangelist-error-envelope:
+      media_type: application/json
+      shape: '{ "code": "<stable_snake_case>", "message": "<human readable>" }'
+      rfc9457: false

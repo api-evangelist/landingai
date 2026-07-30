@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LandingAI Vision Tools API
+  version: 1.0.0
+extends: openapi/landingai-vision-tools-openapi-original.json
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Enhancements derived from the harvested spec at
+  https://api.va.landing.ai/openapi.json and the artifacts in this repository.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: landingai
+    x-apievangelist-note: >-
+      The live Vision Tools spec is auto-generated and titled "Vision Tools API"
+      with version 0.1.0 and no description. It is the broadest LandingAI
+      surface (51 paths), combining the vision-model tool catalog, a
+      vision-training job surface, and the ADE v1 and v2 endpoints.
+    x-apievangelist-artifacts:
+      authentication: authentication/landingai-authentication.yml
+      conventions: conventions/landingai-conventions.yml
+      errors: errors/landingai-problem-types.yml
+- target: $.info
+  update:
+    x-apievangelist-spec-quality:
+      missing_descriptions: >-
+        Most tool operations carry an auto-generated summary derived from the
+        function name (for example "Tool Owlv2", "Tool Countgd") with no
+        description and no tags, which makes the surface hard for agents to
+        select from.
+      long_operation_ids: >-
+        operationIds are framework-generated and embed the method and full path
+        (for example
+        tool_vision_training_get_job_status_v1_tools_vision_training_jobs__job_id__status_get),
+        which produces unwieldy generated client method names.
+      recommendation: >-
+        Add human summaries, descriptions and tags, and shorten operationIds.
+        Filed here as an observation for upstream follow-up, not applied to the
+        harvested spec.
+- target: $.info
+  update:
+    x-apievangelist-deprecated-operations:
+    - operationId: tool_agentic_doc_analysis_v1_tools_agentic_document_analysis_post
+      path: POST /v1/tools/agentic-document-analysis
+      note: Labeled "Agentic Document Extraction (Legacy)"; legacy ADE endpoint deprecated
+        2026-03-31.
+      replacement: parse_run_sync in openapi/landingai-ade-v2-openapi-original.json
+      docs: https://docs.landing.ai/ade/ade-overview-legacy

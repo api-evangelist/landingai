@@ -1,0 +1,30 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/ade/build-with-ai-agents.md
+status: published
+description: >-
+  LandingAI publishes a hosted, remote MCP server for the ADE documentation
+  surface. It is a streamable-HTTP MCP endpoint — a plain GET returns HTTP 405,
+  which is the expected behavior for a POST-only MCP transport, confirming the
+  endpoint is live.
+server:
+  name: ade-docs
+  transport: http
+  url: https://docs.landing.ai/mcp
+  probe:
+    method: GET
+    status: 405
+    note: 405 Method Not Allowed on GET is expected for streamable-HTTP MCP (POST-only).
+install:
+- client: claude-code
+  command: claude mcp add --transport http ade-docs https://docs.landing.ai/mcp
+- client: claude.ai
+  instructions: Settings > Connectors > add https://docs.landing.ai/mcp as a custom connector.
+scope: >-
+  The published server exposes the ADE documentation corpus to agents. LandingAI
+  also publishes the docs as llms.txt and per-page Markdown (append .md to any
+  docs URL) as complementary agent-native surfaces.
+related:
+  llms_txt: https://docs.landing.ai/llms.txt
+  agent_skills: https://github.com/landing-ai/ade-document-processing-skills
+  docs: https://docs.landing.ai/ade/build-with-ai-agents.md

@@ -1,0 +1,928 @@
+{
+  "info": {
+    "_postman_id": "18f953e9-172b-4f6f-82c1-4eec3726e6c7",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Snapshot API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:39.000Z",
+    "updatedAt": "2026-07-28T02:02:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-18f953e9-172b-4f6f-82c1-4eec3726e6c7"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "dataset",
+                  "item": [
+                    {
+                      "name": "snapshots",
+                      "item": [
+                        {
+                          "name": "{snapshot_version}",
+                          "item": [
+                            {
+                              "name": "export",
+                              "item": [
+                                {
+                                  "name": "Post Snapshot Export",
+                                  "id": "26f37060-3c92-472f-a779-58a2fb03f3a6",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"retry\": \"<boolean>\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "dataset",
+                                        "snapshots",
+                                        ":snapshot_version",
+                                        "export"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "7334088c-9166-44cc-bc98-e37b28756af5",
+                                          "key": "project_id",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        },
+                                        {
+                                          "id": "dc0ddad7-e54f-4429-96fb-e6353d07c380",
+                                          "key": "snapshot_version",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "e98464d4-aad9-4229-8dab-c52079de335b",
+                                      "name": "Successful Response",
+                                      "originalRequest": {
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"retry\": \"<boolean>\"\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "export"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"data\": {\n    \"downloadExpiresAt\": \"<string>\",\n    \"status\": \"Completed\",\n    \"downloadUrl\": \"<string>\"\n  }\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-e98464d4-aad9-4229-8dab-c52079de335b"
+                                    },
+                                    {
+                                      "id": "0d0dfd62-a7f0-4927-8fd8-6c0ef51d0e04",
+                                      "name": "Validation Error",
+                                      "originalRequest": {
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"retry\": \"<boolean>\"\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "export"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                      "code": 422,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-0d0dfd62-a7f0-4927-8fd8-6c0ef51d0e04"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:02:40.000Z",
+                                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                                  "uid": "35240-26f37060-3c92-472f-a779-58a2fb03f3a6"
+                                },
+                                {
+                                  "name": "Get Snapshot Export",
+                                  "id": "46fe16b1-fc95-4556-8c82-fb894b4173cc",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "dataset",
+                                        "snapshots",
+                                        ":snapshot_version",
+                                        "export"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "4be00e6f-3d54-4c4d-9203-87fdf4ecd0b3",
+                                          "key": "project_id",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        },
+                                        {
+                                          "id": "25006a0a-3dad-457b-a517-79f0fd5eac2d",
+                                          "key": "snapshot_version",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "169dbcf1-cfb0-4f6d-88db-c4c308854d13",
+                                      "name": "Successful Response",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "export"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"data\": {\n    \"downloadExpiresAt\": \"<string>\",\n    \"status\": \"Completed\",\n    \"downloadUrl\": \"<string>\"\n  }\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-169dbcf1-cfb0-4f6d-88db-c4c308854d13"
+                                    },
+                                    {
+                                      "id": "4157533e-a18b-4cb0-8e13-00466862397e",
+                                      "name": "Validation Error",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/export?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "export"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                      "code": 422,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-4157533e-a18b-4cb0-8e13-00466862397e"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:02:40.000Z",
+                                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                                  "uid": "35240-46fe16b1-fc95-4556-8c82-fb894b4173cc"
+                                }
+                              ],
+                              "id": "78c3e048-b4a3-4171-9c64-40bde6cd6977",
+                              "createdAt": "2026-07-28T02:02:40.000Z",
+                              "updatedAt": "2026-07-28T02:02:40.000Z",
+                              "uid": "35240-78c3e048-b4a3-4171-9c64-40bde6cd6977"
+                            },
+                            {
+                              "name": "metadata",
+                              "item": [
+                                {
+                                  "name": "Get Snapshot Metadata",
+                                  "id": "a79f3bd4-6a7f-4e9c-bad5-794766e7a122",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/metadata?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "dataset",
+                                        "snapshots",
+                                        ":snapshot_version",
+                                        "metadata"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "0ad7ba74-40fd-4c6a-b75f-5b126c018b00",
+                                          "key": "project_id",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        },
+                                        {
+                                          "id": "ad4f8073-180c-4bc3-9d91-d0bdbaf5ad35",
+                                          "key": "snapshot_version",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "67a0f17e-fbb4-4560-8d35-b2e2e84212f5",
+                                      "name": "Successful Response",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/metadata?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "metadata"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"data\": {\n    \"downloadExpiresAt\": \"<string>\",\n    \"status\": \"Completed\",\n    \"downloadUrl\": \"<string>\"\n  }\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-67a0f17e-fbb4-4560-8d35-b2e2e84212f5"
+                                    },
+                                    {
+                                      "id": "406678b4-0b80-4fd0-ba31-a025dfcac79a",
+                                      "name": "Validation Error",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"signedCsvInfo\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots/:snapshot_version/metadata?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "dataset",
+                                            "snapshots",
+                                            ":snapshot_version",
+                                            "metadata"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "snapshot_version"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                      "code": 422,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:40.000Z",
+                                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                                      "uid": "35240-406678b4-0b80-4fd0-ba31-a025dfcac79a"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:02:40.000Z",
+                                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                                  "uid": "35240-a79f3bd4-6a7f-4e9c-bad5-794766e7a122"
+                                }
+                              ],
+                              "id": "4e72de71-8bcb-42e4-8a98-e5ab3c8c153f",
+                              "createdAt": "2026-07-28T02:02:40.000Z",
+                              "updatedAt": "2026-07-28T02:02:40.000Z",
+                              "uid": "35240-4e72de71-8bcb-42e4-8a98-e5ab3c8c153f"
+                            }
+                          ],
+                          "id": "b67530d7-5444-44af-b32d-39a25e7b46eb",
+                          "createdAt": "2026-07-28T02:02:40.000Z",
+                          "updatedAt": "2026-07-28T02:02:40.000Z",
+                          "uid": "35240-b67530d7-5444-44af-b32d-39a25e7b46eb"
+                        },
+                        {
+                          "name": "List Snapshots",
+                          "id": "86c543e8-3945-49a1-8145-0c61459f0825",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "dataset",
+                                "snapshots"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "e48bbb0c-a13e-4978-84ec-9d9ff00df335",
+                                  "key": "project_id",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "8f67b1fa-338d-484d-af38-bde5fa929990",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "dataset",
+                                    "snapshots"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\",\n      \"creationTime\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\",\n      \"creationTime\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:40.000Z",
+                              "updatedAt": "2026-07-28T02:02:40.000Z",
+                              "uid": "35240-8f67b1fa-338d-484d-af38-bde5fa929990"
+                            },
+                            {
+                              "id": "0f3360bd-22f9-41c2-918e-38248c100428",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/dataset/snapshots?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "dataset",
+                                    "snapshots"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:40.000Z",
+                              "updatedAt": "2026-07-28T02:02:40.000Z",
+                              "uid": "35240-0f3360bd-22f9-41c2-918e-38248c100428"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:40.000Z",
+                          "updatedAt": "2026-07-28T02:02:40.000Z",
+                          "uid": "35240-86c543e8-3945-49a1-8145-0c61459f0825"
+                        }
+                      ],
+                      "id": "70641102-dbbf-4c91-a659-ecb68745be98",
+                      "createdAt": "2026-07-28T02:02:40.000Z",
+                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                      "uid": "35240-70641102-dbbf-4c91-a659-ecb68745be98"
+                    }
+                  ],
+                  "id": "168979dc-396c-406e-ba3b-15642b0b578e",
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-168979dc-396c-406e-ba3b-15642b0b578e"
+                }
+              ],
+              "id": "366ef358-7446-43a4-8784-3f2aeed14c1c",
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-366ef358-7446-43a4-8784-3f2aeed14c1c"
+            }
+          ],
+          "id": "0954bb5b-aafe-48b8-8a42-6e02423231b8",
+          "createdAt": "2026-07-28T02:02:40.000Z",
+          "updatedAt": "2026-07-28T02:02:40.000Z",
+          "uid": "35240-0954bb5b-aafe-48b8-8a42-6e02423231b8"
+        }
+      ],
+      "id": "3f48c463-77d0-4822-bcb2-c722cb2e0404",
+      "createdAt": "2026-07-28T02:02:40.000Z",
+      "updatedAt": "2026-07-28T02:02:40.000Z",
+      "uid": "35240-3f48c463-77d0-4822-bcb2-c722cb2e0404"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

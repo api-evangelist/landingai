@@ -1,0 +1,143 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/parse-troubleshoot.md
+derived_from:
+- openapi/landingai-ade-v2-openapi-original.json
+- openapi/landingai-ade-v1-openapi-original.json
+format: custom-json
+description: >-
+  LandingAI ADE does not use RFC 9457 application/problem+json. Errors return a
+  flat JSON object with a stable snake_case `code` and a human-readable
+  `message`. Credits are consumed only on 200 and 206 responses; every error
+  response consumes no credits.
+envelope:
+  media_type: application/json
+  fields:
+  - name: code
+    description: Stable snake_case error identifier.
+  - name: message
+    description: Human-readable description; wording may change.
+  example: |
+    {
+      "code": "error_code_identifier",
+      "message": "Human-readable description"
+    }
+status_codes:
+- status: 200
+  title: Success
+  scope: parse
+  meaning: Document parsed successfully.
+  consumes_credits: true
+- status: 202
+  title: Accepted
+  scope: jobs
+  meaning: Async job created; response includes job_id.
+- status: 206
+  title: Partial Content
+  scope: parse
+  meaning: At least one page (not all) failed during processing.
+  remediation: Review `failed_pages` in metadata; check the failed pages for corruption.
+  consumes_credits: true
+- status: 401
+  title: Unauthorized
+  scope: account
+  meaning: Missing or invalid API key.
+  remediation: Verify the Authorization header contains a valid API key.
+- status: 402
+  title: Payment Required
+  scope: account
+  meaning: Account lacks credits for processing.
+  remediation: Add credits, or verify the correct API key is in use.
+- status: 404
+  title: Not Found
+  scope: jobs
+  meaning: Job ID does not exist.
+- status: 422
+  title: Unprocessable Entity
+  scope: parse
+  meaning: Input validation failure; see error_codes below.
+- status: 429
+  title: Too Many Requests
+  scope: account
+  meaning: Rate limit exceeded.
+  remediation: Wait and retry; implement exponential backoff.
+- status: 500
+  title: Internal Server Error
+  scope: parse
+  meaning: All pages failed to process. Response still carries the full structure
+    with each page showing status "failed" and a reason.
+  remediation: Retry; contact support if persistent.
+error_codes:
+- code: unknown_model_version
+  status: 422
+  message: "Unknown model version '{version}'. Available: {versions}"
+  remediation: Omit the field for latest, or supply a valid version (dpt-3-pro-latest
+    or a dated snapshot).
+- code: invalid_url
+  status: 422
+  variant: scheme
+  message: document_url scheme must be http or https, got '{scheme}'
+  remediation: Use http:// or https:// URLs only.
+- code: invalid_url
+  status: 422
+  variant: no-hostname
+  message: document_url missing hostname
+  remediation: Include a complete hostname.
+- code: invalid_url
+  status: 422
+  variant: dns
+  message: 'document_url hostname did not resolve: {hostname}'
+  remediation: Verify hostname spelling; confirm the host is publicly reachable.
+- code: invalid_url
+  status: 422
+  variant: private-ip
+  message: 'document_url resolves to a non-public IP: {ip}'
+  remediation: Host at a public URL, or use the document parameter for direct upload.
+- code: invalid_url
+  status: 422
+  variant: redirect
+  message: document_url returned a redirect; supply the final URL directly
+  remediation: Resolve the redirect manually and provide the final destination URL.
+- code: invalid_url
+  status: 422
+  variant: fetch-failed
+  message: 'Failed to fetch document_url: HTTP {status}'
+  remediation: Verify URL accessibility; check for expired presigned URLs.
+- code: size_exceeded
+  status: 422
+  message: document exceeds 50 MiB cap / document_url body exceeds 50 MiB cap
+  remediation: Reduce to <= 50 MiB, or use Parse Jobs (up to 1 GiB).
+- code: missing_document
+  status: 422
+  message: One of `document` or `document_url` is required
+- code: both_documents
+  status: 422
+  message: Provide exactly one of `document` or `document_url`, not both
+- code: invalid_pages
+  status: 422
+  message: 'pages: page numbers are 1-indexed (must be >= 1), got: [0]'
+- code: empty_file
+  status: 422
+  message: Empty file ({filename})
+- code: unsupported_format
+  status: 422
+  message: "Unsupported format: {format} ({filename}) / Unrecognised file format"
+  remediation: Convert to a supported PDF/image format; verify the file is not corrupted.
+- code: too_many_pages
+  status: 422
+  message: document has {N} pages; the per-request limit is 100
+  remediation: Split into <= 100 page files, or use Parse Jobs (up to 6,000 pages).
+- code: invalid_options
+  status: 422
+  message: 'options: invalid JSON: {details} / options.dpi: Extra inputs are not permitted'
+  remediation: Validate JSON; remove legacy keys (dpi, grounding, blocks.caption).
+async_job_failures:
+  note: >-
+    A failed async job still polls 200; the payload carries status "failed" and a
+    `failure_reason` field explaining the cause.
+docs:
+  parse: https://docs.landing.ai/dpt3/parse-troubleshoot.md
+  extract: https://docs.landing.ai/dpt3/extract-troubleshoot.md
+  classify: https://docs.landing.ai/ade/ade-classify-troubleshoot.md
+  section: https://docs.landing.ai/ade/ade-section-troubleshoot.md
+  split: https://docs.landing.ai/ade/ade-split-troubleshoot.md

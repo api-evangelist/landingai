@@ -1,0 +1,234 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/landingai-ade-v2-openapi-original.json, openapi/landingai-ade-v1-openapi-original.json,
+  openapi/landingai-landinglens-openapi-original.json
+description: >-
+  Entity graph derived from the harvested OpenAPI component schemas and their
+  $ref links. ADE is document-processing rather than resource-CRUD, so its model
+  is a nested document tree (Document > Page > Element > Grounding) plus an
+  asynchronous Job envelope, rather than a set of cross-referenced persistent
+  resources. LandingLens is the conventional resource graph, rooted on Project.
+domains:
+- name: ADE v2 (DPT-3)
+  spec: openapi/landingai-ade-v2-openapi-original.json
+  entities:
+  - name: ParseResponse
+    description: Top-level Parse result — reading-order Markdown plus the document structure
+      and metadata.
+    fields: [markdown, metadata, structure]
+    relationships:
+    - type: has_one
+      target: Document
+      via: structure
+    - type: has_one
+      target: ParseMetadata
+      via: metadata
+  - name: Document
+    description: Root of the hierarchical layout tree.
+    fields: [type, children, markdown]
+    relationships:
+    - type: has_many
+      target: Page
+      via: children
+  - name: Page
+    description: One page of the parsed document, with a processing status.
+    fields: [type, grounding, status, reason, children, markdown]
+    relationships:
+    - type: has_many
+      target: Element
+      via: children
+    - type: has_one
+      target: Grounding
+      via: grounding
+  - name: Element
+    description: A layout block (text, table, figure, marginalia, attestation, logo,
+      scan_code, card) with a stable id and span pointers.
+    fields: [type, id, grounding, atomic_grounding, children, markdown, row, col, colspan,
+      rowspan]
+    relationships:
+    - type: has_many
+      target: Element
+      via: children
+      note: self-referential — elements nest
+    - type: has_one
+      target: Grounding
+      via: grounding
+  - name: Grounding
+    description: Ties an element back to its location in the source document.
+    fields: [page, range, box]
+    relationships:
+    - type: has_one
+      target: Box
+      via: box
+    - type: has_one
+      target: Range
+      via: range
+  - name: Box
+    fields: [xmin, ymin, xmax, ymax]
+  - name: Range
+    description: Character span into the source Markdown.
+    fields: [start, end]
+  - name: ParseMetadata
+    fields: [job_id, model_version, page_count, output_markdown_chars, range_units,
+      openapi_spec, failed_pages, duration_ms, billing]
+    relationships:
+    - type: has_one
+      target: ParseBilling
+      via: billing
+    - type: belongs_to
+      target: Job
+      via: job_id
+  - name: ParseBilling
+    fields: [service_tier, total_credits]
+  - name: ErrorResponse
+    fields: [code, message]
+- name: ADE v1
+  spec: openapi/landingai-ade-v1-openapi-original.json
+  entities:
+  - name: ParseResponse
+    fields: [markdown, chunks, splits, grounding, metadata]
+    relationships:
+    - type: has_many
+      target: ParseChunk
+      via: chunks
+    - type: has_many
+      target: ParseSplit
+      via: splits
+    - type: has_one
+      target: ParseMetadata
+      via: metadata
+  - name: ParseChunk
+    fields: [markdown, type, id, grounding]
+    relationships:
+    - type: has_one
+      target: ParseGrounding
+      via: grounding
+  - name: ParseGrounding
+    fields: [box, page]
+    relationships:
+    - type: has_one
+      target: ParseGroundingBox
+      via: box
+  - name: ParseSplit
+    fields: [class, identifier, pages, markdown, chunks]
+    relationships:
+    - type: has_many
+      target: ParseChunk
+      via: chunks
+  - name: ExtractResponse
+    fields: [extraction, extraction_metadata, metadata]
+    relationships:
+    - type: has_one
+      target: ExtractMetadata
+      via: metadata
+    - type: has_many
+      target: ExtractWarning
+      via: metadata.warnings
+  - name: ClassifyResponse
+    fields: [classification, metadata]
+    relationships:
+    - type: has_many
+      target: ClassificationItem
+      via: classification
+  - name: SectionResponse
+    fields: [table_of_contents, table_of_contents_md, metadata]
+    relationships:
+    - type: has_many
+      target: SectionTOCEntry
+      via: table_of_contents
+  - name: SplitResponse
+    fields: [splits, metadata]
+    relationships:
+    - type: has_many
+      target: SplitData
+      via: splits
+  - name: Job
+    description: Asynchronous job envelope shared by Parse Jobs and Extract Jobs.
+    schemas: [JobCreationResponse, JobStatusResponse, ExtractJobStatusResponse, JobSummary,
+      JobsListResponse]
+    id_field: job_id
+    fields: [job_id, status, received_at, created_at, progress, org_id, version, data,
+      output_url, metadata, failure_reason]
+    relationships:
+    - type: has_many
+      target: JobSummary
+      via: JobsListResponse.jobs
+  - name: BuildSchemaResponse
+    fields: [extraction_schema, metadata]
+- name: LandingLens
+  spec: openapi/landingai-landinglens-openapi-original.json
+  root_entity: Project
+  entities:
+  - name: Project
+    id_field: project_id
+    relationships:
+    - type: has_many
+      target: Image
+      via: project_id
+    - type: has_many
+      target: Class
+      via: project_id
+    - type: has_many
+      target: TrainingJob
+      via: project_id
+    - type: has_many
+      target: Model
+      via: project_id
+    - type: has_many
+      target: Deployment
+      via: project_id
+    - type: has_many
+      target: Snapshot
+      via: project_id
+    - type: has_many
+      target: Metadata
+      via: project_id
+    - type: has_many
+      target: Tag
+      via: project_id
+  - name: Image
+    id_field: image_id
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: project_id
+  - name: TrainingJob
+    id_field: training_id
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: project_id
+    - type: has_many
+      target: Model
+      via: training_id
+  - name: Model
+    id_field: model_id
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: project_id
+    - type: has_many
+      target: Deployment
+      via: model_id
+  - name: Deployment
+    id_field: deployment_id
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: project_id
+  - name: Snapshot
+    id_field: snapshot_version
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: project_id
+  - name: Metadata
+    id_field: metadata_id
+  - name: Tag
+    id_field: tag_id
+id_conventions:
+  note: >-
+    LandingLens uses opaque path-parameter ids (project_id, image_id, model_id,
+    deployment_id, training_id, metadata_id, tag_id) with no documented type
+    prefixes. ADE uses a single job_id for async work and stable per-element ids
+    within a parsed document.

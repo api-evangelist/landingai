@@ -1,0 +1,1028 @@
+{
+  "info": {
+    "_postman_id": "8cf3219d-02be-4396-9a74-d58f9a12f6b3",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Deployment API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:30.000Z",
+    "updatedAt": "2026-07-28T02:02:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8cf3219d-02be-4396-9a74-d58f9a12f6b3"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "deployments",
+                  "item": [
+                    {
+                      "name": "{deployment_id}",
+                      "item": [
+                        {
+                          "name": "Update Deployment",
+                          "id": "73d40e1e-dac3-400b-8c83-143ef8440ad5",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments",
+                                ":deployment_id"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "ed485baa-f70d-4904-bc51-05f4d653d44b",
+                                  "key": "project_id",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "91c0d8fd-e7f3-48a6-ae65-5244bfeeb5ea",
+                                  "key": "deployment_id",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "You can update a deployment by providing one or both of the following:\n- A new model to be used for predictions.\n- A new threshold value to be used for classifying predictions.\n\nAt least one of these values must be provided for a successful update.\n\nUpdating the threshold value with a model already deployed has the\nfollowing behavior:\n- If you specify a new threshold value, it will override the model's\ndefault threshold.\n- If you don't specify a new threshold value, the model's default\nthreshold will be used.\n\nUpdating the deployment with a new model affects the threshold value as\nfollows:\n- If you specify a new threshold value along with the new model, the new\nthreshold will be used.\n- If you don't specify a new threshold value, the threshold associated\nwith the new model will be used."
+                          },
+                          "response": [
+                            {
+                              "id": "6dcba7ab-a4ce-4289-b754-f80ce43b83d1",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"predictionUrl\": \"<string>\",\n    \"name\": \"<string>\",\n    \"modelId\": \"<string>\",\n    \"threshold\": \"<number>\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-6dcba7ab-a4ce-4289-b754-f80ce43b83d1"
+                            },
+                            {
+                              "id": "5258020c-50cd-4d2b-aa82-54d95e5a21a0",
+                              "name": "Bad Request",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-5258020c-50cd-4d2b-aa82-54d95e5a21a0"
+                            },
+                            {
+                              "id": "ca68f758-7360-40d3-bb1c-b0252c7b3451",
+                              "name": "Not Found",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-ca68f758-7360-40d3-bb1c-b0252c7b3451"
+                            },
+                            {
+                              "id": "c08cc52e-d2fe-464a-a4c5-fee7ee96f362",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-c08cc52e-d2fe-464a-a4c5-fee7ee96f362"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-73d40e1e-dac3-400b-8c83-143ef8440ad5"
+                        },
+                        {
+                          "name": "Get Single Deployment",
+                          "id": "bac4f9b8-973a-409a-9940-28fab66e298b",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments",
+                                ":deployment_id"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "ea5709be-33d9-4e48-9a94-8bea9e825ab2",
+                                  "key": "project_id"
+                                },
+                                {
+                                  "id": "aaa7e823-3e45-4d8f-881e-9d8a7d1712fd",
+                                  "key": "deployment_id",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "d0842316-d4f7-469b-a0c6-d71e92fd1aa5",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"predictionUrl\": \"<string>\",\n    \"name\": \"<string>\",\n    \"modelId\": \"<string>\",\n    \"threshold\": \"<number>\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-d0842316-d4f7-469b-a0c6-d71e92fd1aa5"
+                            },
+                            {
+                              "id": "4edf33e0-20ee-445b-a06b-8d7d09a4003c",
+                              "name": "Not Found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-4edf33e0-20ee-445b-a06b-8d7d09a4003c"
+                            },
+                            {
+                              "id": "f63314ee-28be-4627-a4b4-024688aece2a",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/deployments/:deployment_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "deployments",
+                                    ":deployment_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "deployment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:30.000Z",
+                              "updatedAt": "2026-07-28T02:02:30.000Z",
+                              "uid": "35240-f63314ee-28be-4627-a4b4-024688aece2a"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-bac4f9b8-973a-409a-9940-28fab66e298b"
+                        }
+                      ],
+                      "id": "2be2958b-239c-48c6-8666-b03ea85f0475",
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-2be2958b-239c-48c6-8666-b03ea85f0475"
+                    },
+                    {
+                      "name": "Create Deployment",
+                      "id": "57784464-76e7-4cf0-a9af-77df3e2e6c00",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "deployments"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "85b62999-631c-4ce1-a11d-4fcd9d795360",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "This endpoint creates a deployment, which is an instance for running a\nmodel and performing predictions.\n\nTo create a deployment, you only need to provide a unique name. Upon\nsuccessful creation, the endpoint will return an HTTP URL where you can\nsend requests for predictions (also known as inferences).\n\nThe deployment name cannot be changed after creation.\n\nHere's a breakdown of the deployment creation options:\n\n**Model** (Optional): You can either:\n\n- Provide the model data during deployment creation, making it ready to use\nimmediately.\n- Upload a model to the deployment later and then use it for predictions.\n\n\n**Threshold** (Optional):\n\n- Specify a custom threshold value for your\npredictions.\n- If not provided, the default value used during model training will be\napplied."
+                      },
+                      "response": [
+                        {
+                          "id": "b2e4e5cc-777c-4172-a676-27bbb3c4f6f3",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"predictionUrl\": \"<string>\",\n    \"name\": \"<string>\",\n    \"modelId\": \"<string>\",\n    \"threshold\": \"<number>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-b2e4e5cc-777c-4172-a676-27bbb3c4f6f3"
+                        },
+                        {
+                          "id": "bc3efb19-0d28-4815-b2b6-ef4f39c72875",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-bc3efb19-0d28-4815-b2b6-ef4f39c72875"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-57784464-76e7-4cf0-a9af-77df3e2e6c00"
+                    },
+                    {
+                      "name": "Get Deployments",
+                      "id": "c4629f06-5d52-4930-b8d2-26ab3f2c8030",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "deployments"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "36f0703f-cb94-4679-8081-934b95a8bee7",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "86e9caca-aae5-44d1-838e-2afdaa596856",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"predictionUrl\": \"<string>\",\n      \"name\": \"<string>\",\n      \"modelId\": \"<string>\",\n      \"threshold\": \"<number>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"predictionUrl\": \"<string>\",\n      \"name\": \"<string>\",\n      \"modelId\": \"<string>\",\n      \"threshold\": \"<number>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-86e9caca-aae5-44d1-838e-2afdaa596856"
+                        },
+                        {
+                          "id": "da61674a-0f74-4a4c-b1b7-fbef614e374c",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/deployments?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "deployments"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-da61674a-0f74-4a4c-b1b7-fbef614e374c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-c4629f06-5d52-4930-b8d2-26ab3f2c8030"
+                    }
+                  ],
+                  "id": "69ed74c9-f9f9-4abf-ab46-3d443d4f991a",
+                  "createdAt": "2026-07-28T02:02:30.000Z",
+                  "updatedAt": "2026-07-28T02:02:30.000Z",
+                  "uid": "35240-69ed74c9-f9f9-4abf-ab46-3d443d4f991a"
+                }
+              ],
+              "id": "1367c30e-9449-47a5-be99-0e5fb1baba11",
+              "createdAt": "2026-07-28T02:02:30.000Z",
+              "updatedAt": "2026-07-28T02:02:30.000Z",
+              "uid": "35240-1367c30e-9449-47a5-be99-0e5fb1baba11"
+            }
+          ],
+          "id": "6c341137-9679-4c16-a3df-1da74fe11c11",
+          "createdAt": "2026-07-28T02:02:30.000Z",
+          "updatedAt": "2026-07-28T02:02:30.000Z",
+          "uid": "35240-6c341137-9679-4c16-a3df-1da74fe11c11"
+        }
+      ],
+      "id": "85fc4837-d8a7-44cd-bd33-98b8739d6c91",
+      "createdAt": "2026-07-28T02:02:30.000Z",
+      "updatedAt": "2026-07-28T02:02:30.000Z",
+      "uid": "35240-85fc4837-d8a7-44cd-bd33-98b8739d6c91"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

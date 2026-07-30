@@ -1,0 +1,733 @@
+{
+  "info": {
+    "_postman_id": "be6054eb-1db4-4a98-9f01-57d18259cf63",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Project API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:38.000Z",
+    "updatedAt": "2026-07-28T02:02:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-be6054eb-1db4-4a98-9f01-57d18259cf63"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "active",
+                  "item": [
+                    {
+                      "name": "Update Active Project",
+                      "id": "85cdf6af-fa66-4a13-9de0-32613cf36ab9",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"isActive\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/active?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "active"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "81d22a09-6244-4ea0-8c4d-13f660d69500",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "c549278b-4a4b-4ec0-a94b-b7feb634c048",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"isActive\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/active?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "active"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-07-28T02:02:39.000Z",
+                          "updatedAt": "2026-07-28T02:02:39.000Z",
+                          "uid": "35240-c549278b-4a4b-4ec0-a94b-b7feb634c048"
+                        },
+                        {
+                          "id": "6f1116be-aeaf-4ed1-9e6d-c8cf7cabf313",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"isActive\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/active?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "active"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:39.000Z",
+                          "updatedAt": "2026-07-28T02:02:39.000Z",
+                          "uid": "35240-6f1116be-aeaf-4ed1-9e6d-c8cf7cabf313"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:39.000Z",
+                      "updatedAt": "2026-07-28T02:02:39.000Z",
+                      "uid": "35240-85cdf6af-fa66-4a13-9de0-32613cf36ab9"
+                    }
+                  ],
+                  "id": "4ed60588-d49b-410c-b6a2-f95edf0d158d",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-4ed60588-d49b-410c-b6a2-f95edf0d158d"
+                },
+                {
+                  "name": "Get Project",
+                  "id": "01ed7ab4-5da6-47b1-a324-94c7d9e02b5f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "apikey",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/projects/:project_id?timeout=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "projects",
+                        ":project_id"
+                      ],
+                      "query": [
+                        {
+                          "key": "timeout",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "cad07e80-28bc-4ce2-86a3-a625d71b5b01",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "6df5e12c-c7d9-4205-adb2-6e947796c84d",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectType\": \"segmentation\",\n    \"createdAt\": \"<string>\",\n    \"isActive\": \"<boolean>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:39.000Z",
+                      "updatedAt": "2026-07-28T02:02:39.000Z",
+                      "uid": "35240-6df5e12c-c7d9-4205-adb2-6e947796c84d"
+                    },
+                    {
+                      "id": "20ab3c04-13ec-47bd-8623-fdf06dd08587",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:39.000Z",
+                      "updatedAt": "2026-07-28T02:02:39.000Z",
+                      "uid": "35240-20ab3c04-13ec-47bd-8623-fdf06dd08587"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-01ed7ab4-5da6-47b1-a324-94c7d9e02b5f"
+                }
+              ],
+              "id": "57ffb1f0-09f8-4a09-a726-6e00edfb28c3",
+              "createdAt": "2026-07-28T02:02:39.000Z",
+              "updatedAt": "2026-07-28T02:02:39.000Z",
+              "uid": "35240-57ffb1f0-09f8-4a09-a726-6e00edfb28c3"
+            },
+            {
+              "name": "Get Projects",
+              "id": "08ef064d-647e-4fd5-965a-cd6af9b8c0e4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "projects"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d7968003-9593-4e22-a9d5-d4e07ee91468",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "apikey",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "projects"
+                      ],
+                      "query": [
+                        {
+                          "key": "timeout",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"projectType\": \"classification\",\n      \"createdAt\": \"<string>\",\n      \"isActive\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"projectType\": \"classification\",\n      \"createdAt\": \"<string>\",\n      \"isActive\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-d7968003-9593-4e22-a9d5-d4e07ee91468"
+                },
+                {
+                  "id": "2c142614-8e8d-485d-a900-6d86f8e40a5e",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "apikey",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "projects"
+                      ],
+                      "query": [
+                        {
+                          "key": "timeout",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-2c142614-8e8d-485d-a900-6d86f8e40a5e"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:39.000Z",
+              "updatedAt": "2026-07-28T02:02:39.000Z",
+              "uid": "35240-08ef064d-647e-4fd5-965a-cd6af9b8c0e4"
+            },
+            {
+              "name": "Create Project",
+              "id": "700848bc-441f-4498-9931-cdc4920092f7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"projectType\": \"segmentation\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "projects"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "02c5b6f8-7c9f-4f50-9290-5599f6441d08",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "apikey",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"projectType\": \"segmentation\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "projects"
+                      ],
+                      "query": [
+                        {
+                          "key": "timeout",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectType\": \"segmentation\",\n    \"createdAt\": \"<string>\",\n    \"isActive\": \"<boolean>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-02c5b6f8-7c9f-4f50-9290-5599f6441d08"
+                },
+                {
+                  "id": "4b0d2698-1ebe-4457-af86-b8a808f2b860",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "apikey",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"projectType\": \"segmentation\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/projects?timeout=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "projects"
+                      ],
+                      "query": [
+                        {
+                          "key": "timeout",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-4b0d2698-1ebe-4457-af86-b8a808f2b860"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:39.000Z",
+              "updatedAt": "2026-07-28T02:02:39.000Z",
+              "uid": "35240-700848bc-441f-4498-9931-cdc4920092f7"
+            }
+          ],
+          "id": "a5556dee-b65b-4207-8309-12e379ffb40a",
+          "createdAt": "2026-07-28T02:02:39.000Z",
+          "updatedAt": "2026-07-28T02:02:39.000Z",
+          "uid": "35240-a5556dee-b65b-4207-8309-12e379ffb40a"
+        }
+      ],
+      "id": "04cb0c0e-6d68-4518-93f7-d551fe3472e1",
+      "createdAt": "2026-07-28T02:02:39.000Z",
+      "updatedAt": "2026-07-28T02:02:39.000Z",
+      "uid": "35240-04cb0c0e-6d68-4518-93f7-d551fe3472e1"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

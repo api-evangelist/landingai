@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.landing.ai/pricing-agentic-apis, https://docs.landing.ai/ade/ade-pricing.md
+model: credit-based
+docs: https://docs.landing.ai/ade/ade-pricing
+plans:
+- name: Explore
+  price: 0
+  currency: USD
+  billing: pay-as-you-go
+  free_tier: true
+  free_allowance: 1000 credits
+  credit_rate: $1 buys 100 credits
+  rate_limits: standard
+- name: Team
+  price: 250
+  currency: USD
+  billing: monthly
+  included_credits: 27500
+  credit_rate: $1 buys 110 credits (10% more)
+  rate_limits: higher
+  most_popular: true
+- name: Enterprise
+  price: null
+  currency: USD
+  billing: custom
+  included_credits: custom
+  rate_limits: priority
+  contact: https://www.landing.ai/pricing-agentic-apis
+  features:
+  - SSO via SAML 2.0 and OpenID Connect
+  - Zero Data Retention (ZDR) option
+  - EU data residency
+regions_priced: [us, eu]
+notes: >-
+  Pricing is unified across US and EU as of the 2026-07-17 changelog entry.
+  Credit consumption rates per API are documented separately at
+  https://docs.landing.ai/dpt3/credit-consumption.

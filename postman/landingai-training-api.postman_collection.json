@@ -1,0 +1,1393 @@
+{
+  "info": {
+    "_postman_id": "3de48f96-5d27-487e-b986-b9ce32d672a3",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Training API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:43.000Z",
+    "updatedAt": "2026-07-28T02:02:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3de48f96-5d27-487e-b986-b9ce32d672a3"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "train",
+                  "item": [
+                    {
+                      "name": "{training_id}",
+                      "item": [
+                        {
+                          "name": "status",
+                          "item": [
+                            {
+                              "name": "Get Training Status",
+                              "id": "fe84cfdf-f61f-474e-9017-e546ef319702",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/status?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "train",
+                                    ":training_id",
+                                    "status"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "86c5cc02-2bc0-4388-bcdf-2b9ac29bc9b4",
+                                      "key": "project_id",
+                                      "value": "<integer>",
+                                      "description": "(Required) "
+                                    },
+                                    {
+                                      "id": "36753554-043c-42d8-8a29-4bde58e13899",
+                                      "key": "training_id",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "da1ec730-ffcb-4be8-9166-9f3502d77f97",
+                                  "name": "Successful Response",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/status?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "train",
+                                        ":training_id",
+                                        "status"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "project_id"
+                                        },
+                                        {
+                                          "key": "training_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"data\": {\n    \"status\": \"STARTING\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:02:44.000Z",
+                                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                                  "uid": "35240-da1ec730-ffcb-4be8-9166-9f3502d77f97"
+                                },
+                                {
+                                  "id": "36f860a9-2bf3-4c7e-9479-9ce9e4513c3b",
+                                  "name": "Validation Error",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/status?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "train",
+                                        ":training_id",
+                                        "status"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "project_id"
+                                        },
+                                        {
+                                          "key": "training_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                  "code": 422,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                  "createdAt": "2026-07-28T02:02:44.000Z",
+                                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                                  "uid": "35240-36f860a9-2bf3-4c7e-9479-9ce9e4513c3b"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:02:44.000Z",
+                              "updatedAt": "2026-07-28T02:02:44.000Z",
+                              "uid": "35240-fe84cfdf-f61f-474e-9017-e546ef319702"
+                            }
+                          ],
+                          "id": "760779cb-1449-4579-ace7-c917b902bb18",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-760779cb-1449-4579-ace7-c917b902bb18"
+                        },
+                        {
+                          "name": "results",
+                          "item": [
+                            {
+                              "name": "metrics",
+                              "item": [
+                                {
+                                  "name": "Get Metrics Summary For All Splits",
+                                  "id": "72833b89-275b-4cd4-aa61-0c0e0ce4a468",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/metrics?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "train",
+                                        ":training_id",
+                                        "results",
+                                        "metrics"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "b1ff588e-40bb-4c5b-b1f1-50187012d330",
+                                          "key": "project_id",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        },
+                                        {
+                                          "id": "61cc9f87-f65e-4002-8042-9b973b30a4a6",
+                                          "key": "training_id",
+                                          "value": "<string>",
+                                          "description": "(Required) "
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "3a56206b-77a3-484e-a995-52451e7cc7b4",
+                                      "name": "Successful Response",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/metrics?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "train",
+                                            ":training_id",
+                                            "results",
+                                            "metrics"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "training_id"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"classes\": [\n        {\n          \"id\": \"<integer>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"classes\": [\n        {\n          \"id\": \"<integer>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"performance\": \"<number>\",\n          \"recall\": \"<number>\",\n          \"precision\": \"<number>\"\n        }\n      ]\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:44.000Z",
+                                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                                      "uid": "35240-3a56206b-77a3-484e-a995-52451e7cc7b4"
+                                    },
+                                    {
+                                      "id": "95206d51-61ef-4f23-992d-7e55519dbfde",
+                                      "name": "Validation Error",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/metrics?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "train",
+                                            ":training_id",
+                                            "results",
+                                            "metrics"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "training_id"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                      "code": 422,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:44.000Z",
+                                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                                      "uid": "35240-95206d51-61ef-4f23-992d-7e55519dbfde"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:02:44.000Z",
+                                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                                  "uid": "35240-72833b89-275b-4cd4-aa61-0c0e0ce4a468"
+                                }
+                              ],
+                              "id": "69ce049d-9eaa-4770-9922-e58350bb0dfa",
+                              "createdAt": "2026-07-28T02:02:44.000Z",
+                              "updatedAt": "2026-07-28T02:02:44.000Z",
+                              "uid": "35240-69ce049d-9eaa-4770-9922-e58350bb0dfa"
+                            },
+                            {
+                              "name": "confusion-matrix",
+                              "item": [
+                                {
+                                  "name": "Get Confusion Matrix For All Splits",
+                                  "id": "428b6b52-1160-431f-8bd2-4cbf5743adc3",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "apikey",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/confusion-matrix?timeout=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "projects",
+                                        ":project_id",
+                                        "train",
+                                        ":training_id",
+                                        "results",
+                                        "confusion-matrix"
+                                      ],
+                                      "query": [
+                                        {
+                                          "key": "timeout",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "d45320d9-7c68-4cb3-af9b-109644ea851d",
+                                          "key": "project_id",
+                                          "value": "<integer>",
+                                          "description": "(Required) "
+                                        },
+                                        {
+                                          "id": "b7376bac-043e-4dd2-b7a7-9ae8c6179e80",
+                                          "key": "training_id",
+                                          "value": "<string>",
+                                          "description": "(Required) "
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "a563cde9-b29f-425d-a83b-511d38376293",
+                                      "name": "Successful Response",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/confusion-matrix?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "train",
+                                            ":training_id",
+                                            "results",
+                                            "confusion-matrix"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "training_id"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"correctPredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"falseNegativePredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"falsePositivePredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"misclassifications\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"correctPredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"falseNegativePredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"falsePositivePredictions\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ],\n      \"misclassifications\": [\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        },\n        {\n          \"count\": \"<integer>\",\n          \"groundTruthClassId\": \"<integer>\",\n          \"predictedClassId\": \"<integer>\"\n        }\n      ]\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:44.000Z",
+                                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                                      "uid": "35240-a563cde9-b29f-425d-a83b-511d38376293"
+                                    },
+                                    {
+                                      "id": "a245f30d-4935-4b6a-9071-5950ed61c999",
+                                      "name": "Validation Error",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "apikey",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v1/projects/:project_id/train/:training_id/results/confusion-matrix?timeout=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v1",
+                                            "projects",
+                                            ":project_id",
+                                            "train",
+                                            ":training_id",
+                                            "results",
+                                            "confusion-matrix"
+                                          ],
+                                          "query": [
+                                            {
+                                              "key": "timeout",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "project_id"
+                                            },
+                                            {
+                                              "key": "training_id"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                      "code": 422,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-07-28T02:02:44.000Z",
+                                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                                      "uid": "35240-a245f30d-4935-4b6a-9071-5950ed61c999"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:02:44.000Z",
+                                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                                  "uid": "35240-428b6b52-1160-431f-8bd2-4cbf5743adc3"
+                                }
+                              ],
+                              "id": "d5db0de8-572a-4dc0-a70c-ff09ea2a894a",
+                              "createdAt": "2026-07-28T02:02:44.000Z",
+                              "updatedAt": "2026-07-28T02:02:44.000Z",
+                              "uid": "35240-d5db0de8-572a-4dc0-a70c-ff09ea2a894a"
+                            }
+                          ],
+                          "id": "da429c52-c1d7-417f-9b43-1b6e48b3c28f",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-da429c52-c1d7-417f-9b43-1b6e48b3c28f"
+                        }
+                      ],
+                      "id": "dffb778a-3511-42d1-8e2f-15649cc8f082",
+                      "createdAt": "2026-07-28T02:02:44.000Z",
+                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                      "uid": "35240-dffb778a-3511-42d1-8e2f-15649cc8f082"
+                    },
+                    {
+                      "name": "architectures",
+                      "item": [
+                        {
+                          "name": "Get Train Archs",
+                          "id": "401e47b9-82cb-4153-98bc-fd4597cef5bf",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/train/architectures?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "train",
+                                "architectures"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "7ba16696-dde4-471a-a6da-0feb5e5e01cf",
+                                  "key": "project_id",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "63cbc057-8ce3-445b-84cd-ff28ff8370f2",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/train/architectures?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "train",
+                                    "architectures"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:44.000Z",
+                              "updatedAt": "2026-07-28T02:02:44.000Z",
+                              "uid": "35240-63cbc057-8ce3-445b-84cd-ff28ff8370f2"
+                            },
+                            {
+                              "id": "83485827-2277-495b-9c52-897b1e188a9a",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/train/architectures?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "train",
+                                    "architectures"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:44.000Z",
+                              "updatedAt": "2026-07-28T02:02:44.000Z",
+                              "uid": "35240-83485827-2277-495b-9c52-897b1e188a9a"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-401e47b9-82cb-4153-98bc-fd4597cef5bf"
+                        }
+                      ],
+                      "id": "e5c4565e-9c2a-450b-87ac-70d087971c38",
+                      "createdAt": "2026-07-28T02:02:44.000Z",
+                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                      "uid": "35240-e5c4565e-9c2a-450b-87ac-70d087971c38"
+                    },
+                    {
+                      "name": "Create Training Job",
+                      "id": "1ce563e5-86e5-44b0-afec-354636194d92",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"model\": {\n    \"architecture\": \"<string>\",\n    \"hyperParams\": {}\n  },\n  \"transforms\": {\n    \"preprocessing\": [\n      {\n        \"minim8de\": {},\n        \"non8\": {},\n        \"fugiat_4d\": {}\n      },\n      {\n        \"ullamco_47\": {}\n      }\n    ],\n    \"augmentations\": [\n      {\n        \"tempor_22\": {},\n        \"cupidatat71c\": {}\n      },\n      {\n        \"Ut_1_\": {},\n        \"sed__\": {}\n      }\n    ]\n  },\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "train"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "0de394dd-bad3-49a5-a32e-9eb5359cd58c",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "39f0d9fd-ec70-402d-8626-02904d01247a",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"model\": {\n    \"architecture\": \"<string>\",\n    \"hyperParams\": {}\n  },\n  \"transforms\": {\n    \"preprocessing\": [\n      {\n        \"minim8de\": {},\n        \"non8\": {},\n        \"fugiat_4d\": {}\n      },\n      {\n        \"ullamco_47\": {}\n      }\n    ],\n    \"augmentations\": [\n      {\n        \"tempor_22\": {},\n        \"cupidatat71c\": {}\n      },\n      {\n        \"Ut_1_\": {},\n        \"sed__\": {}\n      }\n    ]\n  },\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "train"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": {\n    \"trainingId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-39f0d9fd-ec70-402d-8626-02904d01247a"
+                        },
+                        {
+                          "id": "6b749247-2772-4a0f-9a64-b11bff00c769",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"model\": {\n    \"architecture\": \"<string>\",\n    \"hyperParams\": {}\n  },\n  \"transforms\": {\n    \"preprocessing\": [\n      {\n        \"minim8de\": {},\n        \"non8\": {},\n        \"fugiat_4d\": {}\n      },\n      {\n        \"ullamco_47\": {}\n      }\n    ],\n    \"augmentations\": [\n      {\n        \"tempor_22\": {},\n        \"cupidatat71c\": {}\n      },\n      {\n        \"Ut_1_\": {},\n        \"sed__\": {}\n      }\n    ]\n  },\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "train"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-6b749247-2772-4a0f-9a64-b11bff00c769"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:44.000Z",
+                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                      "uid": "35240-1ce563e5-86e5-44b0-afec-354636194d92"
+                    },
+                    {
+                      "name": "Get Training List",
+                      "id": "6e8c1dd2-c223-4461-9a6e-29e47105596c",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "train"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "64346280-07fc-42b6-8219-c9c3959e2450",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "fa8bec6e-c383-482a-a46d-69dd3b8dbc26",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "train"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"TRAINING\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"FAILED\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-fa8bec6e-c383-482a-a46d-69dd3b8dbc26"
+                        },
+                        {
+                          "id": "0616338c-ac9e-49a2-8af6-6e17b6c92696",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/train?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "train"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-0616338c-ac9e-49a2-8af6-6e17b6c92696"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:44.000Z",
+                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                      "uid": "35240-6e8c1dd2-c223-4461-9a6e-29e47105596c"
+                    }
+                  ],
+                  "id": "7dcd0a38-f6aa-48eb-bdba-14f8452c30a5",
+                  "createdAt": "2026-07-28T02:02:44.000Z",
+                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                  "uid": "35240-7dcd0a38-f6aa-48eb-bdba-14f8452c30a5"
+                },
+                {
+                  "name": "autosplit",
+                  "item": [
+                    {
+                      "name": "Auto Split",
+                      "id": "378982ba-8c24-4d19-9b3d-0bd2f0b64eb0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"splitPercentages\": {\n    \"train\": \"<integer>\",\n    \"dev\": \"<integer>\",\n    \"test\": \"<integer>\"\n  },\n  \"selectOption\": \"all-labeled\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/autosplit?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "autosplit"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "a48914f7-ad5f-4367-b6d0-dcc149a3a354",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "c1355f9c-bf45-4d3d-8a34-bb1f8a2862a0",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"splitPercentages\": {\n    \"train\": \"<integer>\",\n    \"dev\": \"<integer>\",\n    \"test\": \"<integer>\"\n  },\n  \"selectOption\": \"all-labeled\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/autosplit?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "autosplit"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-c1355f9c-bf45-4d3d-8a34-bb1f8a2862a0"
+                        },
+                        {
+                          "id": "2e2c819c-34e4-45e9-b760-ed2dab9440ca",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"splitPercentages\": {\n    \"train\": \"<integer>\",\n    \"dev\": \"<integer>\",\n    \"test\": \"<integer>\"\n  },\n  \"selectOption\": \"all-labeled\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/autosplit?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "autosplit"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:44.000Z",
+                          "updatedAt": "2026-07-28T02:02:44.000Z",
+                          "uid": "35240-2e2c819c-34e4-45e9-b760-ed2dab9440ca"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:44.000Z",
+                      "updatedAt": "2026-07-28T02:02:44.000Z",
+                      "uid": "35240-378982ba-8c24-4d19-9b3d-0bd2f0b64eb0"
+                    }
+                  ],
+                  "id": "acae96ec-75d6-43f1-bb32-fda1134eeb9d",
+                  "createdAt": "2026-07-28T02:02:44.000Z",
+                  "updatedAt": "2026-07-28T02:02:44.000Z",
+                  "uid": "35240-acae96ec-75d6-43f1-bb32-fda1134eeb9d"
+                }
+              ],
+              "id": "00d1a407-4b29-4b69-9a50-0d7a75509e06",
+              "createdAt": "2026-07-28T02:02:44.000Z",
+              "updatedAt": "2026-07-28T02:02:44.000Z",
+              "uid": "35240-00d1a407-4b29-4b69-9a50-0d7a75509e06"
+            }
+          ],
+          "id": "a5312833-796d-41e3-bbb6-67a7c50ed389",
+          "createdAt": "2026-07-28T02:02:44.000Z",
+          "updatedAt": "2026-07-28T02:02:44.000Z",
+          "uid": "35240-a5312833-796d-41e3-bbb6-67a7c50ed389"
+        }
+      ],
+      "id": "86e76cdd-992f-4116-8ab6-bdcd6aa0d8cd",
+      "createdAt": "2026-07-28T02:02:44.000Z",
+      "updatedAt": "2026-07-28T02:02:44.000Z",
+      "uid": "35240-86e76cdd-992f-4116-8ab6-bdcd6aa0d8cd"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

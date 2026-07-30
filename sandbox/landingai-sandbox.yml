@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/playground.md, https://docs.landing.ai/ade/ade-playground.md,
+  https://www.landing.ai/pricing-agentic-apis
+description: >-
+  LandingAI does not operate a separate test-vs-live key environment. There are
+  no test API keys, no test/live key prefixes, and no magic test values — a real
+  API key runs against production and consumes real credits. What LandingAI does
+  provide is a no-code Playground plus a free credit allowance, which together
+  serve the try-before-you-build role.
+test_live_separation:
+  supported: false
+  key_prefixes: null
+  modes: null
+  note: >-
+    A single API key works against production. Credits are consumed only on HTTP
+    200 and 206 responses, so failed calls cost nothing while integrating.
+playground:
+  available: true
+  url: https://ade.landing.ai/
+  docs:
+  - https://docs.landing.ai/dpt3/playground
+  - https://docs.landing.ai/ade/ade-playground
+  description: >-
+    Parse documents with DPT-3 in the browser with no code, configure parse
+    options from the Config menu, and build extraction schemas visually with the
+    schema wizard.
+  features:
+  - No-code document parsing
+  - Parse options configurable in the Config menu
+  - Schema Wizard for building and testing extraction schemas
+  note: The Playground relocated to ade.landing.ai in the 2026-07-07 release.
+free_allowance:
+  plan: Explore
+  credits: 1000
+  description: New accounts start with 1000 free credits, which is the practical sandbox budget.
+sample_data:
+  available: true
+  docs: https://docs.landing.ai/ade/ade-quickstart
+  description: >-
+    The quickstart parses and extracts fields from a sample document using cURL,
+    Python or TypeScript. Additional runnable samples are catalogued at
+    https://docs.landing.ai/ade/ade-code-examples-resources.
+test_clocks:
+  supported: false
+fixtures_or_triggers:
+  supported: false

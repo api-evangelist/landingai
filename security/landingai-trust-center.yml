@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: searched
+source: https://trust.landing.ai/, https://docs.landing.ai/ade/ade-security.md
+url: https://trust.landing.ai/
+security_page: https://www.landing.ai/security-at-landingai
+probe:
+  trust_landing_ai: 200
+  security_at_landingai: 200
+certifications:
+- SOC 2 Type II
+- HIPAA
+- GDPR
+data_protection:
+  zero_data_retention:
+    available: true
+    name: Zero Data Retention (ZDR) option
+    docs: https://docs.landing.ai/ade/zdr
+    description: >-
+      Opt-in so that customer data is not persisted beyond processing.
+  data_residency:
+    regions: [us, eu]
+    eu_docs: https://docs.landing.ai/dpt3/eu
+    description: >-
+      EU-hosted ADE for data residency, GDPR compliance, and lower latency for
+      European users.
+access_control:
+  sso:
+    protocols: [SAML 2.0, OpenID Connect]
+    docs: https://docs.landing.ai/ade/ade-sso
+  organizations_and_roles:
+    docs: https://docs.landing.ai/ade/ade-members
+    description: Organization management, member invitations, and role assignment.
+evidence:
+- source: https://docs.landing.ai/ade/ade-security.md
+  kind: docs
+  certifications_named: [SOC 2 Type II, HIPAA, GDPR]
+- source: https://trust.landing.ai/
+  kind: trust-center
+  status: 200
+notes: >-
+  LandingAI publishes a dedicated trust center plus an in-docs security and
+  privacy page naming its certifications. No RFC 9116 security.txt and no public
+  bug-bounty or coordinated-disclosure program was found — see
+  security/landingai-vulnerability-disclosure.yml.

@@ -1,0 +1,116 @@
+# LandingAI
+
+> Documentation for Agentic Document Extraction (ADE), LandingAI's document intelligence platform that converts documents into structured data.
+
+## Docs
+
+- [Home](https://docs.landing.ai/index.md)
+- [Overview](https://docs.landing.ai/dpt3/overview.md): Learn what DPT-3 changes about document parsing and how the Parse v2 API works.
+- [Quickstart](https://docs.landing.ai/dpt3/quickstart.md): Make your first Parse v2 API call and get structured Markdown in under five minutes.
+- [Build with AI Agents](https://docs.landing.ai/ade/build-with-ai-agents.md): Use ADE with AI agents and LLMs: install ADE skills, connect the MCP server, and access docs as llms.txt and Markdown.
+- [API Key](https://docs.landing.ai/dpt3/agentic-api-key.md): Create an API key and set it for calling the Parse API directly.
+- [Migration Guide](https://docs.landing.ai/dpt3/migration-guide.md): Migrate from the Parse v1 API to DPT-3, including the response changes you need to handle.
+- [Parse Documents](https://docs.landing.ai/dpt3/parse.md): Parse documents with the Parse v2 API into Markdown, structured blocks, and per-block grounding.
+- [Parse Input Parameters](https://docs.landing.ai/dpt3/parse-input.md): Set the document, model version, and options when calling the Parse v2 API.
+- [Parse API Response](https://docs.landing.ai/dpt3/parse-response.md): Read the Parse response: reading-order Markdown, document structure with per-block grounding, and metadata.
+- [Parse Asynchronously (Parse Jobs)](https://docs.landing.ai/dpt3/parse-async.md): Parse documents asynchronously with Parse Jobs v2: submit a job, poll for status, and retrieve results.
+- [Troubleshoot Parsing](https://docs.landing.ai/dpt3/parse-troubleshoot.md): Resolve errors when parsing with the Parse v2 API using status codes, causes, and recommended fixes.
+- [Parse in the Playground](https://docs.landing.ai/dpt3/playground.md): Parse documents with DPT-3 in the Playground, no code required.
+- [Extract Data](https://docs.landing.ai/dpt3/extract.md): Pull specific fields from Markdown with a schema for high-volume, repeatable extraction.
+- [Extract Input Parameters](https://docs.landing.ai/dpt3/extract-input.md): Set the Markdown, schema, options, and model version when calling the Extract v2 API.
+- [Extraction Schema (JSON)](https://docs.landing.ai/dpt3/ade-extract-schema-json.md): Structure the JSON schema that tells Extract which fields to pull and how to format output.
+- [Extract API Response](https://docs.landing.ai/dpt3/extract-response.md): Read the Extract response: extracted values, per-field range grounding, and metadata.
+- [Asynchronous Extraction (Extract Jobs)](https://docs.landing.ai/dpt3/extract-async.md): Extract from large Markdown documents asynchronously with Extract Jobs v2, then poll for results.
+- [Troubleshoot Extraction](https://docs.landing.ai/dpt3/extract-troubleshoot.md): Resolve Extract errors using status codes, causes, and fixes.
+- [Rate Limits](https://docs.landing.ai/dpt3/rate-limits.md): See how rate and size limits work for the Parse v2 API and Extract v2 API, including the higher limits for async jobs.
+- [Supported Languages](https://docs.landing.ai/ade/ade-languages.md): Learn which languages ADE supports for parsing.
+- [Supported File Types](https://docs.landing.ai/dpt3/file-types.md): See which file types the Parse v2 API can parse: PDFs and images.
+- [European Union (EU)](https://docs.landing.ai/dpt3/eu.md): Use the EU-hosted ADE for data residency, GDPR compliance, and lower latency for European users.
+- [Support](https://docs.landing.ai/ade/ade-support.md): Find support channels and resources for getting help with ADE.
+- [Security and Privacy](https://docs.landing.ai/dpt3/ade-security.md): Review ADE security practices, zero data retention, and compliance certifications (GDPR, SOC 2, HIPAA).
+- [Zero Data Retention (ZDR) Option Overview](https://docs.landing.ai/ade/zdr.md): Enable the Zero Data Retention (ZDR) option so that your data is not persisted beyond processing.
+- [Plans & Billing](https://docs.landing.ai/ade/ade-pricing.md): Understand ADE plans, pricing, billing, and overages.
+- [Credit Consumption](https://docs.landing.ai/dpt3/credit-consumption.md): Understand credit consumption for the ADE v2 Parse and Extract APIs.
+- [Organizations & Members](https://docs.landing.ai/ade/ade-members.md): Manage your organization, invite members, and assign roles in ADE.
+- [Single Sign-On (SSO)](https://docs.landing.ai/ade/ade-sso.md): Set up SSO via SAML 2.0 or OpenID Connect to manage ADE access through your identity provider.
+- [ADE Parse](https://docs.landing.ai/api-reference/parse/ade-parse.md): Parse a document and return the parse response inline.
+- [ADE Parse Jobs](https://docs.landing.ai/api-reference/parse/ade-parse-jobs.md): Parse a document asynchronously. Returns a job ID; use it to poll for the job's status and retrieve the parse result once processing completes.
+- [ADE List Parse Jobs](https://docs.landing.ai/api-reference/parse/ade-list-parse-jobs.md)
+- [ADE Get Parse Jobs](https://docs.landing.ai/api-reference/parse/ade-get-parse-jobs.md): Get the status of an async parse job. Once the job has ``completed``, ``result`` carries the parse response (or ``output_url`` when ``output_save_url`` was set). Partial success (some pages failed) is reported in ``result.metadata.failed_pages``.
+- [ADE Extract](https://docs.landing.ai/api-reference/extract/ade-extract.md): Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs synchronously and returns the result inline.
+- [ADE Extract Jobs](https://docs.landing.ai/api-reference/extract/ade-extract-jobs.md): Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs asynchronously and returns a job ID; use it to poll for status and retrieve the result once processing completes.
+- [ADE List Extract Jobs](https://docs.landing.ai/api-reference/extract/ade-list-extract-jobs.md): List your Extract jobs, newest first.
+- [ADE Get Extract Jobs](https://docs.landing.ai/api-reference/extract/ade-get-extract-jobs.md): Get the status of an async Extract job, including its result once the job has completed.
+- [Changelog](https://docs.landing.ai/dpt3/changelog.md): Learn about updates and new features across the ADE v2 APIs: Parse, Extract, Parse Jobs, and Extract Jobs.
+- [Overview](https://docs.landing.ai/ade/ade-overview.md): Learn how ADE converts documents into structured data and when to use Parse, Extract, Classify, Section, and Split.
+- [Quickstart](https://docs.landing.ai/ade/ade-quickstart.md): Parse and extract fields from a sample document in minutes using cURL, Python, or TypeScript.
+- [API Key](https://docs.landing.ai/ade/agentic-api-key.md): Create an API key and set it for the client libraries or direct API calls.
+- [Playground](https://docs.landing.ai/ade/ade-playground.md): Process documents with ADE in our Playground, no code required.
+- [Python Library](https://docs.landing.ai/ade/ade-python.md): Process documents using the ADE Python library.
+- [TypeScript Library](https://docs.landing.ai/ade/ade-typescript.md): Process documents using the ADE TypeScript library.
+- [Parse](https://docs.landing.ai/ade/ade-separate-apis.md): Convert documents into structured Markdown, chunks, and metadata with exact page and coordinate references.
+- [Parse Large Files (Parse Jobs)](https://docs.landing.ai/ade/ade-parse-async.md): Parse large documents asynchronously with Parse Jobs, and monitor job status and results.
+- [Parse Password-Protected Files](https://docs.landing.ai/ade/ade-parse-password.md): Decrypt and parse password-protected PDFs and Office files by passing the document password.
+- [Custom Prompts for Figure Descriptions](https://docs.landing.ai/ade/ade-parse-custom-prompts.md): Customize how figures and images are described during parsing.
+- [Document Pre-Trained Transformers (Parsing Models)](https://docs.landing.ai/ade/ade-parse-models.md): Choose a parsing model (DPT) and set it when parsing files.
+- [Chunk Types](https://docs.landing.ai/ade/ade-chunk-types.md): Understand the chunk types ADE returns, such as text, tables, figures, and form fields.
+- [JSON Response for Parsing](https://docs.landing.ai/ade/ade-json-response.md): Understand the parse JSON response: markdown, chunks, splits, grounding, and metadata fields.
+- [Markdown Response](https://docs.landing.ai/ade/ade-markdown-response.md): Understand the Markdown that Parse returns, including anchor tags and chunk- and split-level fields.
+- [Troubleshoot Parsing](https://docs.landing.ai/ade/ade-parse-troubleshoot.md): Resolve Parse and Parse Jobs errors using status codes, causes, and fixes for failed or partial results.
+- [Extract Data](https://docs.landing.ai/ade/ade-extract.md): Pull specific fields from parsed documents with a schema for high-volume, repeatable extraction.
+- [Extraction Schema (JSON)](https://docs.landing.ai/ade/ade-extract-schema-json.md): Structure the JSON schema that tells Extract which fields to pull and how to format output.
+- [Extraction Model Versions](https://docs.landing.ai/ade/ade-extract-models.md): Choose an extraction model and set it when running extraction.
+- [Schema Wizard: Build Extraction Schemas in the Playground](https://docs.landing.ai/ade/ade-extract-playground.md): Build and test an extraction schema visually with the Playground schema wizard.
+- [Build Extraction Schemas with the API](https://docs.landing.ai/ade/ade-extract-schema-api.md): Generate a JSON extraction schema programmatically from parsed Markdown with the Build Extract Schema API.
+- [JSON Response for Extraction](https://docs.landing.ai/ade/ade-extract-response.md): Understand the extraction JSON response: extracted values, field references, and metadata.
+- [Asynchronous Extraction (Extract Jobs)](https://docs.landing.ai/ade/ade-extract-async.md)
+- [Troubleshoot Extraction](https://docs.landing.ai/ade/ade-extract-troubleshoot.md): Resolve Extract and Build Extract Schema errors using status codes, causes, and fixes.
+- [Classify](https://docs.landing.ai/ade/ade-classify.md): Label each page of a document by type to route pages before parsing (Preview).
+- [JSON Response for Classification](https://docs.landing.ai/ade/ade-classify-response.md): Understand the classification JSON response: per-page class labels and processing metadata.
+- [Troubleshoot Classification](https://docs.landing.ai/ade/ade-classify-troubleshoot.md): Resolve Classify API errors using status codes, causes, and recommended fixes.
+- [Section](https://docs.landing.ai/ade/ade-section.md): Generate a hierarchical table of contents from a parsed document (Preview).
+- [Section Model Versions](https://docs.landing.ai/ade/ade-section-models.md): Choose a Section model and set it when running the section process.
+- [JSON Response for Sectioning](https://docs.landing.ai/ade/ade-section-response.md): Understand the Section JSON response: section titles, hierarchy levels, numbers, and chunk references.
+- [Troubleshoot Sectioning](https://docs.landing.ai/ade/ade-section-troubleshoot.md): Resolve Section API errors using status codes, causes, and recommended fixes.
+- [Split](https://docs.landing.ai/ade/ade-split.md): Separate a parsed document into classified sub-documents by type (Preview).
+- [Split Model Versions](https://docs.landing.ai/ade/ade-split-models.md): Choose a split model and set it when splitting files.
+- [JSON Response for Splitting](https://docs.landing.ai/ade/ade-split-response.md): Understand the Split JSON response: classified sub-documents and processing metadata.
+- [Troubleshoot Splitting](https://docs.landing.ai/ade/ade-split-troubleshoot.md): Resolve Split API errors using status codes, causes, and recommended fixes.
+- [Rate Limits](https://docs.landing.ai/ade/ade-rate-limits.md): See how page-per-hour rate limits work by pricing plan and at the organization level.
+- [Supported File Types](https://docs.landing.ai/ade/ade-file-types.md): See which file types ADE can parse, including PDFs, images, Office files, and spreadsheets.
+- [European Union (EU)](https://docs.landing.ai/ade/ade-eu.md): Use the EU-hosted ADE for data residency, GDPR compliance, and lower latency for European users.
+- [Security and Privacy](https://docs.landing.ai/ade/ade-security.md): Review ADE security practices, zero data retention, and compliance certifications (GDPR, SOC 2, HIPAA).
+- [Credit Consumption](https://docs.landing.ai/ade/ade-credit-consumption.md): Understand credit consumption rates for the ADE v1 Parse, Extract, Build Schema, Classify, Section, and Split APIs.
+- [Overview](https://docs.landing.ai/ade/ade-sf-overview.md): Learn how to parse and extract data from documents in Snowflake with the ADE Marketplace app.
+- [Install and Update](https://docs.landing.ai/ade/ade-sf-install.md): Install and update the ADE app from the Snowflake Marketplace.
+- [Parse Documents](https://docs.landing.ai/ade/ade-sf-parse-cloud.md): Parse documents staged in Snowflake or at public URLs with the api.parse procedure.
+- [Extract Fields from Parsed Output](https://docs.landing.ai/ade/ade-sf-extract-cloud.md): Extract key-value pairs from parsed Markdown in Snowflake with the api.extract procedure.
+- [Grant Agentic Document Extraction Access to Stages](https://docs.landing.ai/ade/ade-sf-grant-access-to-stages.md): Grant the ADE Snowflake app access to the stages that hold the files you want to parse or extract.
+- [App Name](https://docs.landing.ai/ade/ade-sf-app-name.md): Find your Snowflake app name for use in SQL commands that manage the ADE app.
+- [LandingLens and LandingEdge Documentation](https://docs.landing.ai/landinglens-landingedge.md): Find LandingLens and LandingEdge documentation, now hosted on a dedicated site.
+- [Legacy ADE Features](https://docs.landing.ai/ade/ade-overview-legacy.md): Review the legacy ADE endpoint, agentic-doc library, and DPT-1 model, all deprecated March 31, 2026.
+- [ADE Parse](https://docs.landing.ai/api-reference/tools/ade-parse.md): Parse a document or spreadsheet.
+- [ADE Extract](https://docs.landing.ai/api-reference/tools/ade-extract.md): Extract structured data from Markdown using a JSON schema.
+- [ADE Extract Jobs](https://docs.landing.ai/api-reference/tools/ade-extract-jobs.md): Extract structured data asynchronously.
+- [ADE List Extract Jobs](https://docs.landing.ai/api-reference/tools/ade-list-extract-jobs.md): List all async extract jobs associated with your API key.
+- [ADE Get Extract Jobs](https://docs.landing.ai/api-reference/tools/ade-get-extract-jobs.md): Get the status for an async extract job.
+- [ADE Build Extract Schema](https://docs.landing.ai/api-reference/tools/ade-build-extract-schema.md): Generate a JSON schema from Markdown using AI.
+- [ADE Split](https://docs.landing.ai/api-reference/tools/ade-split.md): Split classification for documents.
+- [ADE Section](https://docs.landing.ai/api-reference/tools/ade-section.md): Section parsed markdown into a hierarchical table of contents.
+- [ADE Classify](https://docs.landing.ai/api-reference/tools/ade-classify.md): Classify the pages of a document into classes you define.
+- [ADE Parse Jobs](https://docs.landing.ai/api-reference/tools/ade-parse-jobs.md): Parse documents asynchronously.
+- [ADE List Parse Jobs](https://docs.landing.ai/api-reference/tools/ade-list-parse-jobs.md): List all async parse jobs associated with your API key. Returns the list of jobs or an error response. For EU users, use this endpoint:
+- [ADE Get Parse Jobs](https://docs.landing.ai/api-reference/tools/ade-get-parse-jobs.md): Get the status for an async parse job.
+- [Code Examples and Resources](https://docs.landing.ai/ade/ade-code-examples-resources.md): Browse ready-to-use code samples and sample projects for common document processing tasks.
+- [Parse a Directory of Documents](https://docs.landing.ai/ade/ade-parse-directory-sample.md): Loop through a local folder and call the parse API on each supported file to process documents in bulk.
+- [Async Parse: Processing Multiple Documents Concurrently](https://docs.landing.ai/ade/ade-parse-async-sample.md): Process multiple documents concurrently with async parsing to cut total processing time.
+- [Visualize Parsed Chunks: Draw Bounding Boxes](https://docs.landing.ai/ade/ade-parse-visualize-sample.md): Draw color-coded bounding boxes on your document to see how each chunk type was parsed.
+- [Save Parsed Chunks as Images](https://docs.landing.ai/ade/ade-parse-save-chunks-images-sample.md): Save each parsed chunk as a separate PNG to build datasets or analyze chunk quality.
+- [Parse & Extract](https://docs.landing.ai/ade/ade-parse-extract-sample.md): Parse a document and extract specific fields from it using the Python or TypeScript library.
+- [Link Extracted Data to Document Locations](https://docs.landing.ai/ade/ade-extract-grounding-sample.md): Trace each extracted value back to its location in the source document using extraction metadata.
+- [Changelog](https://docs.landing.ai/ade/ade-changelog.md): Learn about updates and new features in ADE.
+
+## OpenAPI Specs
+
+- [LandingAI Agentic Document Extraction (ADE) API v2: Parse and Extract Documents with DPT-3](https://docs.landing.ai/dpt3/openapi-adev2.json)
+- [LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section](https://docs.landing.ai/ade/va_openapi_ade2.json)

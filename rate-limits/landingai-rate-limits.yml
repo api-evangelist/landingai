@@ -1,0 +1,56 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/rate-limits.md, https://docs.landing.ai/ade/ade-rate-limits.md
+description: >-
+  ADE rate limiting is metered on pages processed against a plan-level hourly
+  limit at the organization level, not on request counts. Hard size and page
+  ceilings differ sharply between the synchronous APIs and the asynchronous Jobs
+  APIs.
+basis: pages processed per hour, per organization, by plan
+signaling:
+  status_code: 429
+  headers: null
+  guidance: Wait before retrying and use exponential backoff.
+  async_behavior: >-
+    Job submissions are accepted immediately (HTTP 202) and queued rather than
+    rejected, which is the documented way to avoid rate-limit errors on bulk work.
+rate_limits:
+- api: Parse v2 (synchronous)
+  limit_type: document_size
+  limit_count: 50
+  limit_unit: MiB
+- api: Parse v2 (synchronous)
+  limit_type: pages_per_request
+  limit_count: 100
+  limit_unit: pages per PDF
+  note: An image counts as one page.
+- api: Parse Jobs v2 (asynchronous)
+  limit_type: document_size
+  limit_count: 1
+  limit_unit: GiB
+  note: 1 GiB for PDFs, 50 MiB for images.
+- api: Parse Jobs v2 (asynchronous)
+  limit_type: pages_per_request
+  limit_count: 6000
+  limit_unit: pages per PDF
+- api: Extract v2 (synchronous)
+  limit_type: input_size
+  limit_count: null
+  limit_unit: unlimited
+  note: Rate limit is based on input Markdown size; a markdown_url counts as a single unit.
+- api: Extract Jobs v2 (asynchronous)
+  limit_type: input_size
+  limit_count: null
+  limit_unit: unlimited
+plan_tiers:
+- plan: Explore
+  rate_limits: standard
+- plan: Team
+  rate_limits: higher
+- plan: Enterprise
+  rate_limits: priority
+credits:
+  docs: https://docs.landing.ai/dpt3/credit-consumption
+  consumed_on: [200, 206]
+  free_on_error: true
+  note: Errors consume no credits.

@@ -1,0 +1,43 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LandingAI ADE API v1
+  version: 1.0.0
+extends: openapi/landingai-ade-v1-openapi-original.json
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Enhancements derived from https://docs.landing.ai/ade/ and the artifacts in
+  this repository. The harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: landingai
+    x-apievangelist-artifacts:
+      authentication: authentication/landingai-authentication.yml
+      conventions: conventions/landingai-conventions.yml
+      errors: errors/landingai-problem-types.yml
+      lifecycle: lifecycle/landingai-lifecycle.yml
+      skills: skills/_index.yml
+    x-apievangelist-successor:
+      version: v2
+      spec: openapi/landingai-ade-v2-openapi-original.json
+      migration_guide: https://docs.landing.ai/dpt3/migration-guide
+- target: $.components.securitySchemes['Basic Auth']
+  update:
+    x-apievangelist-note: >-
+      This scheme is named "Basic Auth" with bearerFormat "Basic", but its
+      type/scheme is http/bearer and the documented usage is an
+      "Authorization: Bearer <API_KEY>" header. The name is misleading; it is not
+      HTTP Basic authentication. Recommend renaming to bearerAuth upstream.
+- target: $.info
+  update:
+    x-apievangelist-preview-operations:
+      note: Classify, Section and Split are documented as Preview APIs.
+      operations:
+      - tool_ade_classify_v1_ade_classify_post
+      - tool_ade_section_v1_ade_section_post
+      - tool_ade_split_v1_ade_split_post
+    x-apievangelist-error-envelope:
+      media_type: application/json
+      shape: '{ "code": "<stable_snake_case>", "message": "<human readable>" }'
+      rfc9457: false

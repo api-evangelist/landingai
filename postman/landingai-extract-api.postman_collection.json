@@ -1,0 +1,698 @@
+{
+  "info": {
+    "_postman_id": "4eed4f49-080a-4707-b49f-e406aeac288a",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, , Classify, Split, Section Classes Extract API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:31.000Z",
+    "updatedAt": "2026-07-28T02:02:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4eed4f49-080a-4707-b49f-e406aeac288a"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "extract",
+          "item": [
+            {
+              "name": "jobs",
+              "item": [
+                {
+                  "name": "{job_id}",
+                  "item": [
+                    {
+                      "name": "ADE Get Extract Jobs",
+                      "id": "2fe473f2-00c9-4dee-8d3c-7d893be45703",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/extract/jobs/:job_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "extract",
+                            "jobs",
+                            ":job_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "348ec08e-86dc-4fb4-91fe-d4459072a52d",
+                              "key": "job_id",
+                              "value": "<string>",
+                              "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                            }
+                          ]
+                        },
+                        "description": "Get the status of an async Extract job, including its result once the job has completed."
+                      },
+                      "response": [
+                        {
+                          "id": "c2a26016-7d02-4e33-83f7-616d6fe751e9",
+                          "name": "Job status / result",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/extract/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "extract",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"job_id\": \"<string>\",\n  \"status\": \"completed\",\n  \"created_at\": \"<string,null>\",\n  \"completed_at\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"result\": {\n    \"extraction\": {\n      \"ipsuma_\": -93930499.80865711\n    },\n    \"extraction_metadata\": {\n      \"veniam7f\": 9223219\n    },\n    \"markdown\": \"<string>\",\n    \"metadata\": {\n      \"job_id\": \"<string>\",\n      \"model_version\": \"<string>\",\n      \"duration_ms\": \"<integer>\",\n      \"openapi_spec\": \"<string>\",\n      \"range_units\": \"unicode_codepoints\",\n      \"doc_id\": \"<string>\",\n      \"input_markdown_chars\": \"<integer>\",\n      \"output_extraction_chars\": \"<integer>\",\n      \"billing\": {\n        \"service_tier\": \"priority\",\n        \"total_credits\": \"<number>\"\n      }\n    },\n    \"schema_violation_error\": \"<string>\",\n    \"warnings\": [\n      {\n        \"eab\": false\n      },\n      {\n        \"reprehenderit4e3\": 97285066.39128828\n      }\n    ]\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  },\n  \"output_url\": \"<string,null>\"\n}",
+                          "createdAt": "2026-07-28T02:02:31.000Z",
+                          "updatedAt": "2026-07-28T02:02:31.000Z",
+                          "uid": "35240-c2a26016-7d02-4e33-83f7-616d6fe751e9"
+                        },
+                        {
+                          "id": "3d0bcf48-8242-4cd6-9252-24c87370c1b1",
+                          "name": "Not found (e.g. no such job).",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/extract/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "extract",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:31.000Z",
+                          "updatedAt": "2026-07-28T02:02:31.000Z",
+                          "uid": "35240-3d0bcf48-8242-4cd6-9252-24c87370c1b1"
+                        },
+                        {
+                          "id": "b371fe6d-0d0b-43f2-bdb0-f2ece36e490c",
+                          "name": "Request validation failed.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/extract/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "extract",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:31.000Z",
+                          "updatedAt": "2026-07-28T02:02:31.000Z",
+                          "uid": "35240-b371fe6d-0d0b-43f2-bdb0-f2ece36e490c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-2fe473f2-00c9-4dee-8d3c-7d893be45703"
+                    }
+                  ],
+                  "id": "a78d5602-ccd4-41c6-bf86-f3022bc8e075",
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-a78d5602-ccd4-41c6-bf86-f3022bc8e075"
+                },
+                {
+                  "name": "ADE Extract Jobs",
+                  "id": "9ba91097-ca84-4980-92b7-43756682b700",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schema\": {\n    \"etad\": -49464964,\n    \"ut_9c\": true,\n    \"minim_fe\": false,\n    \"adipisicing83e\": false\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  },\n  \"output_save_url\": \"<string>\",\n  \"service_tier\": \"priority\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/extract/jobs",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "extract",
+                        "jobs"
+                      ]
+                    },
+                    "description": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs asynchronously and returns a job ID; use it to poll for status and retrieve the result once processing completes."
+                  },
+                  "response": [
+                    {
+                      "id": "bb394f6b-d478-43d2-a97a-ec13d0cea7fe",
+                      "name": "Job created",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schema\": {\n    \"etad\": -49464964,\n    \"ut_9c\": true,\n    \"minim_fe\": false,\n    \"adipisicing83e\": false\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  },\n  \"output_save_url\": \"<string>\",\n  \"service_tier\": \"priority\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/extract/jobs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "extract",
+                            "jobs"
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"job_id\": \"<string>\",\n  \"status\": \"failed\",\n  \"created_at\": \"<string,null>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-bb394f6b-d478-43d2-a97a-ec13d0cea7fe"
+                    },
+                    {
+                      "id": "7ac1d1cc-2615-49bf-b29d-18868a5a0d71",
+                      "name": "Request validation failed.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schema\": {\n    \"etad\": -49464964,\n    \"ut_9c\": true,\n    \"minim_fe\": false,\n    \"adipisicing83e\": false\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  },\n  \"output_save_url\": \"<string>\",\n  \"service_tier\": \"priority\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/extract/jobs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "extract",
+                            "jobs"
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-7ac1d1cc-2615-49bf-b29d-18868a5a0d71"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-9ba91097-ca84-4980-92b7-43756682b700"
+                },
+                {
+                  "name": "ADE List Extract Jobs",
+                  "id": "ff3894c1-c9f5-4588-ab10-ee6b5fe96f7c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/extract/jobs?page=0&page_size=10&status=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "extract",
+                        "jobs"
+                      ],
+                      "query": [
+                        {
+                          "description": "Page number (0-indexed).",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Number of items per page.",
+                          "key": "page_size",
+                          "value": "10"
+                        },
+                        {
+                          "description": "Filter by job status.",
+                          "key": "status",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "List your Extract jobs, newest first."
+                  },
+                  "response": [
+                    {
+                      "id": "a91ab05b-55d1-4f30-8a20-57f6101e3211",
+                      "name": "The caller's jobs, newest first",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/extract/jobs?page=0&page_size=10&status=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "extract",
+                            "jobs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (0-indexed).",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Number of items per page.",
+                              "key": "page_size",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by job status.",
+                              "key": "status",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"jobs\": [\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"pending\",\n      \"created_at\": \"<string,null>\",\n      \"completed_at\": \"<string,null>\",\n      \"model_version\": \"<string,null>\",\n      \"failure_reason\": \"<string,null>\"\n    },\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"completed\",\n      \"created_at\": \"<string,null>\",\n      \"completed_at\": \"<string,null>\",\n      \"model_version\": \"<string,null>\",\n      \"failure_reason\": \"<string,null>\"\n    }\n  ],\n  \"page\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"has_more\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-a91ab05b-55d1-4f30-8a20-57f6101e3211"
+                    },
+                    {
+                      "id": "d2940580-ad66-41e3-81df-6f695c349664",
+                      "name": "Request validation failed.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/extract/jobs?page=0&page_size=10&status=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "extract",
+                            "jobs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (0-indexed).",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Number of items per page.",
+                              "key": "page_size",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by job status.",
+                              "key": "status",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-d2940580-ad66-41e3-81df-6f695c349664"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-ff3894c1-c9f5-4588-ab10-ee6b5fe96f7c"
+                }
+              ],
+              "id": "f56c2c1f-69cd-4c30-8796-ff0929b1b944",
+              "createdAt": "2026-07-28T02:02:31.000Z",
+              "updatedAt": "2026-07-28T02:02:31.000Z",
+              "uid": "35240-f56c2c1f-69cd-4c30-8796-ff0929b1b944"
+            },
+            {
+              "name": "ADE Extract",
+              "id": "900775b9-d87d-4b38-ba0f-6b64e6ca9cf7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schema\": {\n    \"consectetur21\": -80218999,\n    \"consequatf\": -64650058\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/extract",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "extract"
+                  ]
+                },
+                "description": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs synchronously and returns the result inline."
+              },
+              "response": [
+                {
+                  "id": "2712ea11-ab93-4f78-a721-0962ff87c450",
+                  "name": "v2-extract result",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schema\": {\n    \"consectetur21\": -80218999,\n    \"consequatf\": -64650058\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/extract",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "extract"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"extraction\": {\n    \"Duis84\": \"culpa minim amet est\",\n    \"fugiatb81\": 35813102.88071084,\n    \"ad10\": 50096813.25504264\n  },\n  \"extraction_metadata\": {\n    \"culpa_08\": -33120230.987934418,\n    \"voluptate__b7\": false,\n    \"sed_e\": -25214656,\n    \"velit_514\": \"proident dolor Duis ut\"\n  },\n  \"markdown\": \"<string>\",\n  \"metadata\": {\n    \"job_id\": \"<string>\",\n    \"model_version\": \"<string>\",\n    \"duration_ms\": \"<integer>\",\n    \"openapi_spec\": \"<string>\",\n    \"range_units\": \"unicode_codepoints\",\n    \"doc_id\": \"<string>\",\n    \"input_markdown_chars\": \"<integer>\",\n    \"output_extraction_chars\": \"<integer>\",\n    \"billing\": {\n      \"service_tier\": \"priority\",\n      \"total_credits\": \"<number>\"\n    }\n  },\n  \"schema_violation_error\": \"<string>\",\n  \"warnings\": [\n    {\n      \"minim_e\": true,\n      \"sunt82c\": -1030374,\n      \"ex7\": true\n    },\n    {\n      \"ut_a\": 23186187\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-2712ea11-ab93-4f78-a721-0962ff87c450"
+                },
+                {
+                  "id": "6de2eb61-c14b-4537-83de-4dc73532569d",
+                  "name": "Request validation failed.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schema\": {\n    \"consectetur21\": -80218999,\n    \"consequatf\": -64650058\n  },\n  \"markdown\": \"<string>\",\n  \"markdown_url\": \"<string>\",\n  \"model\": \"<string>\",\n  \"options\": {\n    \"strict\": false\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/extract",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "extract"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-6de2eb61-c14b-4537-83de-4dc73532569d"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:31.000Z",
+              "updatedAt": "2026-07-28T02:02:31.000Z",
+              "uid": "35240-900775b9-d87d-4b38-ba0f-6b64e6ca9cf7"
+            }
+          ],
+          "id": "9c23e976-231b-4532-9ee0-57895b3103b8",
+          "createdAt": "2026-07-28T02:02:31.000Z",
+          "updatedAt": "2026-07-28T02:02:31.000Z",
+          "uid": "35240-9c23e976-231b-4532-9ee0-57895b3103b8"
+        }
+      ],
+      "id": "eb066390-3fed-4984-97db-f5eafb8e2759",
+      "createdAt": "2026-07-28T02:02:31.000Z",
+      "updatedAt": "2026-07-28T02:02:31.000Z",
+      "uid": "35240-eb066390-3fed-4984-97db-f5eafb8e2759"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

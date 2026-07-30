@@ -1,0 +1,645 @@
+{
+  "info": {
+    "_postman_id": "3ad390ab-44f8-4f95-8524-1433da09c296",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Tags API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:40.000Z",
+    "updatedAt": "2026-07-28T02:02:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3ad390ab-44f8-4f95-8524-1433da09c296"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "tags",
+                  "item": [
+                    {
+                      "name": "{tag_id}",
+                      "item": [
+                        {
+                          "name": "Update Project Tag",
+                          "id": "69f78b81-5aae-44bb-830f-3c8be231ed5c",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/tags/:tag_id?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "tags",
+                                ":tag_id"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "db35f061-d2b4-42cb-8534-30a4013ba9af",
+                                  "key": "project_id"
+                                },
+                                {
+                                  "id": "2fc9c862-eef2-4dc7-9127-2363cf271c58",
+                                  "key": "tag_id",
+                                  "value": "<integer>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "be9f8d37-d99e-447c-975b-6e14aa54f487",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/tags/:tag_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "tags",
+                                    ":tag_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "tag_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"orgId\": \"<integer>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<string>\",\n    \"updatedAt\": \"<string>\",\n    \"color\": \"<string>\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:02:41.000Z",
+                              "updatedAt": "2026-07-28T02:02:41.000Z",
+                              "uid": "35240-be9f8d37-d99e-447c-975b-6e14aa54f487"
+                            },
+                            {
+                              "id": "2ac980aa-b22d-4af3-8905-3f30d04f2625",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "apikey",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/tags/:tag_id?timeout=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "tags",
+                                    ":tag_id"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "timeout",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "tag_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:41.000Z",
+                              "updatedAt": "2026-07-28T02:02:41.000Z",
+                              "uid": "35240-2ac980aa-b22d-4af3-8905-3f30d04f2625"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-69f78b81-5aae-44bb-830f-3c8be231ed5c"
+                        }
+                      ],
+                      "id": "0dde0f62-9291-48f7-a23f-683b62f0bfc7",
+                      "createdAt": "2026-07-28T02:02:41.000Z",
+                      "updatedAt": "2026-07-28T02:02:41.000Z",
+                      "uid": "35240-0dde0f62-9291-48f7-a23f-683b62f0bfc7"
+                    },
+                    {
+                      "name": "Get Project Tags",
+                      "id": "edb32a34-23db-49bb-bb38-d1122ac42f42",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "tags"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "f0d0c07b-f428-4f7c-a522-4946600e19da",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "3fbb2be9-a515-4ae2-89ad-c1193305d806",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "tags"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"orgId\": \"<integer>\",\n      \"isArchived\": \"<boolean>\",\n      \"createdAt\": \"<string>\",\n      \"updatedAt\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"orgId\": \"<integer>\",\n      \"isArchived\": \"<boolean>\",\n      \"createdAt\": \"<string>\",\n      \"updatedAt\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-3fbb2be9-a515-4ae2-89ad-c1193305d806"
+                        },
+                        {
+                          "id": "31a180dc-d180-4020-a21f-83c8533a8045",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "tags"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-31a180dc-d180-4020-a21f-83c8533a8045"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:41.000Z",
+                      "updatedAt": "2026-07-28T02:02:41.000Z",
+                      "uid": "35240-edb32a34-23db-49bb-bb38-d1122ac42f42"
+                    },
+                    {
+                      "name": "Create Project Tag",
+                      "id": "d77a69d2-7b38-4ec7-9550-98142df2af04",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "apikey",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "tags"
+                          ],
+                          "query": [
+                            {
+                              "key": "timeout",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "d91c8f60-6eea-476b-825f-a202f44a8b71",
+                              "key": "project_id",
+                              "value": "<integer>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "874c2628-3422-49c7-a0ea-812d39ad78ef",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "tags"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"orgId\": \"<integer>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<string>\",\n    \"updatedAt\": \"<string>\",\n    \"color\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-874c2628-3422-49c7-a0ea-812d39ad78ef"
+                        },
+                        {
+                          "id": "405c8b70-d604-4310-b78b-f15f87e59b10",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "apikey",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/tags?timeout=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "tags"
+                              ],
+                              "query": [
+                                {
+                                  "key": "timeout",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-405c8b70-d604-4310-b78b-f15f87e59b10"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:41.000Z",
+                      "updatedAt": "2026-07-28T02:02:41.000Z",
+                      "uid": "35240-d77a69d2-7b38-4ec7-9550-98142df2af04"
+                    }
+                  ],
+                  "id": "8f605a59-2e5b-485a-bf2c-9073717d29e8",
+                  "createdAt": "2026-07-28T02:02:41.000Z",
+                  "updatedAt": "2026-07-28T02:02:41.000Z",
+                  "uid": "35240-8f605a59-2e5b-485a-bf2c-9073717d29e8"
+                }
+              ],
+              "id": "62f91806-0425-475c-aadc-b514be85d8bd",
+              "createdAt": "2026-07-28T02:02:41.000Z",
+              "updatedAt": "2026-07-28T02:02:41.000Z",
+              "uid": "35240-62f91806-0425-475c-aadc-b514be85d8bd"
+            }
+          ],
+          "id": "fd7340a6-27e9-4499-9d2a-8a7d52503f06",
+          "createdAt": "2026-07-28T02:02:41.000Z",
+          "updatedAt": "2026-07-28T02:02:41.000Z",
+          "uid": "35240-fd7340a6-27e9-4499-9d2a-8a7d52503f06"
+        }
+      ],
+      "id": "e46cb2f2-e988-464c-b24f-ca3232f8f64c",
+      "createdAt": "2026-07-28T02:02:41.000Z",
+      "updatedAt": "2026-07-28T02:02:41.000Z",
+      "uid": "35240-e46cb2f2-e988-464c-b24f-ca3232f8f64c"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}

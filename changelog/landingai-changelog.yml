@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/changelog.md
+docs:
+  dpt3: https://docs.landing.ai/dpt3/changelog
+  ade_v1: https://docs.landing.ai/ade/ade-changelog
+scheme: dated-entries
+current_version: v2
+current_model: dpt-3-pro-latest
+description: >-
+  LandingAI publishes a dated changelog for the ADE v2 APIs (Parse, Extract,
+  Parse Jobs, Extract Jobs), plus a separate changelog for ADE v1. Recent window
+  captured below; the live changelog remains the source of truth.
+entries:
+- date: '2026-07-17'
+  title: New v2 Response Format and Unified Pricing
+  breaking: true
+  highlights:
+  - Breaking changes to the Parse and Extract v2 responses; grounding is now embedded
+    directly in the structure.
+  - 'Unified pricing: $1 = 100 credits for the Explore and Teams plans, in both US
+    and EU.'
+  - Fixed bounding boxes for images carrying EXIF orientation metadata.
+- date: '2026-07-07'
+  title: Parse v2 API Updates, Three New v2 APIs, and a New Playground URL
+  breaking: false
+  additions:
+  - Parse Jobs v2 API
+  - Extract v2 API
+  - Extract Jobs v2 API
+  highlights:
+  - Parse v2 API updates with the DPT-3 model.
+  - Service tiers (standard / priority) for asynchronous jobs.
+  - Playground relocated to ade.landing.ai.
+  - Redesigned Usage page with enhanced consumption tracking.
+- date: '2026-06-26'
+  title: HTML Tables by Default and Parse Options in the Playground
+  breaking: true
+  highlights:
+  - Tables now return as HTML instead of Markdown pipe syntax.
+  - Parse options are now configurable directly in the Playground Config menu.
+- date: '2026-05-29'
+  title: Preview of DPT-3 and the New Parse API
+  breaking: false
+  highlights:
+  - New DPT-3 model and redesigned Parse API released in Preview.
+  - Hierarchical layout model with stable element IDs and span pointers.
+  - Cleaner, more standardized Markdown with standard image syntax.

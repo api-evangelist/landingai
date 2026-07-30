@@ -1,0 +1,38 @@
+{
+  "provider": "landingai",
+  "sources": [
+    "landingai-classes-api-openapi.yml",
+    "landingai-deployment-api-openapi.yml",
+    "landingai-extract-api-openapi.yml",
+    "landingai-image-api-openapi.yml",
+    "landingai-metadata-api-openapi.yml",
+    "landingai-metrics-api-openapi.yml",
+    "landingai-model-api-openapi.yml",
+    "landingai-parse-api-openapi.yml",
+    "landingai-project-api-openapi.yml",
+    "landingai-snapshot-api-openapi.yml",
+    "landingai-tags-api-openapi.yml",
+    "landingai-tools-api-openapi.yml",
+    "landingai-training-api-openapi.yml"
+  ],
+  "outputs": [
+    "landingai-classes-api-openapi.yml",
+    "landingai-deployment-api-openapi.yml",
+    "landingai-extract-api-openapi.yml",
+    "landingai-image-api-openapi.yml",
+    "landingai-metadata-api-openapi.yml",
+    "landingai-metrics-api-openapi.yml",
+    "landingai-model-api-openapi.yml",
+    "landingai-parse-api-openapi.yml",
+    "landingai-project-api-openapi.yml",
+    "landingai-snapshot-api-openapi.yml",
+    "landingai-tags-api-openapi.yml",
+    "landingai-tools-api-openapi.yml",
+    "landingai-training-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

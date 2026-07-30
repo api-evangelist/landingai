@@ -1,0 +1,47 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LandingLens API
+  version: 1.0.0
+extends: openapi/landingai-landinglens-openapi-original.json
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Enhancements derived from the harvested spec at
+  https://api.landing.ai/openapi.json and the artifacts in this repository.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: landingai
+    x-apievangelist-artifacts:
+      authentication: authentication/landingai-authentication.yml
+      data-model: data-model/landingai-data-model.yml
+    x-apievangelist-note: >-
+      The published LandingLens spec declares no components.securitySchemes and
+      no security requirement even though the API requires an API key. The
+      scheme below is supplied by this overlay.
+- target: $.components
+  update:
+    securitySchemes:
+      apiKeyAuth:
+        type: http
+        scheme: bearer
+        description: >-
+          LandingAI API key presented as an HTTP bearer token in the
+          Authorization header.
+        x-apievangelist-supplied: true
+- target: $.info
+  update:
+    x-apievangelist-data-model:
+      root_entity: Project
+      note: >-
+        Every resource in this API is nested under /v1/projects/{project_id} —
+        images, classes, training jobs, models, deployments, dataset snapshots,
+        metadata and tags. See data-model/landingai-data-model.yml for the
+        derived entity graph.
+    x-apievangelist-spec-quality:
+      duplicate_operation_ids: >-
+        get_project_metadata_v1_projects__project_id__images__image_id__get and
+        get_project_metadata_v1_projects__project_id__metadata_get resolve to
+        two different operations that both read as "Get Project Metadata",
+        which breaks generated clients that key on the summary.
+      recommendation: Disambiguate the summaries and operationIds upstream.

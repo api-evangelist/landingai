@@ -1,0 +1,97 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/ade/ade-python.md, https://pypi.org/, https://registry.npmjs.org/
+description: >-
+  First-party LandingAI client libraries. The current generation is the ADE
+  (Agentic Document Extraction) library pair — landingai-ade for Python and
+  landingai-ade for TypeScript. The agentic-doc, landingai and vision-agent
+  Python packages are earlier-generation first-party libraries that remain
+  published on PyPI; the legacy ADE endpoint and the agentic-doc library are
+  documented as deprecated as of March 31, 2026.
+packages:
+- language: python
+  registry: pypi
+  name: landingai-ade
+  version: 1.14.0
+  url: https://pypi.org/project/landingai-ade/
+  install: pip install landingai-ade
+  repository: https://github.com/landing-ai/ade-python
+  docs: https://docs.landing.ai/ade/ade-python.md
+  official: true
+  status: current
+  description: The official Python library for the landingai-ade API.
+- language: typescript
+  registry: npm
+  name: landingai-ade
+  version: 2.9.0
+  url: https://www.npmjs.com/package/landingai-ade
+  install: npm install landingai-ade
+  repository: https://github.com/landing-ai/ade-typescript
+  docs: https://docs.landing.ai/ade/ade-typescript.md
+  official: true
+  status: current
+  description: The official TypeScript library for the LandingAI ADE API.
+- language: python
+  registry: pypi
+  name: agentic-doc
+  version: 0.3.3
+  url: https://pypi.org/project/agentic-doc/
+  install: pip install agentic-doc
+  repository: https://github.com/landing-ai/agentic-doc
+  official: true
+  status: deprecated
+  deprecation_note: >-
+    Documented as legacy alongside the legacy ADE endpoint and the DPT-1 model,
+    deprecated March 31, 2026.
+  deprecation_docs: https://docs.landing.ai/ade/ade-overview-legacy.md
+  description: >-
+    A Python library that wraps around the VisionAgent document extraction REST
+    API.
+- language: python
+  registry: pypi
+  name: landingai
+  version: 0.3.49
+  url: https://pypi.org/project/landingai/
+  install: pip install landingai
+  repository: https://github.com/landing-ai/landingai-python
+  docs: https://landing-ai.github.io/landingai-python/landingai.html
+  official: true
+  status: maintenance
+  description: Helper library for interacting with LandingAI LandingLens.
+- language: python
+  registry: pypi
+  name: vision-agent
+  version: 1.1.20
+  url: https://pypi.org/project/vision-agent/
+  install: pip install vision-agent
+  repository: https://github.com/landing-ai/vision-agent
+  official: true
+  status: maintenance
+  description: Toolset for Vision Agent.
+- language: javascript
+  registry: npm
+  name: landingai
+  version: 1.0.26
+  url: https://www.npmjs.com/package/landingai
+  install: npm install landingai
+  repository: https://github.com/landing-ai/landingai-js
+  official: true
+  status: maintenance
+  description: LandingAI JavaScript helper library.
+registries_probed:
+- registry: pypi
+  result: hit
+- registry: npm
+  result: hit
+- registry: maven-central
+  result: none
+- registry: nuget
+  result: none
+- registry: pkg.go.dev
+  result: none
+- registry: rubygems
+  result: none
+- registry: packagist
+  result: none
+- registry: crates.io
+  result: none

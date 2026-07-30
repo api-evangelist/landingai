@@ -1,0 +1,55 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.landing.ai/dpt3/migration-guide.md, https://docs.landing.ai/ade/ade-overview-legacy.md,
+  https://docs.landing.ai/dpt3/changelog.md
+versioning:
+  scheme: uri-path
+  current: v2
+  supported: [v1, v2]
+  docs: https://docs.landing.ai/dpt3/migration-guide
+  model_versioning:
+    parameter: model
+    latest_alias: dpt-3-pro-latest
+    pinning: dated snapshots supported for reproducibility
+    note: >-
+      Model version is independent of the API path version. Omitting the model
+      parameter selects latest, which means model behavior can change under a
+      stable API version unless a dated snapshot is pinned.
+deprecation:
+  policy_url: https://docs.landing.ai/ade/ade-overview-legacy
+  migration_guide: https://docs.landing.ai/dpt3/migration-guide
+  sunset_header: false
+  rfc8594: false
+  announced_sunsets:
+  - item: Legacy ADE endpoint (/v1/tools/agentic-document-analysis)
+    date: '2026-03-31'
+    status: deprecated
+  - item: agentic-doc Python library
+    date: '2026-03-31'
+    status: deprecated
+  - item: DPT-1 model
+    date: '2026-03-31'
+    status: deprecated
+  note: >-
+    LandingAI announces deprecations through a dedicated legacy-features docs
+    page and the dated changelog, with a named sunset date and a migration guide.
+    No Sunset or Deprecation HTTP response headers (RFC 8594) are documented.
+deprecated_operations:
+- spec: openapi/landingai-vision-tools-openapi-original.json
+  operationId: tool_agentic_doc_analysis_v1_tools_agentic_document_analysis_post
+  path: POST /v1/tools/agentic-document-analysis
+  note: Labeled "Agentic Document Extraction (Legacy)" in the spec summary.
+status_page: https://status.landing.ai/
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime SLA was found. Priority rate limits are an Enterprise plan
+    feature, and async jobs offer standard and priority service tiers.
+preview_features:
+  note: Classify, Section and Split are documented as Preview APIs.
+  items:
+  - https://docs.landing.ai/ade/ade-classify
+  - https://docs.landing.ai/ade/ade-section
+  - https://docs.landing.ai/ade/ade-split
+changelog: changelog/landingai-changelog.yml

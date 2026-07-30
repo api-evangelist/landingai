@@ -1,0 +1,913 @@
+{
+  "info": {
+    "_postman_id": "621887c9-eeec-43bc-b0b7-ea00d38a82c5",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: , Extract, Classify, Split, Section Classes Parse API",
+    "description": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:37.000Z",
+    "updatedAt": "2026-07-28T02:02:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-621887c9-eeec-43bc-b0b7-ea00d38a82c5"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "parse",
+          "item": [
+            {
+              "name": "jobs",
+              "item": [
+                {
+                  "name": "{job_id}",
+                  "item": [
+                    {
+                      "name": "ADE Get Parse Jobs",
+                      "id": "0221effc-cded-4e23-8f30-966cd2b1f658",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/parse/jobs/:job_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "parse",
+                            "jobs",
+                            ":job_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "1e8c19f1-5e1f-4c2b-b9fc-920131f1e86b",
+                              "key": "job_id",
+                              "value": "<string>",
+                              "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                            }
+                          ]
+                        },
+                        "description": "Get the status of an async parse job. Once the job has ``completed``, ``result`` carries the parse response (or ``output_url`` when ``output_save_url`` was set). Partial success (some pages failed) is reported in ``result.metadata.failed_pages``."
+                      },
+                      "response": [
+                        {
+                          "id": "94cca5c0-7c02-4f9b-86f0-472b761de927",
+                          "name": "Job status / result",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/parse/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "parse",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"job_id\": \"<string>\",\n  \"status\": \"completed\",\n  \"created_at\": \"<string,null>\",\n  \"completed_at\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"result\": {\n    \"markdown\": \"<string>\",\n    \"metadata\": {\n      \"job_id\": \"<string>\",\n      \"model_version\": \"<string>\",\n      \"page_count\": \"<integer>\",\n      \"output_markdown_chars\": \"<integer>\",\n      \"range_units\": \"<string>\",\n      \"openapi_spec\": \"<string>\",\n      \"failed_pages\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"duration_ms\": \"<integer>\",\n      \"billing\": {\n        \"service_tier\": \"standard\",\n        \"total_credits\": \"<number>\"\n      }\n    },\n    \"structure\": {\n      \"type\": \"document\",\n      \"children\": [\n        {\n          \"grounding\": {\n            \"page\": \"<integer>\",\n            \"range\": {\n              \"start\": \"<integer>\",\n              \"end\": \"<integer>\"\n            },\n            \"box\": {\n              \"xmin\": \"<number>\",\n              \"ymin\": \"<number>\",\n              \"xmax\": \"<number>\",\n              \"ymax\": \"<number>\"\n            }\n          },\n          \"type\": \"page\",\n          \"status\": \"ok\",\n          \"reason\": \"<string>\",\n          \"children\": [\n            {\n              \"type\": \"logo\",\n              \"id\": \"<string>\",\n              \"grounding\": {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              \"atomic_grounding\": [\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                },\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                }\n              ],\n              \"children\": [\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                },\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                }\n              ],\n              \"markdown\": \"<string>\",\n              \"row\": \"<integer>\",\n              \"col\": \"<integer>\",\n              \"colspan\": \"<integer>\",\n              \"rowspan\": \"<integer>\"\n            },\n            {\n              \"type\": \"marginalia\",\n              \"id\": \"<string>\",\n              \"grounding\": {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              \"atomic_grounding\": [\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                },\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                }\n              ],\n              \"children\": [\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                },\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                }\n              ],\n              \"markdown\": \"<string>\",\n              \"row\": \"<integer>\",\n              \"col\": \"<integer>\",\n              \"colspan\": \"<integer>\",\n              \"rowspan\": \"<integer>\"\n            }\n          ],\n          \"markdown\": \"<string>\"\n        },\n        {\n          \"grounding\": {\n            \"page\": \"<integer>\",\n            \"range\": {\n              \"start\": \"<integer>\",\n              \"end\": \"<integer>\"\n            },\n            \"box\": {\n              \"xmin\": \"<number>\",\n              \"ymin\": \"<number>\",\n              \"xmax\": \"<number>\",\n              \"ymax\": \"<number>\"\n            }\n          },\n          \"type\": \"page\",\n          \"status\": \"ok\",\n          \"reason\": \"<string>\",\n          \"children\": [\n            {\n              \"type\": \"text\",\n              \"id\": \"<string>\",\n              \"grounding\": {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              \"atomic_grounding\": [\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                },\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                }\n              ],\n              \"children\": [\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                },\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                }\n              ],\n              \"markdown\": \"<string>\",\n              \"row\": \"<integer>\",\n              \"col\": \"<integer>\",\n              \"colspan\": \"<integer>\",\n              \"rowspan\": \"<integer>\"\n            },\n            {\n              \"type\": \"table_cell\",\n              \"id\": \"<string>\",\n              \"grounding\": {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              \"atomic_grounding\": [\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                },\n                {\n                  \"page\": \"<integer>\",\n                  \"range\": {\n                    \"start\": \"<integer>\",\n                    \"end\": \"<integer>\"\n                  },\n                  \"box\": {\n                    \"xmin\": \"<number>\",\n                    \"ymin\": \"<number>\",\n                    \"xmax\": \"<number>\",\n                    \"ymax\": \"<number>\"\n                  }\n                }\n              ],\n              \"children\": [\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                },\n                {\n                  \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n                }\n              ],\n              \"markdown\": \"<string>\",\n              \"row\": \"<integer>\",\n              \"col\": \"<integer>\",\n              \"colspan\": \"<integer>\",\n              \"rowspan\": \"<integer>\"\n            }\n          ],\n          \"markdown\": \"<string>\"\n        }\n      ],\n      \"markdown\": \"<string>\"\n    }\n  },\n  \"output_url\": \"<string,null>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:38.000Z",
+                          "updatedAt": "2026-07-28T02:02:38.000Z",
+                          "uid": "35240-94cca5c0-7c02-4f9b-86f0-472b761de927"
+                        },
+                        {
+                          "id": "3b2c3690-89fe-436f-86eb-4ca00e65bbfe",
+                          "name": "Job not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/parse/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "parse",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:38.000Z",
+                          "updatedAt": "2026-07-28T02:02:38.000Z",
+                          "uid": "35240-3b2c3690-89fe-436f-86eb-4ca00e65bbfe"
+                        },
+                        {
+                          "id": "a7557e44-a176-4771-8920-5520502db3f9",
+                          "name": "Request validation failed.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/parse/jobs/:job_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "parse",
+                                "jobs",
+                                ":job_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "job_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:38.000Z",
+                          "updatedAt": "2026-07-28T02:02:38.000Z",
+                          "uid": "35240-a7557e44-a176-4771-8920-5520502db3f9"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-0221effc-cded-4e23-8f30-966cd2b1f658"
+                    }
+                  ],
+                  "id": "24ab9a7b-42cf-4e9b-88aa-6fa359d059c8",
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-24ab9a7b-42cf-4e9b-88aa-6fa359d059c8"
+                },
+                {
+                  "name": "ADE Parse Jobs",
+                  "id": "e3ed17e3-29d3-49bd-ae6f-62323c7cdb7f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document",
+                          "type": "file",
+                          "value": null
+                        },
+                        {
+                          "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document_url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                          "key": "options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data.",
+                          "key": "output_save_url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent \u2192 ``standard``. (This can only be one of standard,priority)",
+                          "key": "service_tier",
+                          "value": "priority",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/parse/jobs",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "parse",
+                        "jobs"
+                      ]
+                    },
+                    "description": "Parse a document asynchronously. Returns a job ID; use it to poll for the job's status and retrieve the parse result once processing completes."
+                  },
+                  "response": [
+                    {
+                      "id": "ca4c4d93-dd34-4a12-9317-8458653398c5",
+                      "name": "Job created",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                              "key": "document",
+                              "type": "file"
+                            },
+                            {
+                              "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                              "key": "document_url",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                              "key": "model",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                              "key": "options",
+                              "value": "[object Object]",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data.",
+                              "key": "output_save_url",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent \u2192 ``standard``. (This can only be one of standard,priority)",
+                              "key": "service_tier",
+                              "value": "priority",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/parse/jobs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "parse",
+                            "jobs"
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"job_id\": \"<string>\",\n  \"status\": \"processing\",\n  \"created_at\": \"<string,null>\"\n}",
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-ca4c4d93-dd34-4a12-9317-8458653398c5"
+                    },
+                    {
+                      "id": "c7e47f16-237d-421a-8fa4-68c4025d9a8f",
+                      "name": "Request validation failed.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                              "key": "document",
+                              "type": "file"
+                            },
+                            {
+                              "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                              "key": "document_url",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                              "key": "model",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                              "key": "options",
+                              "value": "[object Object]",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data.",
+                              "key": "output_save_url",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent \u2192 ``standard``. (This can only be one of standard,priority)",
+                              "key": "service_tier",
+                              "value": "priority",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/parse/jobs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "parse",
+                            "jobs"
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-c7e47f16-237d-421a-8fa4-68c4025d9a8f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-e3ed17e3-29d3-49bd-ae6f-62323c7cdb7f"
+                },
+                {
+                  "name": "ADE List Parse Jobs",
+                  "id": "d2babb13-2a38-4b85-b530-d4db37147052",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/parse/jobs?page=0&page_size=10&status=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "parse",
+                        "jobs"
+                      ],
+                      "query": [
+                        {
+                          "description": "Page number (0-indexed).",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Number of items per page.",
+                          "key": "page_size",
+                          "value": "10"
+                        },
+                        {
+                          "description": "Filter by job status.",
+                          "key": "status",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "30a10f36-8ab4-4d3f-b797-5d0bf2f72c6c",
+                      "name": "The caller's jobs, newest first",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/parse/jobs?page=0&page_size=10&status=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "parse",
+                            "jobs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (0-indexed).",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Number of items per page.",
+                              "key": "page_size",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by job status.",
+                              "key": "status",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"jobs\": [\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"failed\",\n      \"created_at\": \"<string,null>\",\n      \"completed_at\": \"<string,null>\",\n      \"model_version\": \"<string,null>\",\n      \"failure_reason\": \"<string,null>\"\n    },\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"completed\",\n      \"created_at\": \"<string,null>\",\n      \"completed_at\": \"<string,null>\",\n      \"model_version\": \"<string,null>\",\n      \"failure_reason\": \"<string,null>\"\n    }\n  ],\n  \"page\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"has_more\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-30a10f36-8ab4-4d3f-b797-5d0bf2f72c6c"
+                    },
+                    {
+                      "id": "34d134a9-720a-40d0-ba7c-e7b46562dcc4",
+                      "name": "Request validation failed.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/parse/jobs?page=0&page_size=10&status=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "parse",
+                            "jobs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (0-indexed).",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Number of items per page.",
+                              "key": "page_size",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by job status.",
+                              "key": "status",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-34d134a9-720a-40d0-ba7c-e7b46562dcc4"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-d2babb13-2a38-4b85-b530-d4db37147052"
+                }
+              ],
+              "id": "78b53f86-7b16-4a4a-b509-1a4a8061ed0b",
+              "createdAt": "2026-07-28T02:02:38.000Z",
+              "updatedAt": "2026-07-28T02:02:38.000Z",
+              "uid": "35240-78b53f86-7b16-4a4a-b509-1a4a8061ed0b"
+            },
+            {
+              "name": "ADE Parse",
+              "id": "686aaa81-ccf8-4bb4-9074-c58e432c85a1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                      "key": "document",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                      "key": "options",
+                      "value": "[object Object]",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/parse",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "parse"
+                  ]
+                },
+                "description": "Parse a document and return the parse response inline."
+              },
+              "response": [
+                {
+                  "id": "b4e50f0f-e5dd-4883-a3cb-918df557a02d",
+                  "name": "The parse response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document",
+                          "type": "file"
+                        },
+                        {
+                          "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document_url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                          "key": "options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/parse",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "parse"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"markdown\": \"<string>\",\n  \"metadata\": {\n    \"job_id\": \"<string>\",\n    \"model_version\": \"<string>\",\n    \"page_count\": \"<integer>\",\n    \"output_markdown_chars\": \"<integer>\",\n    \"range_units\": \"<string>\",\n    \"openapi_spec\": \"<string>\",\n    \"failed_pages\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"duration_ms\": \"<integer>\",\n    \"billing\": {\n      \"service_tier\": \"priority\",\n      \"total_credits\": \"<number>\"\n    }\n  },\n  \"structure\": {\n    \"type\": \"document\",\n    \"children\": [\n      {\n        \"grounding\": {\n          \"page\": \"<integer>\",\n          \"range\": {\n            \"start\": \"<integer>\",\n            \"end\": \"<integer>\"\n          },\n          \"box\": {\n            \"xmin\": \"<number>\",\n            \"ymin\": \"<number>\",\n            \"xmax\": \"<number>\",\n            \"ymax\": \"<number>\"\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"<string>\",\n        \"children\": [\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          },\n          {\n            \"type\": \"table\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          }\n        ],\n        \"markdown\": \"<string>\"\n      },\n      {\n        \"grounding\": {\n          \"page\": \"<integer>\",\n          \"range\": {\n            \"start\": \"<integer>\",\n            \"end\": \"<integer>\"\n          },\n          \"box\": {\n            \"xmin\": \"<number>\",\n            \"ymin\": \"<number>\",\n            \"xmax\": \"<number>\",\n            \"ymax\": \"<number>\"\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"<string>\",\n        \"children\": [\n          {\n            \"type\": \"table\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          },\n          {\n            \"type\": \"logo\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          }\n        ],\n        \"markdown\": \"<string>\"\n      }\n    ],\n    \"markdown\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-b4e50f0f-e5dd-4883-a3cb-918df557a02d"
+                },
+                {
+                  "id": "f909812a-0249-4502-9d1e-5949a31e2994",
+                  "name": "Partial success (some pages failed to parse)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document",
+                          "type": "file"
+                        },
+                        {
+                          "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document_url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                          "key": "options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/parse",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "parse"
+                      ]
+                    }
+                  },
+                  "status": "Partial Content",
+                  "code": 206,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"markdown\": \"<string>\",\n  \"metadata\": {\n    \"job_id\": \"<string>\",\n    \"model_version\": \"<string>\",\n    \"page_count\": \"<integer>\",\n    \"output_markdown_chars\": \"<integer>\",\n    \"range_units\": \"<string>\",\n    \"openapi_spec\": \"<string>\",\n    \"failed_pages\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"duration_ms\": \"<integer>\",\n    \"billing\": {\n      \"service_tier\": \"priority\",\n      \"total_credits\": \"<number>\"\n    }\n  },\n  \"structure\": {\n    \"type\": \"document\",\n    \"children\": [\n      {\n        \"grounding\": {\n          \"page\": \"<integer>\",\n          \"range\": {\n            \"start\": \"<integer>\",\n            \"end\": \"<integer>\"\n          },\n          \"box\": {\n            \"xmin\": \"<number>\",\n            \"ymin\": \"<number>\",\n            \"xmax\": \"<number>\",\n            \"ymax\": \"<number>\"\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"<string>\",\n        \"children\": [\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          },\n          {\n            \"type\": \"table\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          }\n        ],\n        \"markdown\": \"<string>\"\n      },\n      {\n        \"grounding\": {\n          \"page\": \"<integer>\",\n          \"range\": {\n            \"start\": \"<integer>\",\n            \"end\": \"<integer>\"\n          },\n          \"box\": {\n            \"xmin\": \"<number>\",\n            \"ymin\": \"<number>\",\n            \"xmax\": \"<number>\",\n            \"ymax\": \"<number>\"\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"<string>\",\n        \"children\": [\n          {\n            \"type\": \"table\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          },\n          {\n            \"type\": \"logo\",\n            \"id\": \"<string>\",\n            \"grounding\": {\n              \"page\": \"<integer>\",\n              \"range\": {\n                \"start\": \"<integer>\",\n                \"end\": \"<integer>\"\n              },\n              \"box\": {\n                \"xmin\": \"<number>\",\n                \"ymin\": \"<number>\",\n                \"xmax\": \"<number>\",\n                \"ymax\": \"<number>\"\n              }\n            },\n            \"atomic_grounding\": [\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              },\n              {\n                \"page\": \"<integer>\",\n                \"range\": {\n                  \"start\": \"<integer>\",\n                  \"end\": \"<integer>\"\n                },\n                \"box\": {\n                  \"xmin\": \"<number>\",\n                  \"ymin\": \"<number>\",\n                  \"xmax\": \"<number>\",\n                  \"ymax\": \"<number>\"\n                }\n              }\n            ],\n            \"children\": [\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              },\n              {\n                \"value\": \"<Circular reference to #/components/schemas/Element detected>\"\n              }\n            ],\n            \"markdown\": \"<string>\",\n            \"row\": \"<integer>\",\n            \"col\": \"<integer>\",\n            \"colspan\": \"<integer>\",\n            \"rowspan\": \"<integer>\"\n          }\n        ],\n        \"markdown\": \"<string>\"\n      }\n    ],\n    \"markdown\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-f909812a-0249-4502-9d1e-5949a31e2994"
+                },
+                {
+                  "id": "989c9e00-fa3d-44b5-abed-cd14abd97003",
+                  "name": "Request validation failed.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document",
+                          "type": "file"
+                        },
+                        {
+                          "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                          "key": "document_url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                          "key": "options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/parse",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "parse"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-989c9e00-fa3d-44b5-abed-cd14abd97003"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:38.000Z",
+              "updatedAt": "2026-07-28T02:02:38.000Z",
+              "uid": "35240-686aaa81-ccf8-4bb4-9074-c58e432c85a1"
+            }
+          ],
+          "id": "3f804e9c-01e0-425b-9f9c-fd9cd37c534b",
+          "createdAt": "2026-07-28T02:02:38.000Z",
+          "updatedAt": "2026-07-28T02:02:38.000Z",
+          "uid": "35240-3f804e9c-01e0-425b-9f9c-fd9cd37c534b"
+        }
+      ],
+      "id": "61b84a95-6ea5-4b3f-b7fc-6a47798c16b4",
+      "createdAt": "2026-07-28T02:02:38.000Z",
+      "updatedAt": "2026-07-28T02:02:38.000Z",
+      "uid": "35240-61b84a95-6ea5-4b3f-b7fc-6a47798c16b4"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.va.landing.ai"
+    }
+  ]
+}
