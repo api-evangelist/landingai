@@ -398,6 +398,8 @@ apis:
   - type: Documentation
     url: https://docs.landing.ai/landinglens-landingedge
 common:
+- type: Overlay
+  url: overlays/landingai-ade-v1-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/landingai/overview
 - type: Website
