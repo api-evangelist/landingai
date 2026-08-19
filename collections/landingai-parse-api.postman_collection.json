@@ -1,0 +1,936 @@
+{
+  "item": [
+    {
+      "id": "cf0f6426-3773-446f-8b1e-f0c043873df7",
+      "name": "Parse",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "420346cd-f3cd-4bfb-8c69-7bc5824d7bd2",
+          "name": "ADE Parse",
+          "request": {
+            "name": "ADE Parse",
+            "description": {
+              "content": "Parse a document and return the parse response inline.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "parse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "document",
+                  "type": "file",
+                  "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both."
+                },
+                {
+                  "key": "document_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both."
+                },
+                {
+                  "key": "model",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot."
+                },
+                {
+                  "key": "options",
+                  "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                  "type": "text",
+                  "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f3305760-4e4a-4327-96b2-848ce4a82a21",
+              "name": "The parse response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"markdown\": \"string\",\n  \"metadata\": {\n    \"job_id\": \"string\",\n    \"model_version\": \"string\",\n    \"page_count\": 7516,\n    \"output_markdown_chars\": 435,\n    \"range_units\": \"string\",\n    \"openapi_spec\": \"string\",\n    \"failed_pages\": [\n      1312,\n      2484\n    ],\n    \"duration_ms\": 163,\n    \"billing\": {\n      \"service_tier\": \"standard\",\n      \"total_credits\": 9018.605317080224\n    }\n  },\n  \"structure\": {\n    \"type\": \"document\",\n    \"children\": [\n      {\n        \"grounding\": {\n          \"page\": 3067,\n          \"range\": {\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"end\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"box\": {\n            \"xmin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"xmax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"string\",\n        \"children\": [\n          {\n            \"type\": \"attestation\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"markdown\": \"string\"\n      },\n      {\n        \"grounding\": {\n          \"page\": 9654,\n          \"range\": {\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"end\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"box\": {\n            \"xmin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"xmax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"string\",\n        \"children\": [\n          {\n            \"type\": \"scan_code\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"markdown\": \"string\"\n      }\n    ],\n    \"markdown\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a1d4316-4224-4a7c-8462-8d04e7b8f08d",
+              "name": "Partial success (some pages failed to parse)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Partial Content",
+              "code": 206,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"markdown\": \"string\",\n  \"metadata\": {\n    \"job_id\": \"string\",\n    \"model_version\": \"string\",\n    \"page_count\": 7516,\n    \"output_markdown_chars\": 435,\n    \"range_units\": \"string\",\n    \"openapi_spec\": \"string\",\n    \"failed_pages\": [\n      1312,\n      2484\n    ],\n    \"duration_ms\": 163,\n    \"billing\": {\n      \"service_tier\": \"standard\",\n      \"total_credits\": 9018.605317080224\n    }\n  },\n  \"structure\": {\n    \"type\": \"document\",\n    \"children\": [\n      {\n        \"grounding\": {\n          \"page\": 3067,\n          \"range\": {\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"end\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"box\": {\n            \"xmin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"xmax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"string\",\n        \"children\": [\n          {\n            \"type\": \"attestation\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"markdown\": \"string\"\n      },\n      {\n        \"grounding\": {\n          \"page\": 9654,\n          \"range\": {\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"end\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"box\": {\n            \"xmin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymin\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"xmax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ymax\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"type\": \"page\",\n        \"status\": \"ok\",\n        \"reason\": \"string\",\n        \"children\": [\n          {\n            \"type\": \"scan_code\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": \"marginalia\",\n            \"id\": \"string\",\n            \"grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"atomic_grounding\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"children\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"markdown\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"row\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"col\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"colspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rowspan\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"markdown\": \"string\"\n      }\n    ],\n    \"markdown\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f727288d-547c-4660-9d98-435e2fc38a7e",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "958f22a5-a02d-4036-8693-da8a66b6c65e",
+          "name": "ADE Parse Jobs",
+          "request": {
+            "name": "ADE Parse Jobs",
+            "description": {
+              "content": "Parse a document asynchronously. Returns a job ID; use it to poll for the job's status and retrieve the parse result once processing completes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "parse",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "document",
+                  "type": "file",
+                  "description": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both."
+                },
+                {
+                  "key": "document_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both."
+                },
+                {
+                  "key": "model",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot."
+                },
+                {
+                  "key": "options",
+                  "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                  "type": "text",
+                  "description": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data."
+                },
+                {
+                  "key": "output_save_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data."
+                },
+                {
+                  "key": "service_tier",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``. (This can only be one of standard,priority)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0d999083-f68c-4dc0-abda-2ecf080759d0",
+              "name": "Job created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data.",
+                        "type": "text/plain"
+                      },
+                      "key": "output_save_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``. (This can only be one of standard,priority)",
+                        "type": "text/plain"
+                      },
+                      "key": "service_tier",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\",\n  \"status\": \"completed\",\n  \"created_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "814c0b0a-7fec-492e-ac27-991d46173cb5",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A publicly accessible URL to the file to parse. The file must be a PDF or image; see the list of [supported file types](https://docs.landing.ai/dpt3/file-types). Provide either `document` or `document_url`, not both.",
+                        "type": "text/plain"
+                      },
+                      "key": "document_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The DPT-3 model snapshot to use for this request. Accepts a dated snapshot (for example, `dpt-3-pro-20260710`), the `dpt-3-pro-latest` alias, or the bare `dpt-3-pro` family name (equivalent to `dpt-3-pro-latest`). Defaults to the latest DPT-3 Pro snapshot.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional object that customizes the parse. Use it to select which pages to process, adjust how content appears in the Markdown, or control how much detail the response includes. Sent as a JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"pages\":[\"<integer>\",\"<integer>\"],\"blocks\":{\"text\":{\"markdown\":true},\"table\":{\"markdown\":true,\"format\":\"html\"},\"figure\":{\"markdown\":true},\"marginalia\":{\"markdown\":true},\"attestation\":{\"markdown\":true},\"logo\":{\"markdown\":true},\"scan_code\":{\"markdown\":true},\"card\":{\"markdown\":true}},\"atomic_grounding\":true,\"inline_markdown\":false,\"password\":\"<string>\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Public URL the full response is delivered to; the API response then carries ``output_url`` instead of inline data.",
+                        "type": "text/plain"
+                      },
+                      "key": "output_save_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Async service tier (``POST /jobs`` only). ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``. (This can only be one of standard,priority)",
+                        "type": "text/plain"
+                      },
+                      "key": "service_tier",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9158f99-d64c-4ffd-b492-912b39aceb3f",
+          "name": "ADE List Parse Jobs",
+          "request": {
+            "name": "ADE List Parse Jobs",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "parse",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by job status."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4bf314b-c7ab-4409-927e-11da002e7f33",
+              "name": "The caller's jobs, newest first",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": [\n    {\n      \"job_id\": \"string\",\n      \"status\": \"pending\",\n      \"created_at\": \"string\",\n      \"completed_at\": \"string\",\n      \"model_version\": \"string\",\n      \"failure_reason\": \"string\"\n    },\n    {\n      \"job_id\": \"string\",\n      \"status\": \"processing\",\n      \"created_at\": \"string\",\n      \"completed_at\": \"string\",\n      \"model_version\": \"string\",\n      \"failure_reason\": \"string\"\n    }\n  ],\n  \"page\": 6864,\n  \"page_size\": 6935,\n  \"has_more\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcf55523-f013-4bf9-ba5a-1bbbc76b3f64",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c6854e1-973d-48dc-8c7a-e68ae3bc21f6",
+          "name": "ADE Get Parse Jobs",
+          "request": {
+            "name": "ADE Get Parse Jobs",
+            "description": {
+              "content": "Get the status of an async parse job. Once the job has ``completed``, ``result`` carries the parse response (or ``output_url`` when ``output_save_url`` was set). Partial success (some pages failed) is reported in ``result.metadata.failed_pages``.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "parse",
+                "jobs",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "24710041-571f-4b74-bdc7-2d3cb799e22e",
+              "name": "Job status / result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\",\n  \"status\": \"completed\",\n  \"created_at\": \"string\",\n  \"completed_at\": \"string\",\n  \"progress\": 9927.028037922075,\n  \"result\": {\n    \"markdown\": \"string\",\n    \"metadata\": {\n      \"job_id\": \"string\",\n      \"model_version\": \"string\",\n      \"page_count\": 4897,\n      \"output_markdown_chars\": 1223,\n      \"range_units\": \"string\",\n      \"openapi_spec\": \"string\",\n      \"failed_pages\": [\n        4805,\n        3731\n      ],\n      \"duration_ms\": 8673,\n      \"billing\": {\n        \"service_tier\": \"priority\",\n        \"total_credits\": 1673.814676443005\n      }\n    },\n    \"structure\": {\n      \"type\": \"document\",\n      \"children\": [\n        {\n          \"grounding\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": \"page\",\n          \"status\": \"ok\",\n          \"reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"children\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"markdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"grounding\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": \"page\",\n          \"status\": \"ok\",\n          \"reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"children\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"markdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"markdown\": \"string\"\n    }\n  },\n  \"output_url\": \"string\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b073879a-6f76-44c4-8090-4572b7d8d6f1",
+              "name": "Job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e524d103-74c6-4aa6-8724-884ec34aa8f6",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "parse",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.va.landing.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a039aa7c-21ad-422c-ac6a-c427f30a4ae4",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: , Extract, Classify, Split, Section Classes Parse API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,913 @@
+{
+  "item": [
+    {
+      "id": "d3e69180-8613-430c-9d05-fb5be48347a3",
+      "name": "Extract",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1802935-bcaa-4efb-9ad2-9d251b1e9968",
+          "name": "ADE Extract",
+          "request": {
+            "name": "ADE Extract",
+            "description": {
+              "content": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs synchronously and returns the result inline.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "extract"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "schema",
+                  "value": "{\"key_0\":9557.679738024839}",
+                  "type": "text",
+                  "description": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data."
+                },
+                {
+                  "key": "markdown",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "markdown_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data."
+                },
+                {
+                  "key": "model",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data."
+                },
+                {
+                  "key": "options",
+                  "value": "{\"strict\":false}",
+                  "type": "text",
+                  "description": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "702d5a10-20ec-4942-8271-d64e1958625e",
+              "name": "v2-extract result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "{\"properties\":{\"revenue\":{\"description\":\"Q1 revenue figure\",\"type\":\"string\"},\"summary\":{\"description\":\"Executive summary\",\"type\":\"string\"}},\"type\":\"object\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"strict\":false}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"extraction\": {\n    \"key_0\": \"string\",\n    \"key_1\": 3167.141296436007\n  },\n  \"extraction_metadata\": {\n    \"key_0\": 6765.5996594976305,\n    \"key_1\": 1534,\n    \"key_2\": true\n  },\n  \"markdown\": \"string\",\n  \"metadata\": {\n    \"job_id\": \"string\",\n    \"model_version\": \"string\",\n    \"duration_ms\": 3176,\n    \"openapi_spec\": \"string\",\n    \"range_units\": \"unicode_codepoints\",\n    \"doc_id\": \"string\",\n    \"input_markdown_chars\": 8053,\n    \"output_extraction_chars\": 6178,\n    \"billing\": {\n      \"service_tier\": \"standard\",\n      \"total_credits\": 7712.670877347677\n    }\n  },\n  \"schema_violation_error\": \"string\",\n  \"warnings\": [\n    {\n      \"key_0\": true,\n      \"key_1\": true\n    },\n    {\n      \"key_0\": true,\n      \"key_1\": \"string\",\n      \"key_2\": 7624\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "911b5483-bae2-4d87-bb50-3246b8f788f0",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "{\"properties\":{\"revenue\":{\"description\":\"Q1 revenue figure\",\"type\":\"string\"},\"summary\":{\"description\":\"Executive summary\",\"type\":\"string\"}},\"type\":\"object\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"strict\":false}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b798dec-78b3-4d1b-939d-fbfefd3cad8a",
+          "name": "ADE Extract Jobs",
+          "request": {
+            "name": "ADE Extract Jobs",
+            "description": {
+              "content": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs asynchronously and returns a job ID; use it to poll for status and retrieve the result once processing completes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "extract",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "schema",
+                  "value": "{\"key_0\":2422}",
+                  "type": "text",
+                  "description": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data."
+                },
+                {
+                  "key": "markdown",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "markdown_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data."
+                },
+                {
+                  "key": "model",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data."
+                },
+                {
+                  "key": "options",
+                  "value": "{\"strict\":false}",
+                  "type": "text",
+                  "description": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data."
+                },
+                {
+                  "key": "output_save_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL to save the result to — e.g. a presigned S3 PUT URL. Async jobs only. When set, the finished result is delivered (HTTP PUT) to this URL and the completed job reports ``output_url`` instead of an inline ``result``. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data."
+                },
+                {
+                  "key": "service_tier",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Async service tier. ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cc1f790d-8751-449d-aca6-10616da47d2d",
+              "name": "Job created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "{\"properties\":{\"revenue\":{\"description\":\"Q1 revenue figure\",\"type\":\"string\"},\"summary\":{\"description\":\"Executive summary\",\"type\":\"string\"}},\"type\":\"object\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"strict\":false}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to save the result to — e.g. a presigned S3 PUT URL. Async jobs only. When set, the finished result is delivered (HTTP PUT) to this URL and the completed job reports ``output_url`` instead of an inline ``result``. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "output_save_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Async service tier. ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``.",
+                        "type": "text/plain"
+                      },
+                      "key": "service_tier",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\",\n  \"status\": \"pending\",\n  \"created_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ce5521c-40c6-401c-8d15-80c3e2daaa7e",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON Schema describing the fields to extract. The schema must be an object type with a ``properties`` map of field names to their types and descriptions. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "{\"properties\":{\"revenue\":{\"description\":\"Q1 revenue figure\",\"type\":\"string\"},\"summary\":{\"description\":\"Executive summary\",\"type\":\"string\"}},\"type\":\"object\"}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to fetch the markdown from. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "markdown_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The version of the model to use for extraction. Use ``extract-latest`` to use the latest version. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Extraction options (``strict``). Omit for defaults. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "options",
+                      "value": "{\"strict\":false}",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to save the result to — e.g. a presigned S3 PUT URL. Async jobs only. When set, the finished result is delivered (HTTP PUT) to this URL and the completed job reports ``output_url`` instead of an inline ``result``. Must be a public http(s) URL; private/loopback IPs are rejected at submit time. JSON-serialized string in form data.",
+                        "type": "text/plain"
+                      },
+                      "key": "output_save_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Async service tier. ``priority`` runs in the fast lane at the sync billing rate; absent → ``standard``.",
+                        "type": "text/plain"
+                      },
+                      "key": "service_tier",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "156a0b79-e4f7-45d6-8116-d4f848d818c2",
+          "name": "ADE List Extract Jobs",
+          "request": {
+            "name": "ADE List Extract Jobs",
+            "description": {
+              "content": "List your Extract jobs, newest first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "extract",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by job status."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8dbfed47-3155-450a-a934-15d913c9d4c7",
+              "name": "The caller's jobs, newest first",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": [\n    {\n      \"job_id\": \"string\",\n      \"status\": \"processing\",\n      \"created_at\": \"string\",\n      \"completed_at\": \"string\",\n      \"model_version\": \"string\",\n      \"failure_reason\": \"string\"\n    },\n    {\n      \"job_id\": \"string\",\n      \"status\": \"completed\",\n      \"created_at\": \"string\",\n      \"completed_at\": \"string\",\n      \"model_version\": \"string\",\n      \"failure_reason\": \"string\"\n    }\n  ],\n  \"page\": 8346,\n  \"page_size\": 7162,\n  \"has_more\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9e14b39-bf97-4d05-b15c-c55949da5276",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6cfdb7c3-e712-443d-b83a-420bab24ec40",
+          "name": "ADE Get Extract Jobs",
+          "request": {
+            "name": "ADE Get Extract Jobs",
+            "description": {
+              "content": "Get the status of an async Extract job, including its result once the job has completed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "extract",
+                "jobs",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90ad2ef3-8536-4fba-96ba-8d841da5296a",
+              "name": "Job status / result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\",\n  \"status\": \"processing\",\n  \"created_at\": \"string\",\n  \"completed_at\": \"string\",\n  \"progress\": 0.8991874480441768,\n  \"result\": {\n    \"extraction\": {\n      \"key_0\": true,\n      \"key_1\": false\n    },\n    \"extraction_metadata\": {\n      \"key_0\": 3832.9797909579756,\n      \"key_1\": 4266.893260515101,\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"markdown\": \"string\",\n    \"metadata\": {\n      \"job_id\": \"string\",\n      \"model_version\": \"string\",\n      \"duration_ms\": 51,\n      \"openapi_spec\": \"string\",\n      \"range_units\": \"unicode_codepoints\",\n      \"doc_id\": \"string\",\n      \"input_markdown_chars\": 4024,\n      \"output_extraction_chars\": 1857,\n      \"billing\": {\n        \"service_tier\": \"standard\",\n        \"total_credits\": 9768.35163735713\n      }\n    },\n    \"schema_violation_error\": \"string\",\n    \"warnings\": [\n      {\n        \"key_0\": 2253\n      },\n      {\n        \"key_0\": 1825,\n        \"key_1\": false,\n        \"key_2\": 1522\n      }\n    ]\n  },\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"output_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d645b84e-ef5d-46a9-a68d-15ad430163a6",
+              "name": "Not found (e.g. no such job).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a616ddf3-c467-46fc-8022-d5c3fc011611",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "extract",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The identifier of the job to retrieve, as returned by the create-job request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.va.landing.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cf14f0f7-8dc7-496a-9093-51103e3159c9",
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, , Classify, Split, Section Classes Extract API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Convert documents such as PDFs, images, and Office files into structured data with LandingAI's Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai",
+      "type": "text/plain"
+    }
+  }
+}

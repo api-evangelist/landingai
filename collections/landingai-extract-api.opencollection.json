@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, , Classify, Split, Section Classes Extract API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extract",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ADE Extract",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v2/extract",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs synchronously and returns the result inline."
+        },
+        {
+          "info": {
+            "name": "ADE List Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v2/extract/jobs",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (0-indexed)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job status."
+              }
+            ]
+          },
+          "docs": "List your Extract jobs, newest first."
+        },
+        {
+          "info": {
+            "name": "ADE Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v2/extract/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Extract structured data from a Markdown document according to a JSON schema, with character-span grounding into the source Markdown. Runs asynchronously and returns a job ID; use it to poll for status and retrieve the result once processing completes."
+        },
+        {
+          "info": {
+            "name": "ADE Get Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v2/extract/jobs/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the job to retrieve, as returned by the create-job request."
+              }
+            ]
+          },
+          "docs": "Get the status of an async Extract job, including its result once the job has completed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

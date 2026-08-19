@@ -1,0 +1,1264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Tools API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ADE Parse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/parse",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Parse a document or spreadsheet.\n\nThis endpoint parses documents (PDF, images)\n    and spreadsheets (XLSX, CSV) into structured Markdown, chunks, and metadata.\n    \n\n For EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/parse`."
+        },
+        {
+          "info": {
+            "name": "ADE Extract",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/extract",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Extract structured data from Markdown using a JSON schema.\n\nThis endpoint\n    processes Markdown content and extracts structured data according to the provided\n    JSON schema.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/extract`."
+        },
+        {
+          "info": {
+            "name": "ADE List Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/ade/extract/jobs",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (0-indexed)"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job status."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all async extract jobs associated with your API key.\n\nReturns the list of jobs or an error response. For EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs`."
+        },
+        {
+          "info": {
+            "name": "ADE Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/extract/jobs",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Extract structured data asynchronously.\n\nThis endpoint creates a job that handles the processing for large markdown\ndocuments.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs`."
+        },
+        {
+          "info": {
+            "name": "ADE Get Extract Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/ade/extract/jobs/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the status for an async extract job.\n\nReturns the job status or an error\n   response. For EU users, use this endpoint:\n\n\n   `https://api.va.eu-west-1.landing.ai/v1/ade/extract/jobs/{job_id}`."
+        },
+        {
+          "info": {
+            "name": "ADE Build Extract Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/extract/build-schema",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a JSON schema from Markdown using AI.\n\nThis endpoint analyzes Markdown\n    content and generates a JSON schema suitable for use with the extract endpoint.\n    It can also refine an existing schema based on new documents or iterate on a schema\n    based on prompt instructions.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/extract/build-schema`."
+        },
+        {
+          "info": {
+            "name": "ADE Split",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/split",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Split classification for documents.\n\nThis endpoint classifies document sections\n    based on markdown content and split options.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/split`."
+        },
+        {
+          "info": {
+            "name": "ADE Section",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/section",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Section parsed markdown into a hierarchical table of contents.\n\nThis endpoint accepts the markdown output from /ade/parse\n(with reference anchors) and returns a flat, reading-order list of\nsections with hierarchy levels and reference ranges.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/section`."
+        },
+        {
+          "info": {
+            "name": "ADE Classify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/classify",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Classify the pages of a document into classes you define.\n\nThis endpoint accepts PDFs, images, and other supported file types\n(either as a `document` upload or `document_url`) together with a\nlist of `classes`, and returns a classification result for each page.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/classify`."
+        },
+        {
+          "info": {
+            "name": "ADE List Parse Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/ade/parse/jobs",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (0-indexed)"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job status."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all async parse jobs associated with your API key. Returns the list of jobs\nor an error response. For EU users, use this endpoint:\n\n\n`https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs`."
+        },
+        {
+          "info": {
+            "name": "ADE Parse Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/ade/parse/jobs",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Parse documents asynchronously.\n\nThis endpoint creates a job that handles the\n    processing for both large documents and large batches of documents.\n\n For EU\n    users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs`."
+        },
+        {
+          "info": {
+            "name": "ADE Get Parse Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/ade/parse/jobs/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the status for an async parse job.\n\nReturns the job status or an error\n   response. For EU users, use this endpoint:\n\n\n   `https://api.va.eu-west-1.landing.ai/v1/ade/parse/jobs/{job_id}`."
+        },
+        {
+          "info": {
+            "name": "Agentic Document Extraction (Legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/agentic-document-analysis",
+            "params": [
+              {
+                "name": "pages",
+                "value": "",
+                "type": "query",
+                "description": "Which pages to process, separated by commas and starting from 0. For example, to process the first 3 pages, use '0,1,2'. "
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This is a legacy endpoint. Use the ADE Parse endpoint instead.\n\nSend\n    documents to the Agentic Document Extraction API.\n\nThe API parses the\n    documents and returns the extracted data as structured Markdown and JSON.\n\nYou\n    can include an extraction schema to extract key-value pairs from the parsed\n    content.\n\nFor EU users, use this endpoint:\n\n\n    `https://api.va.eu-west-1.landing.ai/v1/tools/agentic-document-analysis`."
+        },
+        {
+          "info": {
+            "name": "Head Agentic Document Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://api.va.landing.ai/v1/tools/agentic-document-analysis",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Head Agentic Document Analysis"
+        },
+        {
+          "info": {
+            "name": "Tool Markdown To Jsonschema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/markdown-schema-suggestion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Endpoint to convert markdown to JSON schema."
+        },
+        {
+          "info": {
+            "name": "Tool Wsi Embedding",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/wsi-embedding",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs whole slide image (WSI) embedding generation for pathology image analysis and feature extraction.\n\nArgs:\n    params (WSIEmbeddingRequest): The input data containing the following fields:\n        - image (bytes): Base64-encoded patch image from a whole slide image.\n        - mpp (float): Microns per pixel resolution of the image patch.\n            Required for proper scaling and analysis.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to the Bas"
+        },
+        {
+          "info": {
+            "name": "Tool Qr Reader",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/qr-reader",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs QR code detection and reading to extract encoded information from images.\n\nArgs:\n    params (QRReaderRequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for QR code detection and reading.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to the Baseten model server for QR code processing.\n\nReturns:\n    QRReaderResponse | JSONResponse\n        Success: QRReaderResponse containing detected QR c"
+        },
+        {
+          "info": {
+            "name": "Tool Owlv2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/owlv2",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object detection using the OWL-ViT v2 model with text prompts.\n\nArgs:\n    params (Owlv2Request): The input request containing the following fields:\n        - image (UploadFile): The image file to analyze for object detection.\n        - prompts (List[str]): Text descriptions of objects to detect in the image.\n        - confidence (float, *optional*): Minimum confidence threshold for detections.\n            Defaults to 0.2, must be between 0 and 1.\n\n    baseten_inference_sender: Dependenc"
+        },
+        {
+          "info": {
+            "name": "Tool Depth Anything V2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/depth-anything-v2",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs depth estimation on images using the Depth-Anything-V2 model to generate depth maps.\n\nArgs:\n    params (DepthAnythingV2Request): The input data containing the following fields:\n        - image (bytes): The image file to analyze for depth estimation.\n        - grayscale (bool, *optional*): Whether to output the depth map in grayscale format.\n            Defaults to False for colored depth maps.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to t"
+        },
+        {
+          "info": {
+            "name": "Tool Loca",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/loca",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs localized content analysis using the LOCA model to analyze specific regions or the entire image.\n\nArgs:\n    params (LocaRequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for localized content analysis.\n        - bbox (BoundingBox, *optional*): Bounding box coordinates to focus analysis on a specific region.\n            If not provided, analyzes the entire image.\n    baseten_inference_sender: Dependency Injection for\n        send"
+        },
+        {
+          "info": {
+            "name": "Tool Florencev2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/florence2",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs various computer vision tasks using the Florence V2 model.\n\nArgs:\n    params (FlorenceV2Request): The input request containing the following fields:\n        - image (UploadFile, *optional*): Single image file for processing.\n        - images (List[UploadFile], *optional*): Multiple image files for batch processing.\n        - video_bytes (bytes, *optional*): Video data for video analysis tasks.\n        - task (str): The specific task to perform (e.g., \"CAPTION\", \"OD\", \"OCR\").\n        - p"
+        },
+        {
+          "info": {
+            "name": "Tool Nsfw Classification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/nsfw-classification",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs NSFW (Not Safe For Work) content classification to detect inappropriate content in images.\n\nArgs:\n    params (NSFWRequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for NSFW content classification.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to the Baseten model server for NSFW classification.\n\nReturns:\n    NSFWResponse | JSONResponse\n        Success: NSFWResponse containing classific"
+        },
+        {
+          "info": {
+            "name": "Tool Florencev2 Qa",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/florence2-qa",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs visual question answering using the Florence2 model to answer questions about image content.\n\nArgs:\n    params (FlorenceQARequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for visual question answering.\n        - question (str): The question to ask about the image content.\n            The model will analyze the image and provide an answer.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests "
+        },
+        {
+          "info": {
+            "name": "Tool Pose Detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/pose-detector",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs human pose detection to identify and locate body keypoints and skeletal structure in images.\n\nArgs:\n    params (PoseDetectionRequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for pose detection.\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to the Baseten model server for pose detection processing.\n\nReturns:\n    PoseDetectionResponse | JSONResponse\n        Success: PoseDetectionRespons"
+        },
+        {
+          "info": {
+            "name": "Tool Barcode Reader",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/barcode-reader",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Extracts barcode information from an image using barcode detection models.\n\nArgs:\n    params (BarcodeReaderRequest): The input request containing the following fields:\n        - image (UploadFile): The image file containing barcode(s) to be detected and read.\n\n    baseten_inference_sender: Dependency Injection for\n        sending request to the baseten server.\n\nReturns:\n    BarcodeReaderResponse | JSONResponse\n        List of detected barcodes with their values and locations, or error response."
+        },
+        {
+          "info": {
+            "name": "Tool Internlm Xcomposer2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/internlm-xcomposer2",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs multimodal analysis using the InternLM-XComposer2 model to generate text responses from images or videos.\n\nArgs:\n    prompt (str): Text prompt to guide the analysis and response generation.\n    image (UploadFile, *optional*): Image file to analyze.\n        Cannot be provided together with video.\n    video (UploadFile, *optional*): Video file to analyze.\n        Cannot be provided together with image.\n    baseten_inference_sender: Dependency Injection for\n        sending inference reques"
+        },
+        {
+          "info": {
+            "name": "Tool Video Temporal Localization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/video-temporal-localization",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs temporal localization on videos to identify specific events or content at particular time intervals.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompt (str): Text prompt describing the content or event to locate in the video.\n        - model (TemporalLocalizationTools): The AI model to use for temporal localization.\n            Options: internlm-xcomposer2, gpt4o, qwen2vl, qwen25vl.\n        - video (UploadFile): The video file to analyze for tem"
+        },
+        {
+          "info": {
+            "name": "Tool Florence2 Sam2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/florence2-sam2",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object detection and segmentation using Florence2 and SAM2 models for precise instance segmentation.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompts (List[str]): List of text prompts describing objects to detect and segment.\n        - image (UploadFile, *optional*): Image file to analyze for object detection and segmentation.\n        - video (UploadFile, *optional*): Video file to analyze for temporal object segmentation.\n        - chunk_leng"
+        },
+        {
+          "info": {
+            "name": "Tool Glee",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/glee",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs text-to-instance segmentation using the GLEE model to detect and segment objects based on text prompts.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompts (List[str]): List of text prompts describing objects to detect and segment.\n            Must contain at least one prompt.\n        - image (UploadFile): The image file to analyze for instance segmentation.\n            Required field for segmentation analysis.\n        - video (UploadFile, *optio"
+        },
+        {
+          "info": {
+            "name": "Tool Text To Od",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/text-to-object-detection",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs text-to-object detection on images or videos with access to various detection models\n\nArgs:\n    data (FormData): The input data containing the following keys:\n        - prompts (List[str]): List of text prompts describing objects to detect.\n            Must contain at least one prompt. For Florence2,\n            total prompt length cannot exceed 800 characters. For agentic,\n            only one prompt is allowed.\n        - model (TextToODModel): The detection model to use:\n            \""
+        },
+        {
+          "info": {
+            "name": "Tool Visual Prompts To Od",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/visual-prompts-to-object-detection",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object detection using visual prompts (bounding box coordinates) instead of text prompts.\n\nArgs:\n    visual_prompts (str): JSON string containing visual prompt coordinates.\n        Format: List of bounding box coordinates as [[x1, y1, x2, y2], ...].\n    model (VisualPromptsToODModel): The detection model to use for visual prompt-based detection.\n        Currently supports CountGD.\n    image (UploadFile, *optional*): Image file to analyze for object detection.\n        Cannot be provided "
+        },
+        {
+          "info": {
+            "name": "Tool Countgd",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/countgd",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object counting and detection using the CountGD model with text prompts and/or visual prompts.\n\nArgs:\n    params (CountGDRequest): The input data containing the following fields:\n        - image (bytes): The image file to analyze for object counting and detection.\n        - prompt (str, *optional*): Text description of objects to count and detect.\n            Can be used alone or in combination with visual_prompts.\n        - visual_prompts (List[List[float]], *optional*): List of boundi"
+        },
+        {
+          "info": {
+            "name": "Tool Flux1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/flux1",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs AI-powered image generation, inpainting, or image-to-image transformation using the Flux1 diffusion model.\n\nArgs:\n    data (Flux1Request): The form data containing the following fields:\n        - task (Flux1Task, *optional*): The task to perform - image_generation, mask_inpainting, or image_to_image.\n            Defaults to image_generation.\n        - prompt (str): Text description of the desired image or modifications.\n            Maximum 512 characters.\n        - image (UploadFile, *o"
+        },
+        {
+          "info": {
+            "name": "Tool Image To Text",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/image-to-text",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs image-to-text conversion to generate textual descriptions or answers from visual content.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompt (str): Text prompt to guide the image analysis and response generation.\n        - model (ImageToText): The AI model to use for analysis.\n            Options: qwen2vl, internlm-xcomposer, qwen25vl.\n        - image (UploadFile, *optional*): Single image file to analyze.\n            Cannot be used with images f"
+        },
+        {
+          "info": {
+            "name": "Tool Depth Pro",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/depth-pro",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs high-precision depth estimation using the Depth-Pro model to generate detailed depth maps with focal length estimation.\n\nArgs:\n    data (BaseMediaRequest): The form data containing the following fields:\n        - image (UploadFile): The image file to analyze for depth estimation.\n            Required field for depth map generation.\n        - video (UploadFile, *optional*): Video file input (not used for Depth-Pro).\n    baseten_inference_sender: Dependency Injection for\n        sending i"
+        },
+        {
+          "info": {
+            "name": "Tool Text To Seg",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/text-to-instance-segmentation",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs text-to-instance segmentation to detect and segment objects based on\ntext descriptions.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompt (str): Text description of objects to detect and segment.\n        - model (TextToSegModel): The segmentation model to use.\n            Currently supports florence2sam2.\n        - image: Image file to analyze for segmentation.\n        - video: Video file to analyze for temporal segmentation.\n        - chunk_len"
+        },
+        {
+          "info": {
+            "name": "Tool Classification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/classification",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs zero-shot image classification to categorize images based on provided labels.\n\nArgs:\n    data (ClassificationRequest): The form data containing the following fields:\n        - model (ClassificationModel): The classification model to use for analysis.\n            Currently supports SigLIP zero-shot image classification.\n        - image (UploadFile): The image file to classify.\n            Required field for classification analysis.\n        - labels (List[str]): Candidate labels for image"
+        },
+        {
+          "info": {
+            "name": "Tool Doc Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/document-analysis",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs comprehensive document analysis to extract and parse text, tables, and\nfigures from images or PDFs.\n\nArgs:\n    data (DocAnalysisRequest): The form data containing the following fields:\n        - image (UploadFile, *optional*): Image file to analyze (max 50MB).\n            Cannot be provided together with PDF.\n        - pdf (UploadFile, *optional*): PDF file to analyze (max 50MB, max 2 pages).\n            Cannot be provided together with image.\n        - parse_text (bool, *optional*): Wh"
+        },
+        {
+          "info": {
+            "name": "Tool Paddle Ocr",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/paddle-ocr",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs optical character recognition using PaddleOCR to extract text from images.\n\nArgs:\n    data (BaseMediaRequest): The form data containing the following fields:\n        - image (UploadFile): The image file to analyze for text extraction.\n            Required field for OCR processing.\n        - video (UploadFile, *optional*): Video file input (not used for OCR).\n    baseten_inference_sender: Dependency Injection for\n        sending inference requests to the Baseten model server for PaddleOC"
+        },
+        {
+          "info": {
+            "name": "Tool Embeddings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/embeddings",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates text embeddings using the specified embedding model.\n\nArgs:\n    data (EmbeddingsRequest): The input request containing the following fields:\n        - model (EmbeddingsModel): The embedding model to use for text vectorization.\n            Currently supports Stella 1.5B model.\n        - input (List[str]): The list of text prompts to generate embeddings for.\n\n    baseten_inference_sender: Dependency Injection for\n        sending request to the baseten server.\n\nReturns:\n    EmbeddingsResp"
+        },
+        {
+          "info": {
+            "name": "Tool Object Detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/custom-object-detection",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object detection using custom trained models deployed on the\nLanding AI platform.\n\nArgs:\n    data (FormData): The input request containing the following fields:\n        - deployment_id (UUID): The unique identifier of the deployed\n        custom model.\n        - image (UploadFile): The image file to analyze for object\n        detection.\n        - confidence (float, *optional*): Minimum confidence threshold for\n        detections.\n            If not provided, all detections above the mod"
+        },
+        {
+          "info": {
+            "name": "Tool Agentic Od",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/agentic-object-detection",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs agentic object detection on images to identify and locate objects based on text prompts.\n\nArgs:\n    data (FormData): The form data containing the following fields:\n        - prompts (List[str]): List containing exactly one text prompt describing what objects to detect.\n            Must contain between 1 and 1 elements.\n        - image (UploadFile): The image file to analyze for object detection.\n            Required field, cannot be None.\n        - video (UploadFile, *optional*): Video "
+        },
+        {
+          "info": {
+            "name": "Tool Docling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/docling",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs document layout analysis using the Docling model to detect and analyze\ndocument structure elements.\n\nArgs:\n    data (DocumentNumberChunksRequest):\n        The form data containing the following fields:\n        - images (List[bytes]):\n            List of image files as byte arrays to analyze for layout detection.\n            Each image represents a page or document section.\n    baseten_inference_sender:\n        Dependency Injection for sending inference requests to the Baseten model\n    "
+        },
+        {
+          "info": {
+            "name": "Tool License Plate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/license-plate",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs automated license plate recognition on video content to detect and read\nlicense plates and vehicle information.\n\nArgs:\n    video (UploadFile): The video file to analyze for license plate detection.\n        Required field containing video data for processing.\n    modelserver_client: Dependency Injection for\n        HTTP client to communicate with the license plate recognition model server.\n\nReturns:\n    LicensePlateResponse | JSONResponse\n        Success:\n            LicensePlateResponse"
+        },
+        {
+          "info": {
+            "name": "Tool Activity Recognition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/activity-recognition",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs activity recognition on video content to identify and analyze activities.\n\nArgs:\n    video (UploadFile): The video file to analyze for activity recognition.\n    prompt (str):\n        The prompt to guide activity recognition and describe what activities to\n        look for.\n    specificity (Specificity, *optional*):\n        Detail level in the response (low, medium, high, max).\n        Defaults to MAX for maximum detail.\n    with_audio (bool, *optional*): Whether to process audio as well"
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Train",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/train",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs object detection using custom trained models deployed on the\nLanding AI platform.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n    data (TrainRequest): The input request containing the training parameters.\n\nReturns:\n    TrainingResponseData | JSONResponse\n        Details of the created training job, or error response."
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Get Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/jobs",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the list of vision training jobs for the authenticated user.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n\nReturns:\n    JobsListResponseData | JSONResponse\n        List of training job identifiers, or error response."
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Get Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/jobs/:job_id/status",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Training job identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the status of a vision training job.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n    job_id (str): The identifier of the training job to check status for.\n\nReturns:\n    JobStatusResponseData | JSONResponse\n        Status details of the training job, or error response."
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Get Job Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/jobs/:job_id/results",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Training job identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the results of a completed vision training job.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n    job_id (str): The identifier of the training job to get results for.\n\nReturns:\n    JobResultsResponseData | JSONResponse\n        Download URLs for the trained model and performance report, or error\n        response."
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Delete Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/jobs/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Training job identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a vision training job.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n    job_id (str): The identifier of the training job to delete.\n\nReturns:\n    JobDeleteResponseData | JSONResponse\n        Confirmation message for successful deletion, or error response."
+        },
+        {
+          "info": {
+            "name": "Tool Vision Training Auto Label",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v1/tools/vision-training/auto-label",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Performs automatic labeling on an image using vision training models.\n\nArgs:\n    request (Request): The FastAPI request containing headers.\n    data (AutoLabelRequest): The input request containing image URL and\n        labeling configuration.\n\nReturns:\n    Response | JSONResponse\n        Auto-labeling results with embeddings and preserved headers, or\n        error response with preserved headers."
+        },
+        {
+          "info": {
+            "name": "ADE Split",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v2/ade/split",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Split a parsed document into classified segments.\n\nSubmit pre-parsed Markdown (as `markdown` or `markdown_url`) and a set\nof `classification_categories`. The API assigns each page to the\ncategory it matches most closely and returns the page assignments for\neach segment.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v2/ade/split`."
+        },
+        {
+          "info": {
+            "name": "ADE Split Build Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.va.landing.ai/v2/ade/split/build-rules",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Suggest classification categories from a parsed document.\n\nSubmit your parsed Markdown and the API suggests a set of\nclassification categories. Review the suggestions, then use them to\nsplit the same document with the ADE Split v2 API.\n\nFor EU users, use this endpoint:\n\n`https://api.va.eu-west-1.landing.ai/v2/ade/split/build-rules`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
