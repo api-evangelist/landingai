@@ -19,6 +19,18 @@ description: >-
   server, published Agent Skills, an llms.txt agent surface, US and EU data
   residency, and SOC 2 Type II, HIPAA and GDPR compliance with a zero data
   retention option.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
