@@ -1,10 +1,10 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: , Extract, Classify, Split, Section Classes Parse API'
-  version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+  title: 'LandingAI Agentic Document Extraction (ADE) API v2: and…'
+  description: 'Parse and extract data from documents with DPT-3, a document parsing model from LandingAI, using the Agentic Document Extraction (ADE) v2 endpoints. Parse converts PDFs and images into structured Markdown and elements with per-element grounding (page numbers and coordinates) for RAG, search, and extraction pipelines. Extract pulls specific fields from parsed Markdown using a JSON schema. Documentation: https://docs.landing.ai'
+  version: 1.0.0
 servers:
-- url: https://api.va.landing.ai
+- url: https://api.ade.landing.ai
   description: Production vision tools API
 tags:
 - name: Parse
@@ -451,80 +451,14 @@ paths:
         source: "const axios = require('axios');\n\naxios.get('https://api.ade.landing.ai/v2/parse/jobs/JOB_ID', {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
 components:
   schemas:
-    Document:
-      properties:
-        type:
-          const: document
-          default: document
-          description: The node type. Identifies this node as the root of the structure tree.
-          title: Type
-          type: string
-        children:
-          description: The pages of the document, in source order.
-          items:
-            $ref: '#/components/schemas/Page'
-          title: Children
-          type: array
-        markdown:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: The full document markdown — identical to the top-level `markdown` field, included so the structure tree is self-contained. Present only when `options.inline_markdown` is `true`.
-          title: Markdown
-      title: Document
-      type: object
-    Page:
-      properties:
-        type:
-          const: page
-          default: page
-          description: The node type. Identifies this node as a page in the structure tree.
-          title: Type
-          type: string
-        grounding:
-          $ref: '#/components/schemas/Grounding'
-          description: 'The page''s spatial data: `page` is the 1-indexed page number in the source document (not contiguous when `options.pages` filters out some pages); `range` covers this page''s content in the top-level `markdown` string (zero-length `start == end` for failed pages); `box` is always the full page `{0, 0, 1, 1}`.'
-        status:
-          default: ok
-          description: Whether this page was parsed successfully (`ok`) or failed (`failed`).
-          enum:
-          - ok
-          - failed
-          title: Status
-          type: string
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Failure reason. Present only when `status` is `failed`.
-          title: Reason
-        children:
-          description: The elements detected on this page, in reading order. Empty for failed pages.
-          items:
-            $ref: '#/components/schemas/Element'
-          title: Children
-          type: array
-        markdown:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: This page's slice of the top-level `markdown` string (`markdown[grounding.range.start:grounding.range.end]`). `""` for failed pages. Present only when `options.inline_markdown` is `true`.
-          title: Markdown
-      required:
-      - grounding
-      title: Page
-      type: object
-    FigureOptions:
+    BaseElementOptions:
       additionalProperties: false
       properties:
         markdown:
           default: true
           title: Markdown
           type: boolean
-      title: FigureOptions
+      title: BaseElementOptions
       type: object
     Element:
       description: 'Hierarchical document element. All non-page elements share this shape.
@@ -614,6 +548,146 @@ components:
       - grounding
       title: Element
       type: object
+    Grounding:
+      description: 'Where a node lives: its page, its slice of `markdown`, and its box.
+
+
+        The same shape is used for page nodes, element nodes, and each
+
+        `atomic_grounding` entry, so any grounding object is self-contained — it
+
+        can be lifted out of the tree and still locates its content.'
+      properties:
+        page:
+          description: 1-indexed page number this grounding is on. On a page node, the page's own number.
+          title: Page
+          type: integer
+        range:
+          $ref: '#/components/schemas/Range'
+          description: '`[start, end)` offsets into the top-level `markdown` string covered by this node or segment.'
+        box:
+          $ref: '#/components/schemas/Box'
+          description: Bounding box in normalized page coordinates (`0`–`1` fractions of page width/height, at most 8 decimal places). A page node's box is always the full page `{0, 0, 1, 1}`.
+      required:
+      - page
+      - range
+      - box
+      title: Grounding
+      type: object
+    FigureOptions:
+      additionalProperties: false
+      properties:
+        markdown:
+          default: true
+          title: Markdown
+          type: boolean
+      title: FigureOptions
+      type: object
+    ParseBilling:
+      description: Billing summary for one parse request.
+      properties:
+        service_tier:
+          anyOf:
+          - enum:
+            - standard
+            - priority
+            type: string
+          - type: 'null'
+          description: 'The service tier the request ran in: `standard` or `priority`. A sync request reports `priority` (same lane, same price).'
+          title: Service Tier
+        total_credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Credits charged for this request.
+          title: Total Credits
+      required:
+      - service_tier
+      - total_credits
+      title: ParseBilling
+      type: object
+    Page:
+      properties:
+        type:
+          const: page
+          default: page
+          description: The node type. Identifies this node as a page in the structure tree.
+          title: Type
+          type: string
+        grounding:
+          $ref: '#/components/schemas/Grounding'
+          description: 'The page''s spatial data: `page` is the 1-indexed page number in the source document (not contiguous when `options.pages` filters out some pages); `range` covers this page''s content in the top-level `markdown` string (zero-length `start == end` for failed pages); `box` is always the full page `{0, 0, 1, 1}`.'
+        status:
+          default: ok
+          description: Whether this page was parsed successfully (`ok`) or failed (`failed`).
+          enum:
+          - ok
+          - failed
+          title: Status
+          type: string
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Failure reason. Present only when `status` is `failed`.
+          title: Reason
+        children:
+          description: The elements detected on this page, in reading order. Empty for failed pages.
+          items:
+            $ref: '#/components/schemas/Element'
+          title: Children
+          type: array
+        markdown:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: This page's slice of the top-level `markdown` string (`markdown[grounding.range.start:grounding.range.end]`). `""` for failed pages. Present only when `options.inline_markdown` is `true`.
+          title: Markdown
+      required:
+      - grounding
+      title: Page
+      type: object
+    Document:
+      properties:
+        type:
+          const: document
+          default: document
+          description: The node type. Identifies this node as the root of the structure tree.
+          title: Type
+          type: string
+        children:
+          description: The pages of the document, in source order.
+          items:
+            $ref: '#/components/schemas/Page'
+          title: Children
+          type: array
+        markdown:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: The full document markdown — identical to the top-level `markdown` field, included so the structure tree is self-contained. Present only when `options.inline_markdown` is `true`.
+          title: Markdown
+      title: Document
+      type: object
+    Range:
+      description: A `[start, end)` slice of the top-level `markdown` string.
+      properties:
+        start:
+          description: Inclusive start offset into the top-level `markdown` string, in the units declared by `metadata.range_units` (Unicode code points).
+          title: Start
+          type: integer
+        end:
+          description: Exclusive end offset into the top-level `markdown` string, in the units declared by `metadata.range_units` (Unicode code points).
+          title: End
+          type: integer
+      required:
+      - start
+      - end
+      title: Range
+      type: object
     Box:
       description: 'Axis-aligned bounding box in normalized page coordinates.
 
@@ -651,6 +725,19 @@ components:
       - ymax
       title: Box
       type: object
+    ErrorResponse:
+      type: object
+      title: ErrorResponse
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Stable snake_case error code (e.g. ``validation_error``, ``unknown_model_version``, ``invalid_url``, ``invalid_api_key``, ``rate_limit_exceeded``).
+        message:
+          type: string
+          description: Human-readable detail.
     ParseResponse:
       description: 'The parse result: the full document as `markdown`, its hierarchical
 
@@ -674,49 +761,6 @@ components:
       - structure
       title: ParseResponse
       type: object
-    BlocksOptions:
-      additionalProperties: false
-      properties:
-        text:
-          $ref: '#/components/schemas/BaseElementOptions'
-        table:
-          $ref: '#/components/schemas/TableOptions'
-        figure:
-          $ref: '#/components/schemas/FigureOptions'
-        marginalia:
-          $ref: '#/components/schemas/BaseElementOptions'
-        attestation:
-          $ref: '#/components/schemas/BaseElementOptions'
-        logo:
-          $ref: '#/components/schemas/BaseElementOptions'
-        scan_code:
-          $ref: '#/components/schemas/BaseElementOptions'
-        card:
-          $ref: '#/components/schemas/BaseElementOptions'
-      title: BlocksOptions
-      type: object
-    BaseElementOptions:
-      additionalProperties: false
-      properties:
-        markdown:
-          default: true
-          title: Markdown
-          type: boolean
-      title: BaseElementOptions
-      type: object
-    ErrorResponse:
-      type: object
-      title: ErrorResponse
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Stable snake_case error code (e.g. ``validation_error``, ``unknown_model_version``, ``invalid_url``, ``invalid_api_key``, ``rate_limit_exceeded``).
-        message:
-          type: string
-          description: Human-readable detail.
     TableOptions:
       additionalProperties: false
       properties:
@@ -732,48 +776,6 @@ components:
           title: Format
           type: string
       title: TableOptions
-      type: object
-    Range:
-      description: A `[start, end)` slice of the top-level `markdown` string.
-      properties:
-        start:
-          description: Inclusive start offset into the top-level `markdown` string, in the units declared by `metadata.range_units` (Unicode code points).
-          title: Start
-          type: integer
-        end:
-          description: Exclusive end offset into the top-level `markdown` string, in the units declared by `metadata.range_units` (Unicode code points).
-          title: End
-          type: integer
-      required:
-      - start
-      - end
-      title: Range
-      type: object
-    Grounding:
-      description: 'Where a node lives: its page, its slice of `markdown`, and its box.
-
-
-        The same shape is used for page nodes, element nodes, and each
-
-        `atomic_grounding` entry, so any grounding object is self-contained — it
-
-        can be lifted out of the tree and still locates its content.'
-      properties:
-        page:
-          description: 1-indexed page number this grounding is on. On a page node, the page's own number.
-          title: Page
-          type: integer
-        range:
-          $ref: '#/components/schemas/Range'
-          description: '`[start, end)` offsets into the top-level `markdown` string covered by this node or segment.'
-        box:
-          $ref: '#/components/schemas/Box'
-          description: Bounding box in normalized page coordinates (`0`–`1` fractions of page width/height, at most 8 decimal places). A page node's box is always the full page `{0, 0, 1, 1}`.
-      required:
-      - page
-      - range
-      - box
-      title: Grounding
       type: object
     ParseMetadata:
       description: 'Information about a parse request. This is the customer-facing shape —
@@ -842,38 +844,24 @@ components:
       - billing
       title: ParseMetadata
       type: object
-    ParseBilling:
-      description: Billing summary for one parse request.
+    BlocksOptions:
+      additionalProperties: false
       properties:
-        service_tier:
-          anyOf:
-          - enum:
-            - standard
-            - priority
-            type: string
-          - type: 'null'
-          description: 'The service tier the request ran in: `standard` or `priority`. A sync request reports `priority` (same lane, same price).'
-          title: Service Tier
-        total_credits:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: Credits charged for this request.
-          title: Total Credits
-      required:
-      - service_tier
-      - total_credits
-      title: ParseBilling
+        text:
+          $ref: '#/components/schemas/BaseElementOptions'
+        table:
+          $ref: '#/components/schemas/TableOptions'
+        figure:
+          $ref: '#/components/schemas/FigureOptions'
+        marginalia:
+          $ref: '#/components/schemas/BaseElementOptions'
+        attestation:
+          $ref: '#/components/schemas/BaseElementOptions'
+        logo:
+          $ref: '#/components/schemas/BaseElementOptions'
+        scan_code:
+          $ref: '#/components/schemas/BaseElementOptions'
+        card:
+          $ref: '#/components/schemas/BaseElementOptions'
+      title: BlocksOptions
       type: object
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic

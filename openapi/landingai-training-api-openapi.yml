@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Training API'
+  title: LandingLens Training API
+  description: '**LandingLens API** is a RESTful API that allows you to use LandingLens programmatically.'
   version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
 servers:
-- url: https://api.va.landing.ai
-  description: Production vision tools API
+- url: https://api.landing.ai
+  description: Production environment
 tags:
 - name: Training
 paths:
@@ -386,120 +386,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    TrainingResponseData:
-      properties:
-        trainingId:
-          type: string
-          title: Trainingid
-      type: object
-      required:
-      - trainingId
-      title: TrainingResponseData
-    BaseResponse_list_TrainingItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/TrainingItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[TrainingItem]]
-    PredictionItem:
-      properties:
-        count:
-          type: integer
-          title: Count
-        groundTruthClassId:
-          type: integer
-          title: Groundtruthclassid
-        predictedClassId:
-          type: integer
-          title: Predictedclassid
-      type: object
-      required:
-      - count
-      - groundTruthClassId
-      - predictedClassId
-      title: PredictionItem
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    TrainingItem:
-      properties:
-        id:
-          type: string
-          title: Id
-        status:
-          $ref: '#/components/schemas/JobStatus'
-      type: object
-      required:
-      - id
-      - status
-      title: TrainingItem
-    AutoSplitOptions:
-      type: string
-      enum:
-      - all-labeled
-      - without-split
-      title: AutoSplitOptions
-    ConfusionMetricsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ConfusionMatrix'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ConfusionMetricsResponse
-    BaseResponse_TrainingResponseData_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TrainingResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TrainingResponseData]
-    TrainItemModel:
-      properties:
-        architecture:
-          type: string
-          title: Architecture
-        hyperParams:
-          type: object
-          title: Hyperparams
-      type: object
-      required:
-      - architecture
-      - hyperParams
-      title: TrainItemModel
     TrainItemTransforms:
       properties:
         preprocessing:
@@ -522,32 +408,6 @@ components:
       required:
       - preprocessing
       title: TrainItemTransforms
-    MetricsSummary:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: The split name
-        classes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ClassMetrics'
-            type: array
-          - type: 'null'
-          title: Classes
-        metrics:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/Metric'
-            type: array
-          - type: 'null'
-          title: Metrics
-      type: object
-      required:
-      - name
-      - classes
-      - metrics
-      title: MetricsSummary
     HTTPValidationError:
       properties:
         detail:
@@ -557,6 +417,130 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Metric:
+      properties:
+        name:
+          type: string
+          title: Name
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - name
+      - performance
+      - recall
+      - precision
+      title: Metric
+    ArchItem:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: ArchItem
+    TrainingItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      type: object
+      required:
+      - id
+      - status
+      title: TrainingItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BaseResponse_TrainingResponseData_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingResponseData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[TrainingResponseData]
+    AutoSplitBody:
+      properties:
+        splitPercentages:
+          $ref: '#/components/schemas/SplitPercentages'
+        selectOption:
+          allOf:
+          - $ref: '#/components/schemas/AutoSplitOptions'
+          description: '`all-labeled` takes all labeled images, whether they have a split or not.
+
+            This option modifies the splits, which can be risky and inconvenient if you manually assigned the splits, as it will override your work.
+
+
+            `without-split` only takes the labeled images that do not yet have a split. It does not modify the splits already assigned to the images that previously had splits.'
+      type: object
+      required:
+      - splitPercentages
+      - selectOption
+      title: AutoSplitBody
+    ConfusionMatrix:
+      properties:
+        name:
+          type: string
+          title: Name
+        correctPredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Correctpredictions
+        falseNegativePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsenegativepredictions
+        falsePositivePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsepositivepredictions
+        misclassifications:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Misclassifications
+      type: object
+      required:
+      - name
+      - correctPredictions
+      - falseNegativePredictions
+      - falsePositivePredictions
+      - misclassifications
+      title: ConfusionMatrix
     ClassMetrics:
       properties:
         id:
@@ -592,39 +576,32 @@ components:
       required:
       - data
       title: BaseResponse[list[ArchItem]]
-    ConfusionMatrix:
+    MetricsSummaryResponse:
       properties:
-        name:
-          type: string
-          title: Name
-        correctPredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Correctpredictions
-        falseNegativePredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Falsenegativepredictions
-        falsePositivePredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Falsepositivepredictions
-        misclassifications:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Misclassifications
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MetricsSummary'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
       required:
-      - name
-      - correctPredictions
-      - falseNegativePredictions
-      - falsePositivePredictions
-      - misclassifications
-      title: ConfusionMatrix
+      - data
+      title: MetricsSummaryResponse
+    BaseResponse_list_TrainingItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TrainingItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TrainingItem]]
     TrainingStatus:
       properties:
         status:
@@ -633,6 +610,15 @@ components:
       required:
       - status
       title: TrainingStatus
+    TrainingResponseData:
+      properties:
+        trainingId:
+          type: string
+          title: Trainingid
+      type: object
+      required:
+      - trainingId
+      title: TrainingResponseData
     TrainItem:
       properties:
         name:
@@ -649,45 +635,75 @@ components:
       - model
       - transforms
       title: TrainItem
-    AutoSplitBody:
+    AutoSplitOptions:
+      type: string
+      enum:
+      - all-labeled
+      - without-split
+      title: AutoSplitOptions
+    ConfusionMetricsResponse:
       properties:
-        splitPercentages:
-          $ref: '#/components/schemas/SplitPercentages'
-        selectOption:
-          allOf:
-          - $ref: '#/components/schemas/AutoSplitOptions'
-          description: '`all-labeled` takes all labeled images, whether they have a split or not.
-
-            This option modifies the splits, which can be risky and inconvenient if you manually assigned the splits, as it will override your work.
-
-
-            `without-split` only takes the labeled images that do not yet have a split. It does not modify the splits already assigned to the images that previously had splits.'
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ConfusionMatrix'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
       required:
-      - splitPercentages
-      - selectOption
-      title: AutoSplitBody
-    Metric:
+      - data
+      title: ConfusionMetricsResponse
+    MetricsSummary:
       properties:
         name:
           type: string
           title: Name
-        performance:
-          type: number
-          title: Performance
-        recall:
-          type: number
-          title: Recall
-        precision:
-          type: number
-          title: Precision
+          description: The split name
+        classes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ClassMetrics'
+            type: array
+          - type: 'null'
+          title: Classes
+        metrics:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Metric'
+            type: array
+          - type: 'null'
+          title: Metrics
       type: object
       required:
       - name
-      - performance
-      - recall
-      - precision
-      title: Metric
+      - classes
+      - metrics
+      title: MetricsSummary
+    TrainItemModel:
+      properties:
+        architecture:
+          type: string
+          title: Architecture
+        hyperParams:
+          type: object
+          title: Hyperparams
+      type: object
+      required:
+      - architecture
+      - hyperParams
+      title: TrainItemModel
+    JobStatus:
+      type: string
+      enum:
+      - CREATED
+      - STARTING
+      - TRAINING
+      - EVALUATING
+      - PUBLISHING
+      - SUCCEEDED
+      - FAILED
+      title: JobStatus
     SplitPercentages:
       properties:
         train:
@@ -705,26 +721,6 @@ components:
       - dev
       - test
       title: SplitPercentages
-    JobStatus:
-      type: string
-      enum:
-      - CREATED
-      - STARTING
-      - TRAINING
-      - EVALUATING
-      - PUBLISHING
-      - SUCCEEDED
-      - FAILED
-      title: JobStatus
-    ArchItem:
-      properties:
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - name
-      title: ArchItem
     BaseResponse_TrainingStatus_:
       properties:
         data:
@@ -735,28 +731,20 @@ components:
       required:
       - data
       title: BaseResponse[TrainingStatus]
-    MetricsSummaryResponse:
+    PredictionItem:
       properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MetricsSummary'
-            type: array
-          - type: 'null'
-          title: Data
+        count:
+          type: integer
+          title: Count
+        groundTruthClassId:
+          type: integer
+          title: Groundtruthclassid
+        predictedClassId:
+          type: integer
+          title: Predictedclassid
       type: object
       required:
-      - data
-      title: MetricsSummaryResponse
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic
+      - count
+      - groundTruthClassId
+      - predictedClassId
+      title: PredictionItem

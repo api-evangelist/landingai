@@ -1,10 +1,10 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, , Classify, Split, Section Classes Extract API'
-  version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
+  title: 'LandingAI Agentic Document Extraction (ADE) API v2: Parse…'
+  description: 'Parse and extract data from documents with DPT-3, a document parsing model from LandingAI, using the Agentic Document Extraction (ADE) v2 endpoints. Parse converts PDFs and images into structured Markdown and elements with per-element grounding (page numbers and coordinates) for RAG, search, and extraction pipelines. Extract pulls specific fields from parsed Markdown using a JSON schema. Documentation: https://docs.landing.ai'
+  version: 1.0.0
 servers:
-- url: https://api.va.landing.ai
+- url: https://api.ade.landing.ai
   description: Production vision tools API
 tags:
 - name: Extract
@@ -716,17 +716,6 @@ components:
       - range_units
       title: V2ExtractMetadata
       type: object
-    V2ExtractOptions:
-      additionalProperties: false
-      description: Extraction options (``docs/extract-v2-proposal.md`` → Options).
-      properties:
-        strict:
-          default: false
-          description: 'When ``true``, a schema containing fields the model cannot extract fails with a validation error — HTTP 422 on the sync route, or a failed job (``status: "failed"``) on the async ``/jobs`` route. When ``false`` (default), unsupported fields are skipped and extraction continues.'
-          title: Strict
-          type: boolean
-      title: V2ExtractOptions
-      type: object
     ErrorResponse:
       type: object
       title: ErrorResponse
@@ -740,15 +729,14 @@ components:
         message:
           type: string
           description: Human-readable detail.
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic
+    V2ExtractOptions:
+      additionalProperties: false
+      description: Extraction options (``docs/extract-v2-proposal.md`` → Options).
+      properties:
+        strict:
+          default: false
+          description: 'When ``true``, a schema containing fields the model cannot extract fails with a validation error — HTTP 422 on the sync route, or a failed job (``status: "failed"``) on the async ``/jobs`` route. When ``false`` (default), unsupported fields are skipped and extraction continues.'
+          title: Strict
+          type: boolean
+      title: V2ExtractOptions
+      type: object

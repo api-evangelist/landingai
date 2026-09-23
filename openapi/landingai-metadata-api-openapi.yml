@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Metadata API'
+  title: LandingLens Metadata API
+  description: '**LandingLens API** is a RESTful API that allows you to use LandingLens programmatically.'
   version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
 servers:
-- url: https://api.va.landing.ai
-  description: Production vision tools API
+- url: https://api.landing.ai
+  description: Production environment
 tags:
 - name: Metadata
 paths:
@@ -157,6 +157,53 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    MetadataType:
+      type: string
+      enum:
+      - text
+      - number
+      - boolean
+      title: MetadataType
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BaseResponse_MetadataItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/MetadataItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[MetadataItem]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     MetadataCreate:
       properties:
         name:
@@ -181,15 +228,6 @@ components:
       - allowMultiple
       - predefinedChoices
       title: MetadataCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     MetadataItem:
       properties:
         name:
@@ -222,57 +260,6 @@ components:
       - id
       - valueFlexible
       title: MetadataItem
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    BaseResponse_list_MetadataItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MetadataItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[MetadataItem]]
-    BaseResponse_MetadataItem_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/MetadataItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[MetadataItem]
-    MetadataType:
-      type: string
-      enum:
-      - text
-      - number
-      - boolean
-      title: MetadataType
     MetadataUpdate:
       properties:
         name:
@@ -303,15 +290,16 @@ components:
       - predefinedChoicesAppend
       - valueFlexible
       title: MetadataUpdate
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic
+    BaseResponse_list_MetadataItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MetadataItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[MetadataItem]]

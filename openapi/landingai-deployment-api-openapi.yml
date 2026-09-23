@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Deployment API'
+  title: LandingLens Deployment API
+  description: '**LandingLens API** is a RESTful API that allows you to use LandingLens programmatically.'
   version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
 servers:
-- url: https://api.va.landing.ai
-  description: Production vision tools API
+- url: https://api.landing.ai
+  description: Production environment
 tags:
 - name: Deployment
 paths:
@@ -40,7 +40,6 @@ paths:
         immediately.
 
         - Upload a model to the deployment later and then use it for predictions.
-
 
 
         **Threshold** (Optional):
@@ -292,16 +291,47 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    BaseResponse_DeploymentItem_:
+    DeploymentInput:
       properties:
-        data:
+        name:
+          type: string
+          title: Name
+        modelId:
           anyOf:
-          - $ref: '#/components/schemas/DeploymentItem'
+          - type: string
+            format: uuid4
           - type: 'null'
+          title: Modelid
+        threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Threshold
       type: object
       required:
-      - data
-      title: BaseResponse[DeploymentItem]
+      - name
+      title: DeploymentInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     BaseResponse_list_DeploymentItem__:
       properties:
         data:
@@ -324,11 +354,17 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    DeploymentInput:
+    ErrorMessage:
       properties:
-        name:
+        message:
           type: string
-          title: Name
+          title: Message
+      type: object
+      required:
+      - message
+      title: ErrorMessage
+    DeploymentUpdateInput:
+      properties:
         modelId:
           anyOf:
           - type: string
@@ -341,9 +377,17 @@ components:
           - type: 'null'
           title: Threshold
       type: object
+      title: DeploymentUpdateInput
+    BaseResponse_DeploymentItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/DeploymentItem'
+          - type: 'null'
+      type: object
       required:
-      - name
-      title: DeploymentInput
+      - data
+      title: BaseResponse[DeploymentItem]
     DeploymentItem:
       properties:
         id:
@@ -373,60 +417,3 @@ components:
       - predictionUrl
       - name
       title: DeploymentItem
-    DeploymentUpdateInput:
-      properties:
-        modelId:
-          anyOf:
-          - type: string
-            format: uuid4
-          - type: 'null'
-          title: Modelid
-        threshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Threshold
-      type: object
-      title: DeploymentUpdateInput
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ErrorMessage:
-      properties:
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - message
-      title: ErrorMessage
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic

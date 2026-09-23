@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: 'LandingAI Agentic Document Extraction (ADE) API v1: Parse, Extract, Classify, Split, Section Classes Model API'
+  title: LandingLens Model API
+  description: '**LandingLens API** is a RESTful API that allows you to use LandingLens programmatically.'
   version: 0.1.0
-  description: 'Convert documents such as PDFs, images, and Office files into structured data with LandingAI''s Agentic Document Extraction (ADE) v1 endpoints. Includes Parse (documents to Markdown and structured chunks with grounding), Extract (schema-based field extraction), Classify (page-level classification), Split (separate multi-document files), and Section (hierarchical table of contents), plus asynchronous jobs for parsing and extraction. Documentation: https://docs.landing.ai'
 servers:
-- url: https://api.va.landing.ai
-  description: Production vision tools API
+- url: https://api.landing.ai
+  description: Production environment
 tags:
 - name: Model
 paths:
@@ -172,25 +172,6 @@ components:
       required:
       - data
       title: ModelDownloadResponse
-    ModelResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ModelItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: ModelResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -212,19 +193,34 @@ components:
       - msg
       - type
       title: ValidationError
-    ModelsResponse:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ModelDownloadRequest:
+      properties:
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownloadRequest
+    ModelResponse:
       properties:
         data:
           anyOf:
-          - items:
-              $ref: '#/components/schemas/ModelItem'
-            type: array
+          - $ref: '#/components/schemas/ModelItem'
           - type: 'null'
-          title: Data
       type: object
       required:
       - data
-      title: ModelsResponse
+      title: ModelResponse
     ModelDownload:
       properties:
         downloadUrl:
@@ -239,6 +235,19 @@ components:
       required:
       - threshold
       title: ModelDownload
+    ModelsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ModelItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ModelsResponse
     ModelItem:
       properties:
         id:
@@ -256,24 +265,3 @@ components:
       - id
       - name
       title: ModelItem
-    ModelDownloadRequest:
-      properties:
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownloadRequest
-  securitySchemes:
-    Basic Auth:
-      type: http
-      description: 'Your unique API key for authentication.
-
-
-        Get your API key here: https://va.landing.ai/settings/api-key.
-
-
-        If using the EU endpoint, get your API key here: https://va.eu-west-1.landing.ai/settings/api-key.'
-      scheme: bearer
-      bearerFormat: Basic
