@@ -57,10 +57,10 @@ modified: '2026-07-19'
 tags:
 - Company
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Document Extraction
 - Document Processing
-- Computer-Vision
+- Computer Vision
 - OCR
 - Data Extraction
 - Agents
@@ -76,6 +76,8 @@ tags_raw:
 - Data Extraction
 - Agents
 - Developer Tools
+- Machine-Learning
+- Computer-Vision
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

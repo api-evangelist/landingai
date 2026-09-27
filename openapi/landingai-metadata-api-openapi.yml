@@ -164,6 +164,16 @@ components:
       - number
       - boolean
       title: MetadataType
+    BaseResponse_MetadataItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/MetadataItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[MetadataItem]
     ValidationError:
       properties:
         loc:
@@ -185,25 +195,6 @@ components:
       - msg
       - type
       title: ValidationError
-    BaseResponse_MetadataItem_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/MetadataItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[MetadataItem]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     MetadataCreate:
       properties:
         name:
@@ -228,6 +219,15 @@ components:
       - allowMultiple
       - predefinedChoices
       title: MetadataCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     MetadataItem:
       properties:
         name:
@@ -260,6 +260,19 @@ components:
       - id
       - valueFlexible
       title: MetadataItem
+    BaseResponse_list_MetadataItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MetadataItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[MetadataItem]]
     MetadataUpdate:
       properties:
         name:
@@ -290,16 +303,3 @@ components:
       - predefinedChoicesAppend
       - valueFlexible
       title: MetadataUpdate
-    BaseResponse_list_MetadataItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MetadataItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[MetadataItem]]

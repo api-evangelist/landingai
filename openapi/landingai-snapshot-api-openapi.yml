@@ -223,6 +223,16 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    Body_post_snapshot_export_v1_projects__project_id__dataset_snapshots__snapshot_version__export_post:
+      properties:
+        retry:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Retry
+          default: false
+      type: object
+      title: Body_post_snapshot_export_v1_projects__project_id__dataset_snapshots__snapshot_version__export_post
     SnapshotExportStatus:
       type: string
       enum:
@@ -231,14 +241,36 @@ components:
       - Completed
       - Failed
       title: SnapshotExportStatus
-    SnapshotInput:
+    BaseResponse_list_SnapshotItem__:
       properties:
-        signedCsvInfo:
-          type: boolean
-          title: Signedcsvinfo
-          default: false
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SnapshotItem'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
-      title: SnapshotInput
+      required:
+      - data
+      title: BaseResponse[list[SnapshotItem]]
+    SnapshotItem:
+      properties:
+        name:
+          type: string
+          title: Name
+        version:
+          type: integer
+          title: Version
+        creationTime:
+          type: string
+          title: Creationtime
+      type: object
+      required:
+      - name
+      - version
+      - creationTime
+      title: SnapshotItem
     ValidationError:
       properties:
         loc:
@@ -260,55 +292,6 @@ components:
       - msg
       - type
       title: ValidationError
-    Body_post_snapshot_export_v1_projects__project_id__dataset_snapshots__snapshot_version__export_post:
-      properties:
-        retry:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Retry
-          default: false
-      type: object
-      title: Body_post_snapshot_export_v1_projects__project_id__dataset_snapshots__snapshot_version__export_post
-    SnapshotItem:
-      properties:
-        name:
-          type: string
-          title: Name
-        version:
-          type: integer
-          title: Version
-        creationTime:
-          type: string
-          title: Creationtime
-      type: object
-      required:
-      - name
-      - version
-      - creationTime
-      title: SnapshotItem
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BaseResponse_list_SnapshotItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/SnapshotItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[SnapshotItem]]
     BaseResponse_SnapshotExportItem_:
       properties:
         data:
@@ -319,6 +302,15 @@ components:
       required:
       - data
       title: BaseResponse[SnapshotExportItem]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     SnapshotExportItem:
       properties:
         status:
@@ -340,3 +332,11 @@ components:
       required:
       - downloadExpiresAt
       title: SnapshotExportItem
+    SnapshotInput:
+      properties:
+        signedCsvInfo:
+          type: boolean
+          title: Signedcsvinfo
+          default: false
+      type: object
+      title: SnapshotInput

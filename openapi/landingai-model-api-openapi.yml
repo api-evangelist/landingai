@@ -162,16 +162,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ModelDownloadResponse:
+    ModelItem:
       properties:
-        data:
+        id:
+          type: string
+          format: uuid4
+          title: Id
+          description: The model ID
+        name:
           anyOf:
-          - $ref: '#/components/schemas/ModelDownload'
+          - type: string
           - type: 'null'
+          title: Name
       type: object
       required:
-      - data
-      title: ModelDownloadResponse
+      - id
+      - name
+      title: ModelItem
+    ModelDownloadRequest:
+      properties:
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownloadRequest
     ValidationError:
       properties:
         loc:
@@ -193,6 +209,16 @@ components:
       - msg
       - type
       title: ValidationError
+    ModelDownloadResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ModelDownload'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: ModelDownloadResponse
     HTTPValidationError:
       properties:
         detail:
@@ -202,15 +228,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ModelDownloadRequest:
-      properties:
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownloadRequest
     ModelResponse:
       properties:
         data:
@@ -221,6 +238,19 @@ components:
       required:
       - data
       title: ModelResponse
+    ModelsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ModelItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ModelsResponse
     ModelDownload:
       properties:
         downloadUrl:
@@ -235,33 +265,3 @@ components:
       required:
       - threshold
       title: ModelDownload
-    ModelsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ModelItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ModelsResponse
-    ModelItem:
-      properties:
-        id:
-          type: string
-          format: uuid4
-          title: Id
-          description: The model ID
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-      type: object
-      required:
-      - id
-      - name
-      title: ModelItem

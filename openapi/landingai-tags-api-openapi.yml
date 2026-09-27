@@ -151,6 +151,36 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    TagBase:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: TagBase
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     TagItem:
       properties:
         name:
@@ -186,45 +216,6 @@ components:
       - updatedAt
       - color
       title: TagItem
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    TagBase:
-      properties:
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - name
-      title: TagBase
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     BaseResponse_list_TagItem__:
       properties:
         data:
@@ -238,6 +229,15 @@ components:
       required:
       - data
       title: BaseResponse[list[TagItem]]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     BaseResponse_TagItem_:
       properties:
         data:

@@ -105,6 +105,24 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ClassMap:
+      properties:
+        name:
+          type: string
+          title: Name
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+        description:
+          type: string
+          title: Description
+          default: ''
+      type: object
+      required:
+      - name
+      title: ClassMap
     ValidationError:
       properties:
         loc:
@@ -126,15 +144,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     LabelClass:
       properties:
         id:
@@ -164,24 +173,15 @@ components:
       - color
       - description
       title: LabelClass
-    ClassMap:
+    HTTPValidationError:
       properties:
-        name:
-          type: string
-          title: Name
-        color:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Color
-        description:
-          type: string
-          title: Description
-          default: ''
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - name
-      title: ClassMap
+      title: HTTPValidationError
     DefectClassResponse:
       properties:
         data:

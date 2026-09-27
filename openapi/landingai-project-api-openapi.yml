@@ -181,6 +181,36 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    IsActiveProject:
+      properties:
+        isActive:
+          type: boolean
+          title: Isactive
+      type: object
+      required:
+      - isActive
+      title: IsActiveProject
     ProjectResponseItem:
       properties:
         id:
@@ -206,27 +236,26 @@ components:
       - projectType
       - createdAt
       title: ProjectResponseItem
-    ValidationError:
+    ProjectType:
+      type: string
+      enum:
+      - classification
+      - object-detection
+      - segmentation
+      - anomaly-detection
+      title: ProjectType
+    ProjectInput:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        name:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Name
+        projectType:
+          $ref: '#/components/schemas/ProjectType'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - name
+      - projectType
+      title: ProjectInput
     HTTPValidationError:
       properties:
         detail:
@@ -249,14 +278,6 @@ components:
       required:
       - data
       title: ProjectsResponse
-    ProjectType:
-      type: string
-      enum:
-      - classification
-      - object-detection
-      - segmentation
-      - anomaly-detection
-      title: ProjectType
     ProjectResponse:
       properties:
         data:
@@ -267,24 +288,3 @@ components:
       required:
       - data
       title: ProjectResponse
-    IsActiveProject:
-      properties:
-        isActive:
-          type: boolean
-          title: Isactive
-      type: object
-      required:
-      - isActive
-      title: IsActiveProject
-    ProjectInput:
-      properties:
-        name:
-          type: string
-          title: Name
-        projectType:
-          $ref: '#/components/schemas/ProjectType'
-      type: object
-      required:
-      - name
-      - projectType
-      title: ProjectInput

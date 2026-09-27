@@ -3082,231 +3082,6 @@ paths:
       - Basic Auth: []
 components:
   schemas:
-    InternLMXComposer2Data:
-      properties:
-        answer:
-          type: string
-          title: Answer
-      type: object
-      required:
-      - answer
-      title: InternLMXComposer2Data
-    NSFWResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/NSFWResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: NSFWResponse
-    VideoTemporalLocalizationResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              type: number
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: VideoTemporalLocalizationResponse
-    SpreadsheetSplit:
-      properties:
-        class:
-          type: string
-          title: Class
-          description: 'Split class: ''page'' for per-sheet splits, ''full'' for single split with all content'
-        identifier:
-          type: string
-          title: Identifier
-          description: 'Split identifier: sheet name for ''page'' splits, ''full'' for full split'
-        sheets:
-          items:
-            type: integer
-          type: array
-          title: Sheets
-          description: 'Sheet indices: single element for ''page'' splits, all indices for ''full'' split'
-        markdown:
-          type: string
-          title: Markdown
-          description: Combined markdown for this split
-        chunks:
-          items:
-            type: string
-          type: array
-          title: Chunks
-          description: Chunk IDs in this split
-      type: object
-      required:
-      - class
-      - identifier
-      - sheets
-      - markdown
-      - chunks
-      title: SpreadsheetSplit
-      description: 'Sheet-based split from spreadsheet parsing.
-
-
-        Similar to ParseSplit but grouped by sheet instead of page.
-
-        Supports both ''page'' (per-sheet) and ''full'' (all sheets) split types.'
-    ImageCaptioningType:
-      type: string
-      enum:
-      - verbose
-      - transcribe
-      - custom
-      title: ImageCaptioningType
-    TextToInstanceSegmentationResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              items:
-                anyOf:
-                - $ref: '#/components/schemas/Florence2SAM2IdInstance'
-                - $ref: '#/components/schemas/InstanceSegmentationResponseData'
-              type: array
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: TextToInstanceSegmentationResponse
-    SplitResponse:
-      properties:
-        splits:
-          items:
-            $ref: '#/components/schemas/SplitData'
-          type: array
-          title: Splits
-        metadata:
-          $ref: '#/components/schemas/SplitMetadata'
-      type: object
-      required:
-      - splits
-      - metadata
-      title: SplitResponse
-      description: Response model for split classification endpoint.
-    GroundingType:
-      type: string
-      enum:
-      - chunkLogo
-      - chunkCard
-      - chunkAttestation
-      - chunkScanCode
-      - chunkForm
-      - chunkTable
-      - chunkFigure
-      - chunkText
-      - chunkMarginalia
-      - chunkTitle
-      - chunkPageHeader
-      - chunkPageFooter
-      - chunkPageNumber
-      - chunkKeyValue
-      - table
-      - tableCell
-      title: GroundingType
-    TemporalLocalizationTools:
-      type: string
-      enum:
-      - internlm-xcomposer
-      - gpt4o
-      - qwen2vl
-      - qwen25vl
-      title: TemporalLocalizationTools
-    Body_tool_visual_prompts_to_od_v1_tools_visual_prompts_to_object_detection_post:
-      properties:
-        visual_prompts:
-          type: string
-          title: Visual Prompts
-        model:
-          $ref: '#/components/schemas/VisualPromptsToODModel'
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-      type: object
-      required:
-      - visual_prompts
-      - model
-      title: Body_tool_visual_prompts_to_od_v1_tools_visual_prompts_to_object_detection_post
-    Florence2SAM2Response:
-      properties:
-        data:
-          anyOf:
-          - additionalProperties:
-              additionalProperties:
-                $ref: '#/components/schemas/Florence2SAM2Instance'
-              type: object
-            type: object
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: Florence2SAM2Response
-    AutoLabelRequest:
-      properties:
-        file:
-          type: string
-          format: binary
-          title: File
-          description: Image file to be processed (max 36MP)
-          examples:
-          - image.jpg
-        config:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Config
-          description: JSON configuration string for optional features
-          examples:
-          - '{"option1": "value1"}'
-        labelType:
-          type: string
-          title: Labeltype
-          description: Type of labeling to perform (currently only 'segmentation' is supported)
-          default: segmentation
-      type: object
-      required:
-      - file
-      title: AutoLabelRequest
-      description: Request model for auto-labeling endpoint with SAM2 embeddings generation
-    VisualPromptsToODModel:
-      type: string
-      enum:
-      - countgd
-      const: countgd
-      title: VisualPromptsToODModel
-    ExtractWarning:
-      properties:
-        code:
-          $ref: '#/components/schemas/ExtractWarningCode'
-          description: The type of warning, used to translate to a status code downstream
-        msg:
-          type: string
-          title: Msg
-          description: Human-readable description of the warning with more details
-      type: object
-      required:
-      - code
-      - msg
-      title: ExtractWarning
     ActivityRecognitionEventItem:
       properties:
         start_time:
@@ -3331,18 +3106,366 @@ components:
           default: 0
       type: object
       title: ActivityRecognitionEventItem
-    JobDeleteResponseData:
+    NSFWResponseData:
       properties:
-        message:
+        label:
           type: string
-          title: Message
-          description: Confirmation message for job deletion
+          title: Label
+        score:
+          type: number
+          title: Score
       type: object
       required:
-      - message
-      title: JobDeleteResponseData
-      description: Training job deletion response
-    AsyncExtractRequest:
+      - label
+      - score
+      title: NSFWResponseData
+    SectionResponse:
+      properties:
+        table_of_contents:
+          items:
+            $ref: '#/components/schemas/SectionTOCEntry'
+          type: array
+          title: Table Of Contents
+        table_of_contents_md:
+          type: string
+          title: Table Of Contents Md
+        metadata:
+          $ref: '#/components/schemas/SectionMetadata'
+      type: object
+      required:
+      - table_of_contents
+      - table_of_contents_md
+      - metadata
+      title: SectionResponse
+      description: Response model for section endpoint.
+    QRReaderResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/QRReaderResponseData'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: QRReaderResponse
+    JobStatusResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          title: Status
+        received_at:
+          type: integer
+          title: Received At
+        created_at:
+          type: integer
+          title: Created At
+          description: Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.
+          default: 0
+        progress:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Progress
+          description: Job completion progress as a decimal from 0 to 1, where 0 is not started, 1 is finished, and values between 0 and 1 indicate work in progress.
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ParseResponse'
+          - $ref: '#/components/schemas/SpreadsheetParseResponse'
+          - type: 'null'
+          title: Data
+          description: The parsed output (ParseResponse for documents, SpreadsheetParseResponse for spreadsheets), if the job is complete and the `output_save_url` parameter was not used.
+        output_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Url
+          description: The URL to the parsed content. This field contains a URL when the job is complete and either you specified the `output_save_url` parameter or the result is larger than 1MB. When the result exceeds 1MB, the URL is a presigned S3 URL that expires after 1 hour. Each time you GET the job, a new presigned URL is generated.
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/ParseMetadata'
+          - type: 'null'
+        failure_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Failure Reason
+      type: object
+      required:
+      - job_id
+      - status
+      - received_at
+      - progress
+      title: JobStatusResponse
+      description: Unified response for job status endpoint.
+    ImageToTextResponse:
+      properties:
+        data:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ImageToTextResponse
+    ParseResponseGrounding:
+      properties:
+        box:
+          $ref: '#/components/schemas/ParseGroundingBox'
+        page:
+          type: integer
+          title: Page
+        type:
+          $ref: '#/components/schemas/GroundingType'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+        low_confidence_spans:
+          items:
+            $ref: '#/components/schemas/Patch'
+          type: array
+          title: Low Confidence Spans
+      type: object
+      required:
+      - box
+      - page
+      - type
+      title: ParseResponseGrounding
+    EmbeddingsRequest:
+      properties:
+        model:
+          $ref: '#/components/schemas/EmbeddingsModel'
+        input:
+          items:
+            type: string
+          type: array
+          title: Input
+      type: object
+      required:
+      - model
+      - input
+      title: EmbeddingsRequest
+    routers__tools__agentic_od__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        prompts:
+          items:
+            type: string
+          type: array
+          maxItems: 1
+          minItems: 1
+          title: Prompts
+      type: object
+      required:
+      - prompts
+      title: FormData
+    AgenticDocAnalysisPageError:
+      properties:
+        page_num:
+          type: integer
+          title: Page Num
+        error:
+          type: string
+          title: Error
+        error_code:
+          type: integer
+          title: Error Code
+      type: object
+      required:
+      - page_num
+      - error
+      - error_code
+      title: AgenticDocAnalysisPageError
+    SplitRulesResponse:
+      properties:
+        suggested_categories:
+          $ref: '#/components/schemas/SplitV2CategoryTree-Output'
+          description: Suggested classification categories, in the same structure accepted by /v2/ade/split.
+        metadata:
+          $ref: '#/components/schemas/SplitV2Metadata'
+          description: Information about the request.
+      type: object
+      required:
+      - suggested_categories
+      - metadata
+      title: SplitRulesResponse
+      description: The suggested classification categories and request metadata.
+    SplitV2Response:
+      properties:
+        segments:
+          $ref: '#/components/schemas/SplitV2SegmentTree'
+          description: The classified segments, organized under the same categories you submitted. Each category maps to either a list of segments or a set of subcategories.
+        metadata:
+          $ref: '#/components/schemas/SplitV2Metadata'
+          description: Information about the request.
+      type: object
+      required:
+      - segments
+      - metadata
+      title: SplitV2Response
+      description: The classified segments and request metadata.
+    WSIEmbeddingResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/WSIEmbeddingResponseData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: WSIEmbeddingResponse
+    MarkdownToJSONSchemaRequest:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Markdown content to analyze for schema generation
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Optional user customization prompt for schema generation
+      type: object
+      required:
+      - markdown
+      title: MarkdownToJSONSchemaRequest
+    PoseDetectionResponse:
+      properties:
+        data:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: PoseDetectionResponse
+    routers__tools__glee__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        prompts:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Prompts
+        nmsThreshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Nmsthreshold
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+      type: object
+      required:
+      - prompts
+      title: FormData
+    SplitClass:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Name of the split classification type
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Detailed description of what this split type represents
+        identifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Identifier
+          description: Identifier to partition/group the splits by
+      type: object
+      required:
+      - name
+      title: SplitClass
+      description: Model for split classification option.
+    SectionTOCEntry:
+      properties:
+        title:
+          type: string
+          title: Title
+        level:
+          type: integer
+          title: Level
+        section_number:
+          type: string
+          title: Section Number
+        start_reference:
+          type: string
+          title: Start Reference
+      type: object
+      required:
+      - title
+      - level
+      - section_number
+      - start_reference
+      title: SectionTOCEntry
+      description: A single entry in the flat table of contents.
+    VisualPromptsToODModel:
+      type: string
+      enum:
+      - countgd
+      const: countgd
+      title: VisualPromptsToODModel
+    ActivityRecognitionResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ActivityRecognitionEvent'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: ActivityRecognitionResponse
+    ExtractRequest:
       properties:
         model:
           anyOf:
@@ -3373,227 +3496,99 @@ components:
           title: Strict
           description: If True, reject schemas with unsupported fields (HTTP 422). If False, prune unsupported fields and continue. Only applies to extract versions that support schema validation.
           default: false
-        output_save_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Output Save Url
-          description: If zero data retention (ZDR) is enabled, you must enter a URL for the extracted output to be saved to. When ZDR is enabled, the extracted content will not be in the API response.
       type: object
       required:
       - schema
-      title: AsyncExtractRequest
-      description: 'Request model for async extract endpoint.
-
-
-        Extends ExtractRequest with output_save_url for ZDR support.'
-    ExtractResponse:
-      properties:
-        extraction:
-          type: object
-          title: Extraction
-          description: The extracted key-value pairs.
-        extraction_metadata:
-          type: object
-          title: Extraction Metadata
-          description: The extracted key-value pairs and the chunk_reference for each one.
-        metadata:
-          $ref: '#/components/schemas/ExtractMetadata'
-          description: The metadata for the extraction process.
-      type: object
-      required:
-      - extraction
-      - extraction_metadata
-      - metadata
-      title: ExtractResponse
-    QRReaderResponse:
+      title: ExtractRequest
+    DoclingClass:
+      type: string
+      enum:
+      - background
+      - Caption
+      - Footnote
+      - Formula
+      - List-item
+      - Page-footer
+      - Page-header
+      - Picture
+      - Section-header
+      - Table
+      - Text
+      - Title
+      - Document Index
+      - Code
+      - Checkbox-Selected
+      - Checkbox-Unselected
+      - Form
+      - Key-Value Region
+      title: DoclingClass
+    BarcodeReaderResponse:
       properties:
         data:
           anyOf:
           - items:
-              $ref: '#/components/schemas/QRReaderResponseData'
+              $ref: '#/components/schemas/BarCodeReaderResponseData'
             type: array
           - type: 'null'
           title: Data
       type: object
       required:
       - data
-      title: QRReaderResponse
-    SplitData:
+      title: BarcodeReaderResponse
+    SplitV2SegmentTree:
+      additionalProperties:
+        anyOf:
+        - items:
+            $ref: '#/components/schemas/SplitV2SegmentLeafItem'
+          type: array
+        - $ref: '#/components/schemas/SplitV2SegmentTree'
+      type: object
+      title: SplitV2SegmentTree
+      description: 'The classified segments, organized under the categories you submitted.
+
+
+        Each category name maps to either a list of segments or a set of
+
+        subcategories. A category can hold more than one segment when the API
+
+        finds multiple instances of it, each with its own `identifier` and its
+
+        own set of pages.'
+    SegmentationBitMaskRLE:
       properties:
-        classification:
-          type: string
-          title: Classification
-        identifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Identifier
-        pages:
+        counts:
           items:
             type: integer
           type: array
-          title: Pages
-        markdowns:
+          title: Counts
+        size:
           items:
-            type: string
+            type: integer
           type: array
-          title: Markdowns
+          title: Size
       type: object
       required:
-      - classification
-      - identifier
-      - pages
-      - markdowns
-      title: SplitData
-      description: Split data for split classification endpoint.
-    EmbeddingsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/Embedding'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: EmbeddingsResponse
-    ODResponseData:
-      properties:
-        label:
-          type: string
-          title: Label
-        score:
-          type: number
-          title: Score
-        bounding_box:
-          items:
-            anyOf:
-            - type: integer
-            - type: number
-          type: array
-          maxItems: 4
-          minItems: 4
-          title: Bounding Box
-      type: object
-      required:
-      - label
-      - score
-      - bounding_box
-      title: ODResponseData
-    DoclingResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DoclingResponseData'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: DoclingResponse
-    SpreadsheetChunk:
-      properties:
-        markdown:
-          type: string
-          title: Markdown
-          description: Chunk content as HTML table with anchor tag (for tables) or parsed markdown content (for chunks from images)
-        type:
-          type: string
-          title: Type
-          description: 'Chunk type: ''table'' for spreadsheet tables, or types from /parse (text, table, figure, form, etc.) for chunks derived from embedded images'
-        id:
-          type: string
-          title: Id
-          description: 'Chunk ID - format: ''{sheet_name}-{cell_range}'' for tables, ''{sheet_name}-image-{index}-{anchor_cell}-chunk-{i}-{type}'' for parsed image chunks'
-        grounding:
-          anyOf:
-          - $ref: '#/components/schemas/ParseGrounding'
-          - type: 'null'
-          description: Visual grounding coordinates from /parse API (only for chunks derived from embedded images)
-      type: object
-      required:
-      - markdown
-      - type
-      - id
-      title: SpreadsheetChunk
-      description: 'Chunk from spreadsheet parsing.
-
-
-        Can represent:
-
-        - Table chunks from spreadsheet cells
-
-        - Parsed content chunks from embedded images (text, table, figure, etc.)'
-    ChunkingType:
+      - counts
+      - size
+      title: SegmentationBitMaskRLE
+    ImageToText:
       type: string
       enum:
-      - full
-      - page
-      title: ChunkingType
-    EmbeddingsRequest:
-      properties:
-        model:
-          $ref: '#/components/schemas/EmbeddingsModel'
-        input:
-          items:
-            type: string
-          type: array
-          title: Input
-      type: object
-      required:
-      - model
-      - input
-      title: EmbeddingsRequest
-    TrainingResponseData:
-      properties:
-        jobId:
-          type: string
-          title: Jobid
-          description: Unique identifier for the training job
-      type: object
-      required:
-      - jobId
-      title: TrainingResponseData
-      description: Training job creation response
-    PaddleOcrResponse:
+      - qwen2vl
+      - internlm-xcomposer
+      - qwen25vl
+      title: ImageToText
+    FlorenceV2Response:
       properties:
         data:
           anyOf:
-          - items:
-              type: object
-            type: array
+          - {}
           - type: 'null'
           title: Data
       type: object
       required:
       - data
-      title: PaddleOcrResponse
-    LocaRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-        bbox:
-          anyOf:
-          - items:
-              anyOf:
-              - type: integer
-              - type: number
-            type: array
-            maxItems: 4
-            minItems: 4
-          - type: 'null'
-          title: Bbox
-      type: object
-      required:
-      - image
-      title: LocaRequest
+      title: FlorenceV2Response
     WSIEmbeddingRequest:
       properties:
         image:
@@ -3611,6 +3606,105 @@ components:
       required:
       - image
       title: WSIEmbeddingRequest
+    Embedding:
+      properties:
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - embedding
+      title: Embedding
+    InternLMXComposer2Response:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/InternLMXComposer2Data'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: InternLMXComposer2Response
+    ParseSplit:
+      properties:
+        class:
+          type: string
+          title: Class
+        identifier:
+          type: string
+          title: Identifier
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+        markdown:
+          type: string
+          title: Markdown
+        chunks:
+          items:
+            type: string
+          type: array
+          title: Chunks
+      type: object
+      required:
+      - class
+      - identifier
+      - pages
+      - markdown
+      - chunks
+      title: ParseSplit
+    JobsListResponse:
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/JobSummary'
+          type: array
+          title: Jobs
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        has_more:
+          type: boolean
+          title: Has More
+          default: false
+      type: object
+      required:
+      - jobs
+      title: JobsListResponse
+      description: Response for listing jobs.
+    DoclingResponseData:
+      properties:
+        l:
+          type: number
+          title: L
+        t:
+          type: number
+          title: T
+        r:
+          type: number
+          title: R
+        b:
+          type: number
+          title: B
+        label:
+          $ref: '#/components/schemas/DoclingClass'
+        confidence:
+          type: number
+          title: Confidence
+      type: object
+      required:
+      - l
+      - t
+      - r
+      - b
+      - label
+      - confidence
+      title: DoclingResponseData
     ParseResponseTableCellGrounding:
       properties:
         box:
@@ -3635,14 +3729,66 @@ components:
       - page
       - type
       title: ParseResponseTableCellGrounding
-    Specificity:
-      type: string
-      enum:
-      - low
-      - medium
-      - high
-      - max
-      title: Specificity
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SplitResponse:
+      properties:
+        splits:
+          items:
+            $ref: '#/components/schemas/SplitData'
+          type: array
+          title: Splits
+        metadata:
+          $ref: '#/components/schemas/SplitMetadata'
+      type: object
+      required:
+      - splits
+      - metadata
+      title: SplitResponse
+      description: Response model for split classification endpoint.
+    Florence2SAM2Response:
+      properties:
+        data:
+          anyOf:
+          - additionalProperties:
+              additionalProperties:
+                $ref: '#/components/schemas/Florence2SAM2Instance'
+              type: object
+            type: object
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: Florence2SAM2Response
+    JobCreationResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+      type: object
+      required:
+      - job_id
+      title: JobCreationResponse
     ParseResponse:
       properties:
         markdown:
@@ -3674,152 +3820,6 @@ components:
       - splits
       - metadata
       title: ParseResponse
-    JobsListResponse:
-      properties:
-        jobs:
-          items:
-            $ref: '#/components/schemas/JobSummary'
-          type: array
-          title: Jobs
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        has_more:
-          type: boolean
-          title: Has More
-          default: false
-      type: object
-      required:
-      - jobs
-      title: JobsListResponse
-      description: Response for listing jobs.
-    BarcodeReaderResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BarCodeReaderResponseData'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BarcodeReaderResponse
-    SplitMetadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-          description: Organization ID
-        page_count:
-          type: integer
-          title: Page Count
-        duration_ms:
-          type: integer
-          title: Duration Ms
-        credit_usage:
-          type: number
-          title: Credit Usage
-        job_id:
-          type: string
-          title: Job Id
-          description: Inference history job ID
-          default: ''
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-          description: Model version used for split classification
-      type: object
-      required:
-      - filename
-      - page_count
-      - duration_ms
-      - credit_usage
-      title: SplitMetadata
-      description: Metadata for split classification response.
-    InternLMXComposer2Response:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/InternLMXComposer2Data'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: InternLMXComposer2Response
-    SpreadsheetParseMetadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-          description: Original filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-          description: Organization ID
-        sheet_count:
-          type: integer
-          title: Sheet Count
-          description: Number of sheets processed
-        total_rows:
-          type: integer
-          title: Total Rows
-          description: Total rows across all sheets
-        total_cells:
-          type: integer
-          title: Total Cells
-          description: Total non-empty cells across all sheets
-        total_chunks:
-          type: integer
-          title: Total Chunks
-          description: Total chunks (tables + images) extracted
-        total_images:
-          type: integer
-          title: Total Images
-          description: Total images extracted
-          default: 0
-        duration_ms:
-          type: integer
-          title: Duration Ms
-          description: Processing duration in milliseconds
-        credit_usage:
-          type: number
-          title: Credit Usage
-          description: Credits charged
-          default: 0.0
-        job_id:
-          type: string
-          title: Job Id
-          description: Inference history job ID
-          default: ''
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-          description: Model version for parsing images
-      type: object
-      required:
-      - filename
-      - sheet_count
-      - total_rows
-      - total_cells
-      - total_chunks
-      - duration_ms
-      title: SpreadsheetParseMetadata
-      description: Metadata for spreadsheet parsing result.
     Flux1Request:
       properties:
         task:
@@ -3897,82 +3897,284 @@ components:
       required:
       - prompt
       title: Flux1Request
-    ActivityRecognitionEvent:
+    LicensePlateResponse:
       properties:
-        events:
-          items:
-            $ref: '#/components/schemas/ActivityRecognitionEventItem'
-          type: array
-          title: Events
-          default: []
-        processing_time:
-          type: number
-          title: Processing Time
-          default: 0.0
-        model_time:
-          type: number
-          title: Model Time
-          default: 0.0
-      type: object
-      title: ActivityRecognitionEvent
-    ParseResponseTableCellGroundingPosition:
-      properties:
-        row:
-          type: integer
-          title: Row
-        col:
-          type: integer
-          title: Col
-        rowspan:
-          type: integer
-          title: Rowspan
-        colspan:
-          type: integer
-          title: Colspan
-        chunk_id:
-          type: string
-          title: Chunk Id
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/LicensePlateEvent'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
       required:
-      - row
-      - col
-      - rowspan
-      - colspan
-      - chunk_id
-      title: ParseResponseTableCellGroundingPosition
-    routers__tools__image_to_text__FormData:
+      - data
+      title: LicensePlateResponse
+    JobsListResponseData:
       properties:
-        image:
+        jobs:
+          items:
+            type: string
+          type: array
+          title: Jobs
+          description: List of training job identifiers
+      type: object
+      required:
+      - jobs
+      title: JobsListResponseData
+      description: List of training jobs response
+    BboxResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BboxResponseData'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BboxResponse
+    ClassificationData:
+      properties:
+        scores:
+          items:
+            type: number
+          type: array
+          title: Scores
+        labels:
+          items:
+            type: string
+          type: array
+          title: Labels
+      type: object
+      required:
+      - scores
+      - labels
+      title: ClassificationData
+    MarkdownToJSONSchemaResponse:
+      properties:
+        data:
+          $ref: '#/components/schemas/MarkdownToJSONSchemaResponseBase'
+      type: object
+      required:
+      - data
+      title: MarkdownToJSONSchemaResponse
+    SplitData:
+      properties:
+        classification:
+          type: string
+          title: Classification
+        identifier:
           anyOf:
           - type: string
-            format: binary
           - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        images:
+          title: Identifier
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+        markdowns:
+          items:
+            type: string
+          type: array
+          title: Markdowns
+      type: object
+      required:
+      - classification
+      - identifier
+      - pages
+      - markdowns
+      title: SplitData
+      description: Split data for split classification endpoint.
+    ExtractResponse:
+      properties:
+        extraction:
+          type: object
+          title: Extraction
+          description: The extracted key-value pairs.
+        extraction_metadata:
+          type: object
+          title: Extraction Metadata
+          description: The extracted key-value pairs and the chunk_reference for each one.
+        metadata:
+          $ref: '#/components/schemas/ExtractMetadata'
+          description: The metadata for the extraction process.
+      type: object
+      required:
+      - extraction
+      - extraction_metadata
+      - metadata
+      title: ExtractResponse
+    SplitV2CategoryTree-Output:
+      additionalProperties:
+        anyOf:
+        - $ref: '#/components/schemas/SplitV2CategoryLeaf'
+        - $ref: '#/components/schemas/SplitV2CategoryTree-Output'
+      type: object
+      title: SplitV2CategoryTree
+      description: 'The classification categories used to split a document.
+
+
+        Each category name maps to either a category that defines a
+
+        classification (with `identifier` and `instructions`) or a set of
+
+        subcategories. You pass these categories when you split the document.'
+    Flux1Response:
+      properties:
+        data:
           anyOf:
           - items:
               type: string
-              format: binary
             type: array
           - type: 'null'
-          title: Images
-        prompt:
-          type: string
-          title: Prompt
-        model:
-          $ref: '#/components/schemas/ImageToText'
+          title: Data
       type: object
       required:
-      - prompt
-      - model
-      title: FormData
-    SectionMetadata:
+      - data
+      title: Flux1Response
+    AsyncExtractRequest:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: The version of the model to use for extraction. Use `extract-latest` to use the latest version.
+        markdown:
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
+          title: Markdown
+          description: The Markdown file or Markdown content to extract data from.
+        markdown_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Markdown Url
+          description: The URL to the Markdown file to extract data from.
+        schema:
+          type: string
+          title: Schema
+          description: JSON schema for field extraction. This schema determines what key-values pairs are extracted from the Markdown. The schema must be a valid JSON object and will be validated before processing the document.
+        strict:
+          type: boolean
+          title: Strict
+          description: If True, reject schemas with unsupported fields (HTTP 422). If False, prune unsupported fields and continue. Only applies to extract versions that support schema validation.
+          default: false
+        output_save_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Save Url
+          description: If zero data retention (ZDR) is enabled, you must enter a URL for the extracted output to be saved to. When ZDR is enabled, the extracted content will not be in the API response.
+      type: object
+      required:
+      - schema
+      title: AsyncExtractRequest
+      description: 'Request model for async extract endpoint.
+
+
+        Extends ExtractRequest with output_save_url for ZDR support.'
+    Owlv2Request:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+        prompts:
+          items:
+            type: string
+          type: array
+          title: Prompts
+        confidence:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.0
+          - type: 'null'
+          title: Confidence
+          default: 0.2
+      type: object
+      required:
+      - image
+      - prompts
+      title: Owlv2Request
+    DoclingResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DoclingResponseData'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: DoclingResponse
+    JobSummary:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          title: Status
+        received_at:
+          type: integer
+          title: Received At
+        created_at:
+          type: integer
+          title: Created At
+          description: Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.
+          default: 0
+        progress:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Progress
+          description: Job completion as a decimal from 0 (not started) to 1 (complete).
+        failure_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Failure Reason
+      type: object
+      required:
+      - job_id
+      - status
+      - received_at
+      - progress
+      title: JobSummary
+      description: Summary of a job for listing.
+    ParseGroundingBox:
+      properties:
+        left:
+          type: number
+          title: Left
+        top:
+          type: number
+          title: Top
+        right:
+          type: number
+          title: Right
+        bottom:
+          type: number
+          title: Bottom
+      type: object
+      required:
+      - left
+      - top
+      - right
+      - bottom
+      title: ParseGroundingBox
+    ExtractMetadata:
       properties:
         filename:
           type: string
@@ -3991,6 +4193,426 @@ components:
         job_id:
           type: string
           title: Job Id
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        schema_violation_error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schema Violation Error
+          description: A detailed error message shows why the extracted data does not fully conform to the input schema. Null means the extraction result is consistent with the input schema.
+        fallback_model_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fallback Model Version
+          description: The extract model that was actually used to extract the data when the initial extraction attempt failed with the requested version.
+        warnings:
+          items:
+            $ref: '#/components/schemas/ExtractWarning'
+          type: array
+          title: Warnings
+          description: Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings.
+      type: object
+      required:
+      - filename
+      - org_id
+      - duration_ms
+      - credit_usage
+      - job_id
+      - version
+      title: ExtractMetadata
+    DepthAnythingV2Data:
+      properties:
+        map:
+          items:
+            items:
+              type: number
+            type: array
+          type: array
+          title: Map
+      type: object
+      required:
+      - map
+      title: DepthAnythingV2Data
+    SplitV2CategoryLeaf:
+      properties:
+        identifier:
+          type: string
+          title: Identifier
+          description: Specifies what makes each segment unique within its category, such as an invoice number, order ID, or date. The API extracts this value from each segment's content and creates a separate segment for each unique value.
+        instructions:
+          type: string
+          title: Instructions
+          description: Instructions for assigning pages to this category.
+      type: object
+      required:
+      - identifier
+      - instructions
+      title: SplitV2CategoryLeaf
+      description: A category that defines a classification, with an identifier and instructions.
+    routers__tools__doc_analysis__DocAnalysisRequest:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        pdf:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Pdf
+        parse_text:
+          type: boolean
+          title: Parse Text
+          default: true
+        parse_tables:
+          type: boolean
+          title: Parse Tables
+          default: true
+        parse_figures:
+          type: boolean
+          title: Parse Figures
+          default: true
+        summary_verbosity:
+          $ref: '#/components/schemas/Verbosity'
+          default: normal
+        return_chunk_crops:
+          type: boolean
+          title: Return Chunk Crops
+          default: false
+        return_page_crops:
+          type: boolean
+          title: Return Page Crops
+          default: false
+        caption_format:
+          $ref: '#/components/schemas/OutputFormat'
+          default: json
+        response_format:
+          $ref: '#/components/schemas/OutputFormat'
+          default: json
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+      type: object
+      title: DocAnalysisRequest
+    ChunkType:
+      type: string
+      enum:
+      - logo
+      - card
+      - attestation
+      - scan_code
+      - form
+      - table
+      - figure
+      - text
+      - marginalia
+      - title
+      - page_header
+      - page_footer
+      - page_number
+      - key_value
+      title: ChunkType
+    ClassificationRequest:
+      properties:
+        model:
+          $ref: '#/components/schemas/ClassificationModel'
+        image:
+          type: string
+          format: binary
+          title: Image
+        labels:
+          items:
+            type: string
+          type: array
+          title: Labels
+      type: object
+      required:
+      - model
+      - image
+      - labels
+      title: ClassificationRequest
+    LocaRequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+        bbox:
+          anyOf:
+          - items:
+              anyOf:
+              - type: integer
+              - type: number
+            type: array
+            maxItems: 4
+            minItems: 4
+          - type: 'null'
+          title: Bbox
+      type: object
+      required:
+      - image
+      title: LocaRequest
+    SplitMetadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+          description: Organization ID
+        page_count:
+          type: integer
+          title: Page Count
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        credit_usage:
+          type: number
+          title: Credit Usage
+        job_id:
+          type: string
+          title: Job Id
+          description: Inference history job ID
+          default: ''
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+          description: Model version used for split classification
+      type: object
+      required:
+      - filename
+      - page_count
+      - duration_ms
+      - credit_usage
+      title: SplitMetadata
+      description: Metadata for split classification response.
+    DocumentAnalysisChunk:
+      properties:
+        text:
+          type: string
+          title: Text
+        grounding:
+          items:
+            $ref: '#/components/schemas/Grounding'
+          type: array
+          title: Grounding
+        chunk_type:
+          $ref: '#/components/schemas/ChunkType'
+        chunk_id:
+          type: string
+          title: Chunk Id
+        rotation_angle:
+          type: number
+          title: Rotation Angle
+          default: 0.0
+      type: object
+      required:
+      - text
+      - grounding
+      - chunk_type
+      - chunk_id
+      title: DocumentAnalysisChunk
+    routers__tools__video_temporal_localization__FormData:
+      properties:
+        video:
+          type: string
+          format: binary
+          title: Video
+        prompt:
+          type: string
+          title: Prompt
+        model:
+          $ref: '#/components/schemas/TemporalLocalizationTools'
+        chunk_length:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Chunk Length
+        chunk_length_seconds:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Chunk Length Seconds
+        chunk_length_frames:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Chunk Length Frames
+      type: object
+      required:
+      - video
+      - prompt
+      - model
+      title: FormData
+    BboxResponseData:
+      properties:
+        label:
+          type: string
+          title: Label
+        score:
+          type: number
+          title: Score
+        bbox:
+          items:
+            type: number
+          type: array
+          title: Bbox
+      type: object
+      required:
+      - label
+      - score
+      - bbox
+      title: BboxResponseData
+    BuildSchemaMetadata:
+      properties:
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        duration_ms:
+          type: integer
+          title: Duration Ms
+          default: 0
+        credit_usage:
+          type: number
+          title: Credit Usage
+          default: 0.0
+        job_id:
+          type: string
+          title: Job Id
+          default: ''
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        warnings:
+          items:
+            $ref: '#/components/schemas/ExtractWarning'
+          type: array
+          title: Warnings
+          description: Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings.
+      type: object
+      title: BuildSchemaMetadata
+    SpreadsheetParseResponse:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Full document as HTML with anchor tags and tables
+        chunks:
+          items:
+            $ref: '#/components/schemas/SpreadsheetChunk'
+          type: array
+          title: Chunks
+          description: List of table chunks (HTML)
+        splits:
+          items:
+            $ref: '#/components/schemas/SpreadsheetSplit'
+          type: array
+          title: Splits
+          description: Sheet-based splits
+        metadata:
+          $ref: '#/components/schemas/SpreadsheetParseMetadata'
+          description: Parsing metadata
+      type: object
+      required:
+      - markdown
+      - chunks
+      - splits
+      - metadata
+      title: SpreadsheetParseResponse
+      description: 'Response from /ade/parse-spreadsheet endpoint.
+
+
+        Similar structure to ParseResponse but without grounding.'
+    BuildSchemaRequest:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: The version of the model to use for schema generation. Use `extract-latest` to use the latest version.
+        markdowns:
+          anyOf:
+          - items:
+              anyOf:
+              - type: string
+                format: binary
+              - type: string
+            type: array
+          - type: 'null'
+          title: Markdowns
+          description: Markdown files or inline content strings to analyze for schema generation. Multiple documents can be provided for better schema coverage.
+        markdown_urls:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Markdown Urls
+          description: URLs to Markdown files to analyze for schema generation.
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Instructions for how to generate or modify the schema.
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schema
+          description: Existing JSON schema to iterate on or refine.
+      type: object
+      title: BuildSchemaRequest
+    ClassifyMetadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        page_count:
+          type: integer
+          title: Page Count
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        credit_usage:
+          type: number
+          title: Credit Usage
+        job_id:
+          type: string
+          title: Job Id
           default: ''
         version:
           anyOf:
@@ -4000,10 +4622,216 @@ components:
       type: object
       required:
       - filename
+      - page_count
       - duration_ms
       - credit_usage
-      title: SectionMetadata
-      description: Public metadata for section response.
+      title: ClassifyMetadata
+      description: Metadata for the classify response.
+    PromptTask:
+      type: string
+      enum:
+      - <CAPTION>
+      - <CAPTION_TO_PHRASE_GROUNDING>
+      - <DETAILED_CAPTION>
+      - <MORE_DETAILED_CAPTION>
+      - <DENSE_REGION_CAPTION>
+      - <OPEN_VOCABULARY_DETECTION>
+      - <OD>
+      - <OCR>
+      - <OCR_WITH_REGION>
+      - <REGION_PROPOSAL>
+      - <REFERRING_EXPRESSION_SEGMENTATION>
+      - <REGION_TO_SEGMENTATION>
+      - <REGION_TO_CATEGORY>
+      - <REGION_TO_DESCRIPTION>
+      title: PromptTask
+    PaddleOcrResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              type: object
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: PaddleOcrResponse
+    AsyncParseRequestWithEncryptedPassword:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: The version of the model to use for parsing.
+        document:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Document
+          description: 'A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided.'
+        document_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Url
+          description: 'The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided.'
+        split:
+          anyOf:
+          - $ref: '#/components/schemas/SplitType'
+          - type: 'null'
+          description: If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page.
+        password:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Password
+          description: Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents.
+        custom_prompts:
+          anyOf:
+          - type: string
+            contentMediaType: application/json
+            contentSchema:
+              $ref: '#/components/schemas/CustomPrompts'
+          - type: 'null'
+          title: Custom Prompts
+          description: Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{"figure":"Describe axis labels in detail."}'.
+        output_save_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Save Url
+          description: If zero data retention (ZDR) is enabled, you must enter a URL for the parsed output to be saved to. When ZDR is enabled, the parsed content will not be in the API response.
+      type: object
+      title: AsyncParseRequestWithEncryptedPassword
+    AgenticDocumentAnalysisBase:
+      properties:
+        markdown:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Markdown
+        extracted_schema:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Extracted Schema
+        extraction_metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Extraction Metadata
+        chunks:
+          items:
+            $ref: '#/components/schemas/DocumentAnalysisChunk'
+          type: array
+          title: Chunks
+      type: object
+      required:
+      - markdown
+      - chunks
+      title: AgenticDocumentAnalysisBase
+    Grounding:
+      properties:
+        box:
+          $ref: '#/components/schemas/GroundingBox'
+        page:
+          type: integer
+          title: Page
+      type: object
+      required:
+      - box
+      - page
+      title: Grounding
+    SplitV2SegmentLeafItem:
+      properties:
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+          description: The 0-indexed page indices grouped into this segment. The first page is 0.
+        identifier:
+          type: string
+          title: Identifier
+          description: The value that makes this segment unique within its category, such as an invoice number, order ID, or date.
+      type: object
+      required:
+      - pages
+      - identifier
+      title: SplitV2SegmentLeafItem
+      description: One classified segment, with its page indices and identifier.
+    WSIEmbeddingResponseData:
+      properties:
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - embedding
+      title: WSIEmbeddingResponseData
+    ClassifyResponse:
+      properties:
+        classification:
+          items:
+            $ref: '#/components/schemas/ClassificationItem'
+          type: array
+          title: Classification
+        metadata:
+          $ref: '#/components/schemas/ClassifyMetadata'
+      type: object
+      required:
+      - classification
+      - metadata
+      title: ClassifyResponse
+      description: Response model for the classify endpoint.
+    JobStatusResponseData:
+      properties:
+        jobId:
+          type: string
+          title: Jobid
+          description: Training job identifier
+        status:
+          type: string
+          title: Status
+          description: Current status of the training job
+        createdAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Createdat
+          description: Job creation timestamp
+        updatedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updatedat
+          description: Last update timestamp
+        epochInfo:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Epochinfo
+          description: Information about training epochs such as current epoch, total epochs, and metrics
+        errorMessage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Errormessage
+          description: Error message if job failed
+      type: object
+      required:
+      - jobId
+      - status
+      title: JobStatusResponseData
+      description: Training job status response
     JobResultsResponseData:
       properties:
         modelBundleUrl:
@@ -4020,55 +4848,150 @@ components:
       - performanceReportUrl
       title: JobResultsResponseData
       description: Training job results with download URLs
-    DepthAnythingV2Data:
-      properties:
-        map:
-          items:
-            items:
-              type: number
-            type: array
-          type: array
-          title: Map
-      type: object
-      required:
-      - map
-      title: DepthAnythingV2Data
-    DocAnalysisResponse:
+    LocaResponse:
       properties:
         data:
           anyOf:
-          - type: object
+          - $ref: '#/components/schemas/LocaResponseData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: LocaResponse
+    FlorenceV2Request:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            maxLength: 50000000
+          - type: 'null'
+          title: Image
+        images:
+          anyOf:
+          - items:
+              type: string
+            type: array
+            maxItems: 50000000
+          - type: 'null'
+          title: Images
+        video:
+          anyOf:
+          - type: string
+            maxLength: 50000000
+          - type: 'null'
+          title: Video
+        video_bytes:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video Bytes
+        task:
+          $ref: '#/components/schemas/PromptTask'
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+      type: object
+      required:
+      - task
+      title: FlorenceV2Request
+    VideoTemporalLocalizationResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              type: number
+            type: array
           - type: 'null'
           title: Data
       type: object
       required:
       - data
-      title: DocAnalysisResponse
-    ParseResponseGrounding:
+      title: VideoTemporalLocalizationResponse
+    TemporalLocalizationTools:
+      type: string
+      enum:
+      - internlm-xcomposer
+      - gpt4o
+      - qwen2vl
+      - qwen25vl
+      title: TemporalLocalizationTools
+    PoseDetectionRequest:
       properties:
-        box:
-          $ref: '#/components/schemas/ParseGroundingBox'
-        page:
-          type: integer
-          title: Page
-        type:
-          $ref: '#/components/schemas/GroundingType'
-        confidence:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Confidence
-        low_confidence_spans:
-          items:
-            $ref: '#/components/schemas/Patch'
-          type: array
-          title: Low Confidence Spans
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
       type: object
       required:
-      - box
+      - image
+      title: PoseDetectionRequest
+    InstanceSegmentationResponseData:
+      properties:
+        label:
+          type: string
+          title: Label
+        score:
+          type: number
+          title: Score
+        mask:
+          $ref: '#/components/schemas/SegmentationBitMaskRLE'
+        bounding_box:
+          items:
+            anyOf:
+            - type: integer
+            - type: number
+          type: array
+          maxItems: 4
+          minItems: 4
+          title: Bounding Box
+      type: object
+      required:
+      - label
+      - score
+      - mask
+      - bounding_box
+      title: InstanceSegmentationResponseData
+    GroundingBox:
+      properties:
+        l:
+          type: number
+          title: L
+        t:
+          type: number
+          title: T
+        r:
+          type: number
+          title: R
+        b:
+          type: number
+          title: B
+      type: object
+      required:
+      - l
+      - t
+      - r
+      - b
+      title: GroundingBox
+    SplitType:
+      type: string
+      enum:
       - page
-      - type
-      title: ParseResponseGrounding
+      const: page
+      title: SplitType
+    JobDeleteResponseData:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Confirmation message for job deletion
+      type: object
+      required:
+      - message
+      title: JobDeleteResponseData
+      description: Training job deletion response
     ExtractJobStatusResponse:
       properties:
         job_id:
@@ -4136,6 +5059,728 @@ components:
       - progress
       title: ExtractJobStatusResponse
       description: The status of an extract job, plus the results once it completes.
+    QRReaderRequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+      type: object
+      required:
+      - image
+      title: QRReaderRequest
+    ClassifyRequest:
+      properties:
+        classes:
+          items:
+            $ref: '#/components/schemas/ClassifyClass'
+          type: array
+          title: Classes
+          description: The possible classes that can be assigned to pages in the document. Each entry is an object with a `class` name and an optional `description`. Only one class is assigned per page; unclassifiable pages receive 'unknown'. Can be provided as a JSON string in form data.
+        document:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Document
+          description: A file to be classified. Either this parameter or the `document_url` parameter must be provided.
+        document_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Url
+          description: The URL of the document to be classified. Either this parameter or the `document` parameter must be provided.
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Classification model version. Defaults to the latest.
+      type: object
+      required:
+      - classes
+      title: ClassifyRequest
+    ODResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              items:
+                $ref: '#/components/schemas/ODResponseData'
+              type: array
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ODResponse
+    ClassificationModel:
+      type: string
+      enum:
+      - siglip
+      const: siglip
+      title: ClassificationModel
+    Patch:
+      properties:
+        text:
+          type: string
+          title: Text
+        span:
+          prefixItems:
+          - type: integer
+          - type: integer
+          type: array
+          maxItems: 2
+          minItems: 2
+          title: Span
+        confidence:
+          type: number
+          title: Confidence
+      type: object
+      required:
+      - text
+      - span
+      - confidence
+      title: Patch
+    SplitRulesRequest:
+      properties:
+        markdown:
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
+          title: Markdown
+          description: Pre-parsed Markdown to split, as a file upload or a raw string. Provide either `markdown` or `markdown_url`, not both. Maximum 50 MB.
+        markdown_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Markdown Url
+          description: URL to a Markdown file to split. Provide either `markdown` or `markdown_url`, not both.
+        guidelines:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guidelines
+          description: Natural-language instructions to steer splitting, such as 'Split by document type'.
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Split model version. Defaults to the latest.
+      type: object
+      title: SplitRulesRequest
+      description: 'The fields you send to get suggested classification categories.
+
+
+        The API proposes classification categories based on the content in
+
+        your document.'
+    routers__tools__object_detection__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        deployment_id:
+          type: string
+          format: uuid
+          title: Deployment Id
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+      type: object
+      required:
+      - deployment_id
+      title: FormData
+    routers__tools__image_to_text__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        images:
+          anyOf:
+          - items:
+              type: string
+              format: binary
+            type: array
+          - type: 'null'
+          title: Images
+        prompt:
+          type: string
+          title: Prompt
+        model:
+          $ref: '#/components/schemas/ImageToText'
+      type: object
+      required:
+      - prompt
+      - model
+      title: FormData
+    ImageCaptioningType:
+      type: string
+      enum:
+      - verbose
+      - transcribe
+      - custom
+      title: ImageCaptioningType
+    Body_tool_license_plate_v1_tools_license_plate_post:
+      properties:
+        video:
+          type: string
+          format: binary
+          title: Video
+      type: object
+      required:
+      - video
+      title: Body_tool_license_plate_v1_tools_license_plate_post
+    Body_tool_activity_recognition_v1_tools_activity_recognition_post:
+      properties:
+        video:
+          type: string
+          format: binary
+          title: Video
+        prompt:
+          type: string
+          title: Prompt
+        specificity:
+          $ref: '#/components/schemas/Specificity'
+          default: max
+        with_audio:
+          type: boolean
+          title: With Audio
+          default: false
+      type: object
+      required:
+      - video
+      - prompt
+      title: Body_tool_activity_recognition_v1_tools_activity_recognition_post
+    ClassifyClass:
+      properties:
+        class:
+          type: string
+          title: Class
+          description: Name of the class.
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Detailed description of what this class represents.
+      type: object
+      required:
+      - class
+      title: ClassifyClass
+      description: 'A single classification option: a class name plus optional description.'
+    ParseRequestWithEncryptedPassword:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: The version of the model to use for parsing.
+        document:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Document
+          description: 'A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided.'
+        document_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Url
+          description: 'The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided.'
+        split:
+          anyOf:
+          - $ref: '#/components/schemas/SplitType'
+          - type: 'null'
+          description: If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page.
+        password:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Password
+          description: Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents.
+        custom_prompts:
+          anyOf:
+          - type: string
+            contentMediaType: application/json
+            contentSchema:
+              $ref: '#/components/schemas/CustomPrompts'
+          - type: 'null'
+          title: Custom Prompts
+          description: Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{"figure":"Describe axis labels in detail."}'.
+      type: object
+      title: ParseRequestWithEncryptedPassword
+    TextToSegModel:
+      type: string
+      enum:
+      - florence2sam2
+      const: florence2sam2
+      title: TextToSegModel
+    AutoLabelRequest:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+          description: Image file to be processed (max 36MP)
+          examples:
+          - image.jpg
+        config:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Config
+          description: JSON configuration string for optional features
+          examples:
+          - '{"option1": "value1"}'
+        labelType:
+          type: string
+          title: Labeltype
+          description: Type of labeling to perform (currently only 'segmentation' is supported)
+          default: segmentation
+      type: object
+      required:
+      - file
+      title: AutoLabelRequest
+      description: Request model for auto-labeling endpoint with SAM2 embeddings generation
+    TrainingResponseData:
+      properties:
+        jobId:
+          type: string
+          title: Jobid
+          description: Unique identifier for the training job
+      type: object
+      required:
+      - jobId
+      title: TrainingResponseData
+      description: Training job creation response
+    Body_tool_visual_prompts_to_od_v1_tools_visual_prompts_to_object_detection_post:
+      properties:
+        visual_prompts:
+          type: string
+          title: Visual Prompts
+        model:
+          $ref: '#/components/schemas/VisualPromptsToODModel'
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+      type: object
+      required:
+      - visual_prompts
+      - model
+      title: Body_tool_visual_prompts_to_od_v1_tools_visual_prompts_to_object_detection_post
+    Verbosity:
+      type: string
+      enum:
+      - none
+      - brief
+      - normal
+      - detailed
+      title: Verbosity
+    ParseMetadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        page_count:
+          type: integer
+          title: Page Count
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        credit_usage:
+          type: number
+          title: Credit Usage
+        job_id:
+          type: string
+          title: Job Id
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        failed_pages:
+          items:
+            type: integer
+          type: array
+          title: Failed Pages
+      type: object
+      required:
+      - filename
+      - org_id
+      - page_count
+      - duration_ms
+      - credit_usage
+      - job_id
+      - version
+      title: ParseMetadata
+    DocAnalysisResponse:
+      properties:
+        data:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: DocAnalysisResponse
+    BuildSchemaResponse:
+      properties:
+        extraction_schema:
+          type: string
+          title: Extraction Schema
+          description: The generated JSON schema as a string.
+        metadata:
+          $ref: '#/components/schemas/BuildSchemaMetadata'
+          description: The metadata for the schema generation process.
+      type: object
+      required:
+      - extraction_schema
+      - metadata
+      title: BuildSchemaResponse
+    ClassificationResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ClassificationData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: ClassificationResponse
+    BarCodeReaderResponseData:
+      properties:
+        text:
+          type: string
+          title: Text
+        x:
+          type: integer
+          title: X
+        y:
+          type: integer
+          title: Y
+        format:
+          type: string
+          title: Format
+      type: object
+      required:
+      - text
+      - x
+      - y
+      - format
+      title: BarCodeReaderResponseData
+    Specificity:
+      type: string
+      enum:
+      - low
+      - medium
+      - high
+      - max
+      title: Specificity
+    SpreadsheetChunk:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Chunk content as HTML table with anchor tag (for tables) or parsed markdown content (for chunks from images)
+        type:
+          type: string
+          title: Type
+          description: 'Chunk type: ''table'' for spreadsheet tables, or types from /parse (text, table, figure, form, etc.) for chunks derived from embedded images'
+        id:
+          type: string
+          title: Id
+          description: 'Chunk ID - format: ''{sheet_name}-{cell_range}'' for tables, ''{sheet_name}-image-{index}-{anchor_cell}-chunk-{i}-{type}'' for parsed image chunks'
+        grounding:
+          anyOf:
+          - $ref: '#/components/schemas/ParseGrounding'
+          - type: 'null'
+          description: Visual grounding coordinates from /parse API (only for chunks derived from embedded images)
+      type: object
+      required:
+      - markdown
+      - type
+      - id
+      title: SpreadsheetChunk
+      description: 'Chunk from spreadsheet parsing.
+
+
+        Can represent:
+
+        - Table chunks from spreadsheet cells
+
+        - Parsed content chunks from embedded images (text, table, figure, etc.)'
+    ExtractWarning:
+      properties:
+        code:
+          $ref: '#/components/schemas/ExtractWarningCode'
+          description: The type of warning, used to translate to a status code downstream
+        msg:
+          type: string
+          title: Msg
+          description: Human-readable description of the warning with more details
+      type: object
+      required:
+      - code
+      - msg
+      title: ExtractWarning
+    ODResponseData:
+      properties:
+        label:
+          type: string
+          title: Label
+        score:
+          type: number
+          title: Score
+        bounding_box:
+          items:
+            anyOf:
+            - type: integer
+            - type: number
+          type: array
+          maxItems: 4
+          minItems: 4
+          title: Bounding Box
+      type: object
+      required:
+      - label
+      - score
+      - bounding_box
+      title: ODResponseData
+    ParseChunk:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+        type:
+          type: string
+          title: Type
+        id:
+          type: string
+          title: Id
+        grounding:
+          $ref: '#/components/schemas/ParseGrounding'
+      type: object
+      required:
+      - markdown
+      - type
+      - id
+      - grounding
+      title: ParseChunk
+    TrainRequest:
+      properties:
+        task:
+          type: string
+          title: Task
+          description: Type of computer vision task to train
+        classMap:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Classmap
+          description: Optional class mapping for training. Maps class IDs to class information.
+          examples:
+          - '0':
+              name: fire
+            '1':
+              name: water
+        trainingManifestURL:
+          type: string
+          title: Trainingmanifesturl
+          description: URL to a CSV file containing the training manifest
+        model:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Model
+          description: Optional model configuration including architecture and hyperparameters
+        transforms:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Transforms
+          description: Optional training transforms for preprocessing and augmentation
+      type: object
+      required:
+      - task
+      - classMap
+      - trainingManifestURL
+      title: TrainRequest
+      description: General training request with comprehensive validation
+    SpreadsheetSplit:
+      properties:
+        class:
+          type: string
+          title: Class
+          description: 'Split class: ''page'' for per-sheet splits, ''full'' for single split with all content'
+        identifier:
+          type: string
+          title: Identifier
+          description: 'Split identifier: sheet name for ''page'' splits, ''full'' for full split'
+        sheets:
+          items:
+            type: integer
+          type: array
+          title: Sheets
+          description: 'Sheet indices: single element for ''page'' splits, all indices for ''full'' split'
+        markdown:
+          type: string
+          title: Markdown
+          description: Combined markdown for this split
+        chunks:
+          items:
+            type: string
+          type: array
+          title: Chunks
+          description: Chunk IDs in this split
+      type: object
+      required:
+      - class
+      - identifier
+      - sheets
+      - markdown
+      - chunks
+      title: SpreadsheetSplit
+      description: 'Sheet-based split from spreadsheet parsing.
+
+
+        Similar to ParseSplit but grouped by sheet instead of page.
+
+        Supports both ''page'' (per-sheet) and ''full'' (all sheets) split types.'
+    QRReaderResponseData:
+      properties:
+        text:
+          type: string
+          title: Text
+        x:
+          type: integer
+          title: X
+        y:
+          type: integer
+          title: Y
+      type: object
+      required:
+      - text
+      - x
+      - y
+      title: QRReaderResponseData
+    InternLMXComposer2Data:
+      properties:
+        answer:
+          type: string
+          title: Answer
+      type: object
+      required:
+      - answer
+      title: InternLMXComposer2Data
+    SplitV2CategoryTree-Input:
+      additionalProperties:
+        anyOf:
+        - $ref: '#/components/schemas/SplitV2CategoryLeaf'
+        - $ref: '#/components/schemas/SplitV2CategoryTree-Input'
+      type: object
+      title: SplitV2CategoryTree
+      description: 'The classification categories used to split a document.
+
+
+        Each category name maps to either a category that defines a
+
+        classification (with `identifier` and `instructions`) or a set of
+
+        subcategories. You pass these categories when you split the document.'
+    BarcodeReaderRequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+      type: object
+      required:
+      - image
+      title: BarcodeReaderRequest
+    NSFWResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/NSFWResponseData'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: NSFWResponse
+    DocumentNumberChunksRequest:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        pdf:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Pdf
+      type: object
+      title: DocumentNumberChunksRequest
+    OutputFormat:
+      type: string
+      enum:
+      - markdown
+      - json
+      - xml
+      - text
+      title: OutputFormat
+    ExtractWarningCode:
+      type: string
+      enum:
+      - nonconformant_schema
+      - nonconformant_output
+      title: ExtractWarningCode
     MarkdownToJSONSchemaResponseBase:
       properties:
         json_schema:
@@ -4145,6 +5790,500 @@ components:
           title: Json Schema
       type: object
       title: MarkdownToJSONSchemaResponseBase
+    ChunkingType:
+      type: string
+      enum:
+      - full
+      - page
+      title: ChunkingType
+    DepthAnythingV2Request:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+        grayscale:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Grayscale
+          default: false
+      type: object
+      required:
+      - image
+      title: DepthAnythingV2Request
+    LocaResponseData:
+      properties:
+        count:
+          type: integer
+          title: Count
+        heat_map:
+          title: Heat Map
+      type: object
+      required:
+      - count
+      - heat_map
+      title: LocaResponseData
+    routers__tools__text_to_object_detection__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        prompts:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Prompts
+        model:
+          $ref: '#/components/schemas/TextToODModel'
+        nmsThreshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Nmsthreshold
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+        jobId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Jobid
+      type: object
+      required:
+      - prompts
+      - model
+      title: FormData
+    SplitV2Metadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+          description: The name of the input Markdown file. Taken from the upload for `markdown` inputs, or the URL basename for `markdown_url` inputs.
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+          description: Organization ID.
+        page_count:
+          type: integer
+          title: Page Count
+          description: Total number of pages in the input Markdown.
+          default: 0
+        duration_ms:
+          type: integer
+          title: Duration Ms
+          description: Total processing time in milliseconds.
+        credit_usage:
+          type: number
+          title: Credit Usage
+          description: Credits consumed by this job.
+        job_id:
+          type: string
+          title: Job Id
+          description: A unique identifier for this split job.
+          default: ''
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+          description: The exact model snapshot used.
+      type: object
+      required:
+      - filename
+      - duration_ms
+      - credit_usage
+      title: SplitV2Metadata
+      description: 'Information about the split job.
+
+
+        Includes the model version, page count, duration, and credit usage.'
+    SpreadsheetParseMetadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+          description: Original filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+          description: Organization ID
+        sheet_count:
+          type: integer
+          title: Sheet Count
+          description: Number of sheets processed
+        total_rows:
+          type: integer
+          title: Total Rows
+          description: Total rows across all sheets
+        total_cells:
+          type: integer
+          title: Total Cells
+          description: Total non-empty cells across all sheets
+        total_chunks:
+          type: integer
+          title: Total Chunks
+          description: Total chunks (tables + images) extracted
+        total_images:
+          type: integer
+          title: Total Images
+          description: Total images extracted
+          default: 0
+        duration_ms:
+          type: integer
+          title: Duration Ms
+          description: Processing duration in milliseconds
+        credit_usage:
+          type: number
+          title: Credit Usage
+          description: Credits charged
+          default: 0.0
+        job_id:
+          type: string
+          title: Job Id
+          description: Inference history job ID
+          default: ''
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+          description: Model version for parsing images
+      type: object
+      required:
+      - filename
+      - sheet_count
+      - total_rows
+      - total_cells
+      - total_chunks
+      - duration_ms
+      title: SpreadsheetParseMetadata
+      description: Metadata for spreadsheet parsing result.
+    CustomPrompts:
+      additionalProperties:
+        type: string
+      type: object
+      title: CustomPrompts
+      description: Map of chunk type to custom prompt string.
+    Florence2SAM2Instance:
+      properties:
+        mask:
+          $ref: '#/components/schemas/SegmentationBitMaskRLE'
+        label:
+          type: string
+          title: Label
+        bounding_box:
+          anyOf:
+          - items:
+              anyOf:
+              - type: integer
+              - type: number
+            type: array
+            maxItems: 4
+            minItems: 4
+          - type: 'null'
+          title: Bounding Box
+      type: object
+      required:
+      - mask
+      - label
+      title: Florence2SAM2Instance
+    GroundingType:
+      type: string
+      enum:
+      - chunkLogo
+      - chunkCard
+      - chunkAttestation
+      - chunkScanCode
+      - chunkForm
+      - chunkTable
+      - chunkFigure
+      - chunkText
+      - chunkMarginalia
+      - chunkTitle
+      - chunkPageHeader
+      - chunkPageFooter
+      - chunkPageNumber
+      - chunkKeyValue
+      - table
+      - tableCell
+      title: GroundingType
+    TextToInstanceSegmentationResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/Florence2SAM2IdInstance'
+                - $ref: '#/components/schemas/InstanceSegmentationResponseData'
+              type: array
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: TextToInstanceSegmentationResponse
+    DepthAnythingV2Response:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/DepthAnythingV2Data'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: DepthAnythingV2Response
+    NSFWRequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+      type: object
+      required:
+      - image
+      title: NSFWRequest
+    ActivityRecognitionEvent:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/ActivityRecognitionEventItem'
+          type: array
+          title: Events
+          default: []
+        processing_time:
+          type: number
+          title: Processing Time
+          default: 0.0
+        model_time:
+          type: number
+          title: Model Time
+          default: 0.0
+      type: object
+      title: ActivityRecognitionEvent
+    Flux1Task:
+      type: string
+      enum:
+      - generation
+      - inpainting
+      - img2img
+      title: Flux1Task
+    ParseGrounding:
+      properties:
+        box:
+          $ref: '#/components/schemas/ParseGroundingBox'
+        page:
+          type: integer
+          title: Page
+      type: object
+      required:
+      - box
+      - page
+      title: ParseGrounding
+    BaseMediaRequest:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+      type: object
+      title: BaseMediaRequest
+    CountGDRequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+        visual_prompts:
+          anyOf:
+          - items:
+              items:
+                type: number
+              type: array
+            type: array
+          - type: 'null'
+          title: Visual Prompts
+      type: object
+      required:
+      - image
+      title: CountGDRequest
+    FlorenceV2QAResponse:
+      properties:
+        data:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: FlorenceV2QAResponse
+    AgenticDocAnalysisResponse:
+      properties:
+        data:
+          $ref: '#/components/schemas/AgenticDocumentAnalysisBase'
+        errors:
+          items:
+            $ref: '#/components/schemas/AgenticDocAnalysisPageError'
+          type: array
+          title: Errors
+        extraction_error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Extraction Error
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - data
+      title: AgenticDocAnalysisResponse
+    SectionRequest:
+      properties:
+        markdown:
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
+          title: Markdown
+          description: Parsed markdown with reference anchors (<a id='...'></a>). This is the markdown field from a parse response.
+        markdown_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Markdown Url
+          description: URL to fetch the markdown from.
+        guidelines:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guidelines
+          description: 'Natural-language instructions to control hierarchy. Examples: ''Group by topic'', ''Treat each numbered section as a top-level entry''.'
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Section model version. Defaults to latest.
+      type: object
+      title: SectionRequest
+      description: Request model for section endpoint.
+    ClassificationItem:
+      properties:
+        class:
+          type: string
+          title: Class
+          description: Predicted class label or 'unknown'.
+        reason:
+          type: string
+          title: Reason
+          description: Reason for the classification (for debugging).
+          default: ''
+        suggested_class:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggested Class
+          description: Proposed class when the prediction is 'unknown'.
+        page:
+          type: integer
+          title: Page
+          description: Page number (0-based).
+      type: object
+      required:
+      - class
+      - page
+      title: ClassificationItem
+      description: A single page-level classification result.
+    Body_tool_internlm_xcomposer2_v1_tools_internlm_xcomposer2_post:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+      type: object
+      required:
+      - prompt
+      title: Body_tool_internlm_xcomposer2_v1_tools_internlm_xcomposer2_post
+    SectionMetadata:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        credit_usage:
+          type: number
+          title: Credit Usage
+        job_id:
+          type: string
+          title: Job Id
+          default: ''
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+      type: object
+      required:
+      - filename
+      - duration_ms
+      - credit_usage
+      title: SectionMetadata
+      description: Public metadata for section response.
     LicensePlateEvent:
       properties:
         plate:
@@ -4176,47 +6315,273 @@ components:
       required:
       - plate
       title: LicensePlateEvent
-    ValidationError:
+    routers__tools__text_to_instance_segmentation__FormData:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        prompt:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Prompt
+        model:
+          $ref: '#/components/schemas/TextToSegModel'
+        chunkLengthFrames:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Chunklengthframes
+        iouThreshold:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.1
+          - type: 'null'
+          title: Iouthreshold
+        nmsThreshold:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.1
+          - type: 'null'
+          title: Nmsthreshold
+        jobId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Jobid
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ParseChunk:
+      - prompt
+      - model
+      title: FormData
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SplitRequest:
       properties:
         markdown:
-          type: string
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
           title: Markdown
-        type:
-          type: string
-          title: Type
-        id:
-          type: string
-          title: Id
-        grounding:
-          $ref: '#/components/schemas/ParseGrounding'
+          description: The Markdown file or Markdown content to split.
+        markdown_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Markdown Url
+          description: The URL to the Markdown file to split.
+        split_class:
+          items:
+            $ref: '#/components/schemas/SplitClass'
+          type: array
+          title: Split Class
+          description: List of split classification options/configuration. Can be provided as JSON string in form data.
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model version to use for split classification. Defaults to the latest version.
+          default: split-20251105
       type: object
       required:
-      - markdown
-      - type
+      - split_class
+      title: SplitRequest
+      description: Request model for split classification endpoint.
+    EmbeddingsModel:
+      type: string
+      enum:
+      - stella1.5b
+      const: stella1.5b
+      title: EmbeddingsModel
+    routers__tools__florence2_sam2__FormData:
+      properties:
+        image:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Image
+        video:
+          anyOf:
+          - type: string
+            format: binary
+          - type: 'null'
+          title: Video
+        prompts:
+          items:
+            type: string
+          type: array
+          title: Prompts
+        chunk_length:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Length
+        iou_threshold:
+          type: number
+          maximum: 1.0
+          minimum: 0.1
+          title: Iou Threshold
+          default: 0.6
+        nms_threshold:
+          type: number
+          maximum: 1.0
+          minimum: 0.1
+          title: Nms Threshold
+          default: 1.0
+      type: object
+      required:
+      - prompts
+      title: FormData
+    SplitV2Request:
+      properties:
+        markdown:
+          anyOf:
+          - type: string
+            format: binary
+          - type: string
+          - type: 'null'
+          title: Markdown
+          description: Pre-parsed Markdown to split, as a file upload or a raw string. Provide either `markdown` or `markdown_url`, not both. Maximum 50 MB.
+        markdown_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Markdown Url
+          description: URL to a Markdown file to split. Provide either `markdown` or `markdown_url`, not both.
+        guidelines:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guidelines
+          description: Natural-language instructions to steer splitting, such as 'Split by document type'.
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Split model version. Defaults to the latest.
+        classification_categories:
+          $ref: '#/components/schemas/SplitV2CategoryTree-Input'
+          description: The classification categories the API assigns pages to. Each entry is a category; a category either defines a classification (with an `identifier` and `instructions`) or groups a set of subcategories. Pass as a JSON object in the multipart form field.
+      type: object
+      required:
+      - classification_categories
+      title: SplitV2Request
+      description: 'The fields you send to split a document into classified segments.
+
+
+        The `classification_categories` field is required. The API assigns
+
+        each page to the category it matches most closely, then returns the
+
+        page assignments grouped into segments.'
+    TextToODModel:
+      type: string
+      enum:
+      - owlv2
+      - countgd
+      - florence2
+      - agentic
+      - glee
+      - florencev2
+      title: TextToODModel
+    Florence2SAM2IdInstance:
+      properties:
+        id:
+          type: integer
+          title: Id
+        label:
+          type: string
+          title: Label
+        mask:
+          $ref: '#/components/schemas/SegmentationBitMaskRLE'
+        bounding_box:
+          items:
+            anyOf:
+            - type: integer
+            - type: number
+          type: array
+          maxItems: 4
+          minItems: 4
+          title: Bounding Box
+      type: object
+      required:
       - id
-      - grounding
-      title: ParseChunk
+      - label
+      - mask
+      - bounding_box
+      title: Florence2SAM2IdInstance
+    DepthProResponse:
+      properties:
+        data:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: DepthProResponse
+    ParseResponseTableCellGroundingPosition:
+      properties:
+        row:
+          type: integer
+          title: Row
+        col:
+          type: integer
+          title: Col
+        rowspan:
+          type: integer
+          title: Rowspan
+        colspan:
+          type: integer
+          title: Colspan
+        chunk_id:
+          type: string
+          title: Chunk Id
+      type: object
+      required:
+      - row
+      - col
+      - rowspan
+      - colspan
+      - chunk_id
+      title: ParseResponseTableCellGroundingPosition
+    FlorenceQARequest:
+      properties:
+        image:
+          type: string
+          maxLength: 50000000
+          title: Image
+        question:
+          type: string
+          title: Question
+      type: object
+      required:
+      - image
+      - question
+      title: FlorenceQARequest
     routers__ade__core__custom_types__DocAnalysisRequest:
       properties:
         pdf:
@@ -4277,2384 +6642,19 @@ components:
           default: false
       type: object
       title: DocAnalysisRequest
-    Florence2SAM2Instance:
-      properties:
-        mask:
-          $ref: '#/components/schemas/SegmentationBitMaskRLE'
-        label:
-          type: string
-          title: Label
-        bounding_box:
-          anyOf:
-          - items:
-              anyOf:
-              - type: integer
-              - type: number
-            type: array
-            maxItems: 4
-            minItems: 4
-          - type: 'null'
-          title: Bounding Box
-      type: object
-      required:
-      - mask
-      - label
-      title: Florence2SAM2Instance
-    BuildSchemaMetadata:
-      properties:
-        filename:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        duration_ms:
-          type: integer
-          title: Duration Ms
-          default: 0
-        credit_usage:
-          type: number
-          title: Credit Usage
-          default: 0.0
-        job_id:
-          type: string
-          title: Job Id
-          default: ''
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        warnings:
-          items:
-            $ref: '#/components/schemas/ExtractWarning'
-          type: array
-          title: Warnings
-          description: Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings.
-      type: object
-      title: BuildSchemaMetadata
-    Owlv2Request:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-        prompts:
-          items:
-            type: string
-          type: array
-          title: Prompts
-        confidence:
-          anyOf:
-          - type: number
-            maximum: 1.0
-            minimum: 0.0
-          - type: 'null'
-          title: Confidence
-          default: 0.2
-      type: object
-      required:
-      - image
-      - prompts
-      title: Owlv2Request
-    LocaResponseData:
-      properties:
-        count:
-          type: integer
-          title: Count
-        heat_map:
-          title: Heat Map
-      type: object
-      required:
-      - count
-      - heat_map
-      title: LocaResponseData
-    MarkdownToJSONSchemaRequest:
-      properties:
-        markdown:
-          type: string
-          title: Markdown
-          description: Markdown content to analyze for schema generation
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-          description: Optional user customization prompt for schema generation
-      type: object
-      required:
-      - markdown
-      title: MarkdownToJSONSchemaRequest
-    ClassificationModel:
-      type: string
-      enum:
-      - siglip
-      const: siglip
-      title: ClassificationModel
-    TextToODModel:
-      type: string
-      enum:
-      - owlv2
-      - countgd
-      - florence2
-      - agentic
-      - glee
-      - florencev2
-      title: TextToODModel
-    NSFWRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-      type: object
-      required:
-      - image
-      title: NSFWRequest
-    TextToSegModel:
-      type: string
-      enum:
-      - florence2sam2
-      const: florence2sam2
-      title: TextToSegModel
-    JobCreationResponse:
-      properties:
-        job_id:
-          type: string
-          title: Job Id
-      type: object
-      required:
-      - job_id
-      title: JobCreationResponse
-    FlorenceV2QAResponse:
-      properties:
-        data:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: FlorenceV2QAResponse
-    ImageToText:
-      type: string
-      enum:
-      - qwen2vl
-      - internlm-xcomposer
-      - qwen25vl
-      title: ImageToText
-    Body_tool_license_plate_v1_tools_license_plate_post:
-      properties:
-        video:
-          type: string
-          format: binary
-          title: Video
-      type: object
-      required:
-      - video
-      title: Body_tool_license_plate_v1_tools_license_plate_post
-    InstanceSegmentationResponseData:
-      properties:
-        label:
-          type: string
-          title: Label
-        score:
-          type: number
-          title: Score
-        mask:
-          $ref: '#/components/schemas/SegmentationBitMaskRLE'
-        bounding_box:
-          items:
-            anyOf:
-            - type: integer
-            - type: number
-          type: array
-          maxItems: 4
-          minItems: 4
-          title: Bounding Box
-      type: object
-      required:
-      - label
-      - score
-      - mask
-      - bounding_box
-      title: InstanceSegmentationResponseData
-    CustomPrompts:
-      additionalProperties:
-        type: string
-      type: object
-      title: CustomPrompts
-      description: Map of chunk type to custom prompt string.
-    ParseGrounding:
-      properties:
-        box:
-          $ref: '#/components/schemas/ParseGroundingBox'
-        page:
-          type: integer
-          title: Page
-      type: object
-      required:
-      - box
-      - page
-      title: ParseGrounding
-    BboxResponseData:
-      properties:
-        label:
-          type: string
-          title: Label
-        score:
-          type: number
-          title: Score
-        bbox:
-          items:
-            type: number
-          type: array
-          title: Bbox
-      type: object
-      required:
-      - label
-      - score
-      - bbox
-      title: BboxResponseData
-    SplitClass:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: Name of the split classification type
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Detailed description of what this split type represents
-        identifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Identifier
-          description: Identifier to partition/group the splits by
-      type: object
-      required:
-      - name
-      title: SplitClass
-      description: Model for split classification option.
-    CountGDRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-        visual_prompts:
-          anyOf:
-          - items:
-              items:
-                type: number
-              type: array
-            type: array
-          - type: 'null'
-          title: Visual Prompts
-      type: object
-      required:
-      - image
-      title: CountGDRequest
-    ODResponse:
+    EmbeddingsResponse:
       properties:
         data:
           anyOf:
           - items:
-              items:
-                $ref: '#/components/schemas/ODResponseData'
-              type: array
+              $ref: '#/components/schemas/Embedding'
             type: array
           - type: 'null'
           title: Data
       type: object
       required:
       - data
-      title: ODResponse
-    SplitV2SegmentLeafItem:
-      properties:
-        pages:
-          items:
-            type: integer
-          type: array
-          title: Pages
-          description: The 0-indexed page indices grouped into this segment. The first page is 0.
-        identifier:
-          type: string
-          title: Identifier
-          description: The value that makes this segment unique within its category, such as an invoice number, order ID, or date.
-      type: object
-      required:
-      - pages
-      - identifier
-      title: SplitV2SegmentLeafItem
-      description: One classified segment, with its page indices and identifier.
-    routers__tools__doc_analysis__DocAnalysisRequest:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        pdf:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Pdf
-        parse_text:
-          type: boolean
-          title: Parse Text
-          default: true
-        parse_tables:
-          type: boolean
-          title: Parse Tables
-          default: true
-        parse_figures:
-          type: boolean
-          title: Parse Figures
-          default: true
-        summary_verbosity:
-          $ref: '#/components/schemas/Verbosity'
-          default: normal
-        return_chunk_crops:
-          type: boolean
-          title: Return Chunk Crops
-          default: false
-        return_page_crops:
-          type: boolean
-          title: Return Page Crops
-          default: false
-        caption_format:
-          $ref: '#/components/schemas/OutputFormat'
-          default: json
-        response_format:
-          $ref: '#/components/schemas/OutputFormat'
-          default: json
-        filename:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filename
-      type: object
-      title: DocAnalysisRequest
-    SplitRequest:
-      properties:
-        markdown:
-          anyOf:
-          - type: string
-            format: binary
-          - type: string
-          - type: 'null'
-          title: Markdown
-          description: The Markdown file or Markdown content to split.
-        markdown_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Markdown Url
-          description: The URL to the Markdown file to split.
-        split_class:
-          items:
-            $ref: '#/components/schemas/SplitClass'
-          type: array
-          title: Split Class
-          description: List of split classification options/configuration. Can be provided as JSON string in form data.
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model version to use for split classification. Defaults to the latest version.
-          default: split-20251105
-      type: object
-      required:
-      - split_class
-      title: SplitRequest
-      description: Request model for split classification endpoint.
-    routers__tools__glee__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        prompts:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Prompts
-        nmsThreshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Nmsthreshold
-        confidence:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Confidence
-      type: object
-      required:
-      - prompts
-      title: FormData
-    AgenticDocAnalysisPageError:
-      properties:
-        page_num:
-          type: integer
-          title: Page Num
-        error:
-          type: string
-          title: Error
-        error_code:
-          type: integer
-          title: Error Code
-      type: object
-      required:
-      - page_num
-      - error
-      - error_code
-      title: AgenticDocAnalysisPageError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    Grounding:
-      properties:
-        box:
-          $ref: '#/components/schemas/GroundingBox'
-        page:
-          type: integer
-          title: Page
-      type: object
-      required:
-      - box
-      - page
-      title: Grounding
-    EmbeddingsModel:
-      type: string
-      enum:
-      - stella1.5b
-      const: stella1.5b
-      title: EmbeddingsModel
-    MarkdownToJSONSchemaResponse:
-      properties:
-        data:
-          $ref: '#/components/schemas/MarkdownToJSONSchemaResponseBase'
-      type: object
-      required:
-      - data
-      title: MarkdownToJSONSchemaResponse
-    Flux1Response:
-      properties:
-        data:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: Flux1Response
-    DoclingResponseData:
-      properties:
-        l:
-          type: number
-          title: L
-        t:
-          type: number
-          title: T
-        r:
-          type: number
-          title: R
-        b:
-          type: number
-          title: B
-        label:
-          $ref: '#/components/schemas/DoclingClass'
-        confidence:
-          type: number
-          title: Confidence
-      type: object
-      required:
-      - l
-      - t
-      - r
-      - b
-      - label
-      - confidence
-      title: DoclingResponseData
-    GroundingBox:
-      properties:
-        l:
-          type: number
-          title: L
-        t:
-          type: number
-          title: T
-        r:
-          type: number
-          title: R
-        b:
-          type: number
-          title: B
-      type: object
-      required:
-      - l
-      - t
-      - r
-      - b
-      title: GroundingBox
-    SectionResponse:
-      properties:
-        table_of_contents:
-          items:
-            $ref: '#/components/schemas/SectionTOCEntry'
-          type: array
-          title: Table Of Contents
-        table_of_contents_md:
-          type: string
-          title: Table Of Contents Md
-        metadata:
-          $ref: '#/components/schemas/SectionMetadata'
-      type: object
-      required:
-      - table_of_contents
-      - table_of_contents_md
-      - metadata
-      title: SectionResponse
-      description: Response model for section endpoint.
-    ClassificationResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ClassificationData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: ClassificationResponse
-    SplitType:
-      type: string
-      enum:
-      - page
-      const: page
-      title: SplitType
-    WSIEmbeddingResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/WSIEmbeddingResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: WSIEmbeddingResponse
-    SplitV2CategoryTree-Input:
-      additionalProperties:
-        anyOf:
-        - $ref: '#/components/schemas/SplitV2CategoryLeaf'
-        - $ref: '#/components/schemas/SplitV2CategoryTree-Input'
-      type: object
-      title: SplitV2CategoryTree
-      description: 'The classification categories used to split a document.
-
-
-        Each category name maps to either a category that defines a
-
-        classification (with `identifier` and `instructions`) or a set of
-
-        subcategories. You pass these categories when you split the document.'
-    ClassificationItem:
-      properties:
-        class:
-          type: string
-          title: Class
-          description: Predicted class label or 'unknown'.
-        reason:
-          type: string
-          title: Reason
-          description: Reason for the classification (for debugging).
-          default: ''
-        suggested_class:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Suggested Class
-          description: Proposed class when the prediction is 'unknown'.
-        page:
-          type: integer
-          title: Page
-          description: Page number (0-based).
-      type: object
-      required:
-      - class
-      - page
-      title: ClassificationItem
-      description: A single page-level classification result.
-    DocumentAnalysisChunk:
-      properties:
-        text:
-          type: string
-          title: Text
-        grounding:
-          items:
-            $ref: '#/components/schemas/Grounding'
-          type: array
-          title: Grounding
-        chunk_type:
-          $ref: '#/components/schemas/ChunkType'
-        chunk_id:
-          type: string
-          title: Chunk Id
-        rotation_angle:
-          type: number
-          title: Rotation Angle
-          default: 0.0
-      type: object
-      required:
-      - text
-      - grounding
-      - chunk_type
-      - chunk_id
-      title: DocumentAnalysisChunk
-    BaseMediaRequest:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-      type: object
-      title: BaseMediaRequest
-    BuildSchemaRequest:
-      properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: The version of the model to use for schema generation. Use `extract-latest` to use the latest version.
-        markdowns:
-          anyOf:
-          - items:
-              anyOf:
-              - type: string
-                format: binary
-              - type: string
-            type: array
-          - type: 'null'
-          title: Markdowns
-          description: Markdown files or inline content strings to analyze for schema generation. Multiple documents can be provided for better schema coverage.
-        markdown_urls:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Markdown Urls
-          description: URLs to Markdown files to analyze for schema generation.
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-          description: Instructions for how to generate or modify the schema.
-        schema:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Schema
-          description: Existing JSON schema to iterate on or refine.
-      type: object
-      title: BuildSchemaRequest
-    routers__tools__object_detection__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        deployment_id:
-          type: string
-          format: uuid
-          title: Deployment Id
-        confidence:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Confidence
-      type: object
-      required:
-      - deployment_id
-      title: FormData
-    DoclingClass:
-      type: string
-      enum:
-      - background
-      - Caption
-      - Footnote
-      - Formula
-      - List-item
-      - Page-footer
-      - Page-header
-      - Picture
-      - Section-header
-      - Table
-      - Text
-      - Title
-      - Document Index
-      - Code
-      - Checkbox-Selected
-      - Checkbox-Unselected
-      - Form
-      - Key-Value Region
-      title: DoclingClass
-    ClassifyClass:
-      properties:
-        class:
-          type: string
-          title: Class
-          description: Name of the class.
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Detailed description of what this class represents.
-      type: object
-      required:
-      - class
-      title: ClassifyClass
-      description: 'A single classification option: a class name plus optional description.'
-    FlorenceV2Request:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            maxLength: 50000000
-          - type: 'null'
-          title: Image
-        images:
-          anyOf:
-          - items:
-              type: string
-            type: array
-            maxItems: 50000000
-          - type: 'null'
-          title: Images
-        video:
-          anyOf:
-          - type: string
-            maxLength: 50000000
-          - type: 'null'
-          title: Video
-        video_bytes:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video Bytes
-        task:
-          $ref: '#/components/schemas/PromptTask'
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-      type: object
-      required:
-      - task
-      title: FlorenceV2Request
-    AsyncParseRequestWithEncryptedPassword:
-      properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: The version of the model to use for parsing.
-        document:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Document
-          description: 'A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided.'
-        document_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Document Url
-          description: 'The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided.'
-        split:
-          anyOf:
-          - $ref: '#/components/schemas/SplitType'
-          - type: 'null'
-          description: If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page.
-        password:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Password
-          description: Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents.
-        custom_prompts:
-          anyOf:
-          - type: string
-            contentMediaType: application/json
-            contentSchema:
-              $ref: '#/components/schemas/CustomPrompts'
-          - type: 'null'
-          title: Custom Prompts
-          description: Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{"figure":"Describe axis labels in detail."}'.
-        output_save_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Output Save Url
-          description: If zero data retention (ZDR) is enabled, you must enter a URL for the parsed output to be saved to. When ZDR is enabled, the parsed content will not be in the API response.
-      type: object
-      title: AsyncParseRequestWithEncryptedPassword
-    ExtractMetadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        duration_ms:
-          type: integer
-          title: Duration Ms
-        credit_usage:
-          type: number
-          title: Credit Usage
-        job_id:
-          type: string
-          title: Job Id
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        schema_violation_error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Schema Violation Error
-          description: A detailed error message shows why the extracted data does not fully conform to the input schema. Null means the extraction result is consistent with the input schema.
-        fallback_model_version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fallback Model Version
-          description: The extract model that was actually used to extract the data when the initial extraction attempt failed with the requested version.
-        warnings:
-          items:
-            $ref: '#/components/schemas/ExtractWarning'
-          type: array
-          title: Warnings
-          description: Structured warnings from the extraction process. Each warning is an instance of ExtractWarning with 'code' (e.g. 'nonconformant_schema') and 'msg' (human-readable description). Present only for extract versions from extract-20260314 and above that support structured warnings.
-      type: object
-      required:
-      - filename
-      - org_id
-      - duration_ms
-      - credit_usage
-      - job_id
-      - version
-      title: ExtractMetadata
-    routers__tools__text_to_instance_segmentation__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        prompt:
-          type: string
-          title: Prompt
-        model:
-          $ref: '#/components/schemas/TextToSegModel'
-        chunkLengthFrames:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Chunklengthframes
-        iouThreshold:
-          anyOf:
-          - type: number
-            maximum: 1.0
-            minimum: 0.1
-          - type: 'null'
-          title: Iouthreshold
-        nmsThreshold:
-          anyOf:
-          - type: number
-            maximum: 1.0
-            minimum: 0.1
-          - type: 'null'
-          title: Nmsthreshold
-        jobId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Jobid
-      type: object
-      required:
-      - prompt
-      - model
-      title: FormData
-    JobStatusResponseData:
-      properties:
-        jobId:
-          type: string
-          title: Jobid
-          description: Training job identifier
-        status:
-          type: string
-          title: Status
-          description: Current status of the training job
-        createdAt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Createdat
-          description: Job creation timestamp
-        updatedAt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updatedat
-          description: Last update timestamp
-        epochInfo:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Epochinfo
-          description: Information about training epochs such as current epoch, total epochs, and metrics
-        errorMessage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Errormessage
-          description: Error message if job failed
-      type: object
-      required:
-      - jobId
-      - status
-      title: JobStatusResponseData
-      description: Training job status response
-    PromptTask:
-      type: string
-      enum:
-      - <CAPTION>
-      - <CAPTION_TO_PHRASE_GROUNDING>
-      - <DETAILED_CAPTION>
-      - <MORE_DETAILED_CAPTION>
-      - <DENSE_REGION_CAPTION>
-      - <OPEN_VOCABULARY_DETECTION>
-      - <OD>
-      - <OCR>
-      - <OCR_WITH_REGION>
-      - <REGION_PROPOSAL>
-      - <REFERRING_EXPRESSION_SEGMENTATION>
-      - <REGION_TO_SEGMENTATION>
-      - <REGION_TO_CATEGORY>
-      - <REGION_TO_DESCRIPTION>
-      title: PromptTask
-    SegmentationBitMaskRLE:
-      properties:
-        counts:
-          items:
-            type: integer
-          type: array
-          title: Counts
-        size:
-          items:
-            type: integer
-          type: array
-          title: Size
-      type: object
-      required:
-      - counts
-      - size
-      title: SegmentationBitMaskRLE
-    DepthAnythingV2Response:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/DepthAnythingV2Data'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: DepthAnythingV2Response
-    WSIEmbeddingResponseData:
-      properties:
-        embedding:
-          items:
-            type: number
-          type: array
-          title: Embedding
-      type: object
-      required:
-      - embedding
-      title: WSIEmbeddingResponseData
-    routers__tools__agentic_od__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        prompts:
-          items:
-            type: string
-          type: array
-          maxItems: 1
-          minItems: 1
-          title: Prompts
-      type: object
-      required:
-      - prompts
-      title: FormData
-    JobSummary:
-      properties:
-        job_id:
-          type: string
-          title: Job Id
-        status:
-          type: string
-          title: Status
-        received_at:
-          type: integer
-          title: Received At
-        created_at:
-          type: integer
-          title: Created At
-          description: Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.
-          default: 0
-        progress:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Progress
-          description: Job completion as a decimal from 0 (not started) to 1 (complete).
-        failure_reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Failure Reason
-      type: object
-      required:
-      - job_id
-      - status
-      - received_at
-      - progress
-      title: JobSummary
-      description: Summary of a job for listing.
-    LocaResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/LocaResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: LocaResponse
-    Body_tool_internlm_xcomposer2_v1_tools_internlm_xcomposer2_post:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-      type: object
-      required:
-      - prompt
-      title: Body_tool_internlm_xcomposer2_v1_tools_internlm_xcomposer2_post
-    Flux1Task:
-      type: string
-      enum:
-      - generation
-      - inpainting
-      - img2img
-      title: Flux1Task
-    FlorenceV2Response:
-      properties:
-        data:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: FlorenceV2Response
-    Patch:
-      properties:
-        text:
-          type: string
-          title: Text
-        span:
-          prefixItems:
-          - type: integer
-          - type: integer
-          type: array
-          maxItems: 2
-          minItems: 2
-          title: Span
-        confidence:
-          type: number
-          title: Confidence
-      type: object
-      required:
-      - text
-      - span
-      - confidence
-      title: Patch
-    Embedding:
-      properties:
-        embedding:
-          items:
-            type: number
-          type: array
-          title: Embedding
-      type: object
-      required:
-      - embedding
-      title: Embedding
-    SplitV2Response:
-      properties:
-        segments:
-          $ref: '#/components/schemas/SplitV2SegmentTree'
-          description: The classified segments, organized under the same categories you submitted. Each category maps to either a list of segments or a set of subcategories.
-        metadata:
-          $ref: '#/components/schemas/SplitV2Metadata'
-          description: Information about the request.
-      type: object
-      required:
-      - segments
-      - metadata
-      title: SplitV2Response
-      description: The classified segments and request metadata.
-    PoseDetectionRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-      type: object
-      required:
-      - image
-      title: PoseDetectionRequest
-    TrainRequest:
-      properties:
-        task:
-          type: string
-          title: Task
-          description: Type of computer vision task to train
-        classMap:
-          additionalProperties:
-            additionalProperties:
-              type: string
-            type: object
-          type: object
-          title: Classmap
-          description: Optional class mapping for training. Maps class IDs to class information.
-          examples:
-          - '0':
-              name: fire
-            '1':
-              name: water
-        trainingManifestURL:
-          type: string
-          title: Trainingmanifesturl
-          description: URL to a CSV file containing the training manifest
-        model:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Model
-          description: Optional model configuration including architecture and hyperparameters
-        transforms:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Transforms
-          description: Optional training transforms for preprocessing and augmentation
-      type: object
-      required:
-      - task
-      - classMap
-      - trainingManifestURL
-      title: TrainRequest
-      description: General training request with comprehensive validation
-    ParseMetadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        page_count:
-          type: integer
-          title: Page Count
-        duration_ms:
-          type: integer
-          title: Duration Ms
-        credit_usage:
-          type: number
-          title: Credit Usage
-        job_id:
-          type: string
-          title: Job Id
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        failed_pages:
-          items:
-            type: integer
-          type: array
-          title: Failed Pages
-      type: object
-      required:
-      - filename
-      - org_id
-      - page_count
-      - duration_ms
-      - credit_usage
-      - job_id
-      - version
-      title: ParseMetadata
-    SectionRequest:
-      properties:
-        markdown:
-          anyOf:
-          - type: string
-            format: binary
-          - type: string
-          - type: 'null'
-          title: Markdown
-          description: Parsed markdown with reference anchors (<a id='...'></a>). This is the markdown field from a parse response.
-        markdown_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Markdown Url
-          description: URL to fetch the markdown from.
-        guidelines:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guidelines
-          description: 'Natural-language instructions to control hierarchy. Examples: ''Group by topic'', ''Treat each numbered section as a top-level entry''.'
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Section model version. Defaults to latest.
-      type: object
-      title: SectionRequest
-      description: Request model for section endpoint.
-    ActivityRecognitionResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ActivityRecognitionEvent'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: ActivityRecognitionResponse
-    JobStatusResponse:
-      properties:
-        job_id:
-          type: string
-          title: Job Id
-        status:
-          type: string
-          title: Status
-        received_at:
-          type: integer
-          title: Received At
-        created_at:
-          type: integer
-          title: Created At
-          description: Unix timestamp (seconds) for when the job was created. Mirrors received_at; exposed so clients have an explicit creation time.
-          default: 0
-        progress:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Progress
-          description: Job completion progress as a decimal from 0 to 1, where 0 is not started, 1 is finished, and values between 0 and 1 indicate work in progress.
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ParseResponse'
-          - $ref: '#/components/schemas/SpreadsheetParseResponse'
-          - type: 'null'
-          title: Data
-          description: The parsed output (ParseResponse for documents, SpreadsheetParseResponse for spreadsheets), if the job is complete and the `output_save_url` parameter was not used.
-        output_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Output Url
-          description: The URL to the parsed content. This field contains a URL when the job is complete and either you specified the `output_save_url` parameter or the result is larger than 1MB. When the result exceeds 1MB, the URL is a presigned S3 URL that expires after 1 hour. Each time you GET the job, a new presigned URL is generated.
-        metadata:
-          anyOf:
-          - $ref: '#/components/schemas/ParseMetadata'
-          - type: 'null'
-        failure_reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Failure Reason
-      type: object
-      required:
-      - job_id
-      - status
-      - received_at
-      - progress
-      title: JobStatusResponse
-      description: Unified response for job status endpoint.
-    routers__tools__video_temporal_localization__FormData:
-      properties:
-        video:
-          type: string
-          format: binary
-          title: Video
-        prompt:
-          type: string
-          title: Prompt
-        model:
-          $ref: '#/components/schemas/TemporalLocalizationTools'
-        chunk_length:
-          anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Chunk Length
-        chunk_length_seconds:
-          anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Chunk Length Seconds
-        chunk_length_frames:
-          anyOf:
-          - type: integer
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Chunk Length Frames
-      type: object
-      required:
-      - video
-      - prompt
-      - model
-      title: FormData
-    DepthProResponse:
-      properties:
-        data:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: DepthProResponse
-    BarCodeReaderResponseData:
-      properties:
-        text:
-          type: string
-          title: Text
-        x:
-          type: integer
-          title: X
-        y:
-          type: integer
-          title: Y
-        format:
-          type: string
-          title: Format
-      type: object
-      required:
-      - text
-      - x
-      - y
-      - format
-      title: BarCodeReaderResponseData
-    ClassifyMetadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        page_count:
-          type: integer
-          title: Page Count
-        duration_ms:
-          type: integer
-          title: Duration Ms
-        credit_usage:
-          type: number
-          title: Credit Usage
-        job_id:
-          type: string
-          title: Job Id
-          default: ''
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-      type: object
-      required:
-      - filename
-      - page_count
-      - duration_ms
-      - credit_usage
-      title: ClassifyMetadata
-      description: Metadata for the classify response.
-    ClassifyResponse:
-      properties:
-        classification:
-          items:
-            $ref: '#/components/schemas/ClassificationItem'
-          type: array
-          title: Classification
-        metadata:
-          $ref: '#/components/schemas/ClassifyMetadata'
-      type: object
-      required:
-      - classification
-      - metadata
-      title: ClassifyResponse
-      description: Response model for the classify endpoint.
-    ExtractRequest:
-      properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: The version of the model to use for extraction. Use `extract-latest` to use the latest version.
-        markdown:
-          anyOf:
-          - type: string
-            format: binary
-          - type: string
-          - type: 'null'
-          title: Markdown
-          description: The Markdown file or Markdown content to extract data from.
-        markdown_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Markdown Url
-          description: The URL to the Markdown file to extract data from.
-        schema:
-          type: string
-          title: Schema
-          description: JSON schema for field extraction. This schema determines what key-values pairs are extracted from the Markdown. The schema must be a valid JSON object and will be validated before processing the document.
-        strict:
-          type: boolean
-          title: Strict
-          description: If True, reject schemas with unsupported fields (HTTP 422). If False, prune unsupported fields and continue. Only applies to extract versions that support schema validation.
-          default: false
-      type: object
-      required:
-      - schema
-      title: ExtractRequest
-    JobsListResponseData:
-      properties:
-        jobs:
-          items:
-            type: string
-          type: array
-          title: Jobs
-          description: List of training job identifiers
-      type: object
-      required:
-      - jobs
-      title: JobsListResponseData
-      description: List of training jobs response
-    SplitV2Request:
-      properties:
-        markdown:
-          anyOf:
-          - type: string
-            format: binary
-          - type: string
-          - type: 'null'
-          title: Markdown
-          description: Pre-parsed Markdown to split, as a file upload or a raw string. Provide either `markdown` or `markdown_url`, not both. Maximum 50 MB.
-        markdown_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Markdown Url
-          description: URL to a Markdown file to split. Provide either `markdown` or `markdown_url`, not both.
-        guidelines:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guidelines
-          description: Natural-language instructions to steer splitting, such as 'Split by document type'.
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Split model version. Defaults to the latest.
-        classification_categories:
-          $ref: '#/components/schemas/SplitV2CategoryTree-Input'
-          description: The classification categories the API assigns pages to. Each entry is a category; a category either defines a classification (with an `identifier` and `instructions`) or groups a set of subcategories. Pass as a JSON object in the multipart form field.
-      type: object
-      required:
-      - classification_categories
-      title: SplitV2Request
-      description: 'The fields you send to split a document into classified segments.
-
-
-        The `classification_categories` field is required. The API assigns
-
-        each page to the category it matches most closely, then returns the
-
-        page assignments grouped into segments.'
-    ParseSplit:
-      properties:
-        class:
-          type: string
-          title: Class
-        identifier:
-          type: string
-          title: Identifier
-        pages:
-          items:
-            type: integer
-          type: array
-          title: Pages
-        markdown:
-          type: string
-          title: Markdown
-        chunks:
-          items:
-            type: string
-          type: array
-          title: Chunks
-      type: object
-      required:
-      - class
-      - identifier
-      - pages
-      - markdown
-      - chunks
-      title: ParseSplit
-    QRReaderRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-      type: object
-      required:
-      - image
-      title: QRReaderRequest
-    ClassifyRequest:
-      properties:
-        classes:
-          items:
-            $ref: '#/components/schemas/ClassifyClass'
-          type: array
-          title: Classes
-          description: The possible classes that can be assigned to pages in the document. Each entry is an object with a `class` name and an optional `description`. Only one class is assigned per page; unclassifiable pages receive 'unknown'. Can be provided as a JSON string in form data.
-        document:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Document
-          description: A file to be classified. Either this parameter or the `document_url` parameter must be provided.
-        document_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Document Url
-          description: The URL of the document to be classified. Either this parameter or the `document` parameter must be provided.
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Classification model version. Defaults to the latest.
-      type: object
-      required:
-      - classes
-      title: ClassifyRequest
-    Body_tool_activity_recognition_v1_tools_activity_recognition_post:
-      properties:
-        video:
-          type: string
-          format: binary
-          title: Video
-        prompt:
-          type: string
-          title: Prompt
-        specificity:
-          $ref: '#/components/schemas/Specificity'
-          default: max
-        with_audio:
-          type: boolean
-          title: With Audio
-          default: false
-      type: object
-      required:
-      - video
-      - prompt
-      title: Body_tool_activity_recognition_v1_tools_activity_recognition_post
-    SplitV2CategoryLeaf:
-      properties:
-        identifier:
-          type: string
-          title: Identifier
-          description: Specifies what makes each segment unique within its category, such as an invoice number, order ID, or date. The API extracts this value from each segment's content and creates a separate segment for each unique value.
-        instructions:
-          type: string
-          title: Instructions
-          description: Instructions for assigning pages to this category.
-      type: object
-      required:
-      - identifier
-      - instructions
-      title: SplitV2CategoryLeaf
-      description: A category that defines a classification, with an identifier and instructions.
-    SplitV2Metadata:
-      properties:
-        filename:
-          type: string
-          title: Filename
-          description: The name of the input Markdown file. Taken from the upload for `markdown` inputs, or the URL basename for `markdown_url` inputs.
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-          description: Organization ID.
-        page_count:
-          type: integer
-          title: Page Count
-          description: Total number of pages in the input Markdown.
-          default: 0
-        duration_ms:
-          type: integer
-          title: Duration Ms
-          description: Total processing time in milliseconds.
-        credit_usage:
-          type: number
-          title: Credit Usage
-          description: Credits consumed by this job.
-        job_id:
-          type: string
-          title: Job Id
-          description: A unique identifier for this split job.
-          default: ''
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-          description: The exact model snapshot used.
-      type: object
-      required:
-      - filename
-      - duration_ms
-      - credit_usage
-      title: SplitV2Metadata
-      description: 'Information about the split job.
-
-
-        Includes the model version, page count, duration, and credit usage.'
-    SplitV2CategoryTree-Output:
-      additionalProperties:
-        anyOf:
-        - $ref: '#/components/schemas/SplitV2CategoryLeaf'
-        - $ref: '#/components/schemas/SplitV2CategoryTree-Output'
-      type: object
-      title: SplitV2CategoryTree
-      description: 'The classification categories used to split a document.
-
-
-        Each category name maps to either a category that defines a
-
-        classification (with `identifier` and `instructions`) or a set of
-
-        subcategories. You pass these categories when you split the document.'
-    ClassificationRequest:
-      properties:
-        model:
-          $ref: '#/components/schemas/ClassificationModel'
-        image:
-          type: string
-          format: binary
-          title: Image
-        labels:
-          items:
-            type: string
-          type: array
-          title: Labels
-      type: object
-      required:
-      - model
-      - image
-      - labels
-      title: ClassificationRequest
-    AgenticDocumentAnalysisBase:
-      properties:
-        markdown:
-          anyOf:
-          - type: string
-          - items:
-              type: string
-            type: array
-          title: Markdown
-        extracted_schema:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Extracted Schema
-        extraction_metadata:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Extraction Metadata
-        chunks:
-          items:
-            $ref: '#/components/schemas/DocumentAnalysisChunk'
-          type: array
-          title: Chunks
-      type: object
-      required:
-      - markdown
-      - chunks
-      title: AgenticDocumentAnalysisBase
-    SplitRulesRequest:
-      properties:
-        markdown:
-          anyOf:
-          - type: string
-            format: binary
-          - type: string
-          - type: 'null'
-          title: Markdown
-          description: Pre-parsed Markdown to split, as a file upload or a raw string. Provide either `markdown` or `markdown_url`, not both. Maximum 50 MB.
-        markdown_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Markdown Url
-          description: URL to a Markdown file to split. Provide either `markdown` or `markdown_url`, not both.
-        guidelines:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guidelines
-          description: Natural-language instructions to steer splitting, such as 'Split by document type'.
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Split model version. Defaults to the latest.
-      type: object
-      title: SplitRulesRequest
-      description: 'The fields you send to get suggested classification categories.
-
-
-        The API proposes classification categories based on the content in
-
-        your document.'
-    BboxResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BboxResponseData'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BboxResponse
-    PoseDetectionResponse:
-      properties:
-        data:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: PoseDetectionResponse
-    SectionTOCEntry:
-      properties:
-        title:
-          type: string
-          title: Title
-        level:
-          type: integer
-          title: Level
-        section_number:
-          type: string
-          title: Section Number
-        start_reference:
-          type: string
-          title: Start Reference
-      type: object
-      required:
-      - title
-      - level
-      - section_number
-      - start_reference
-      title: SectionTOCEntry
-      description: A single entry in the flat table of contents.
-    BarcodeReaderRequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-      type: object
-      required:
-      - image
-      title: BarcodeReaderRequest
-    routers__tools__text_to_object_detection__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        prompts:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Prompts
-        model:
-          $ref: '#/components/schemas/TextToODModel'
-        nmsThreshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Nmsthreshold
-        confidence:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Confidence
-        jobId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Jobid
-      type: object
-      required:
-      - prompts
-      - model
-      title: FormData
-    QRReaderResponseData:
-      properties:
-        text:
-          type: string
-          title: Text
-        x:
-          type: integer
-          title: X
-        y:
-          type: integer
-          title: Y
-      type: object
-      required:
-      - text
-      - x
-      - y
-      title: QRReaderResponseData
-    LicensePlateResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/LicensePlateEvent'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: LicensePlateResponse
-    ParseGroundingBox:
-      properties:
-        left:
-          type: number
-          title: Left
-        top:
-          type: number
-          title: Top
-        right:
-          type: number
-          title: Right
-        bottom:
-          type: number
-          title: Bottom
-      type: object
-      required:
-      - left
-      - top
-      - right
-      - bottom
-      title: ParseGroundingBox
-    Verbosity:
-      type: string
-      enum:
-      - none
-      - brief
-      - normal
-      - detailed
-      title: Verbosity
-    ClassificationData:
-      properties:
-        scores:
-          items:
-            type: number
-          type: array
-          title: Scores
-        labels:
-          items:
-            type: string
-          type: array
-          title: Labels
-      type: object
-      required:
-      - scores
-      - labels
-      title: ClassificationData
-    DocumentNumberChunksRequest:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        pdf:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Pdf
-      type: object
-      title: DocumentNumberChunksRequest
-    ExtractWarningCode:
-      type: string
-      enum:
-      - nonconformant_schema
-      - nonconformant_output
-      title: ExtractWarningCode
-    AgenticDocAnalysisResponse:
-      properties:
-        data:
-          $ref: '#/components/schemas/AgenticDocumentAnalysisBase'
-        errors:
-          items:
-            $ref: '#/components/schemas/AgenticDocAnalysisPageError'
-          type: array
-          title: Errors
-        extraction_error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Extraction Error
-        metadata:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - data
-      title: AgenticDocAnalysisResponse
-    ImageToTextResponse:
-      properties:
-        data:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ImageToTextResponse
-    FlorenceQARequest:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-        question:
-          type: string
-          title: Question
-      type: object
-      required:
-      - image
-      - question
-      title: FlorenceQARequest
-    NSFWResponseData:
-      properties:
-        label:
-          type: string
-          title: Label
-        score:
-          type: number
-          title: Score
-      type: object
-      required:
-      - label
-      - score
-      title: NSFWResponseData
-    OutputFormat:
-      type: string
-      enum:
-      - markdown
-      - json
-      - xml
-      - text
-      title: OutputFormat
-    SplitRulesResponse:
-      properties:
-        suggested_categories:
-          $ref: '#/components/schemas/SplitV2CategoryTree-Output'
-          description: Suggested classification categories, in the same structure accepted by /v2/ade/split.
-        metadata:
-          $ref: '#/components/schemas/SplitV2Metadata'
-          description: Information about the request.
-      type: object
-      required:
-      - suggested_categories
-      - metadata
-      title: SplitRulesResponse
-      description: The suggested classification categories and request metadata.
-    DepthAnythingV2Request:
-      properties:
-        image:
-          type: string
-          maxLength: 50000000
-          title: Image
-        grayscale:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Grayscale
-          default: false
-      type: object
-      required:
-      - image
-      title: DepthAnythingV2Request
-    ChunkType:
-      type: string
-      enum:
-      - logo
-      - card
-      - attestation
-      - scan_code
-      - form
-      - table
-      - figure
-      - text
-      - marginalia
-      - title
-      - page_header
-      - page_footer
-      - page_number
-      - key_value
-      title: ChunkType
-    BuildSchemaResponse:
-      properties:
-        extraction_schema:
-          type: string
-          title: Extraction Schema
-          description: The generated JSON schema as a string.
-        metadata:
-          $ref: '#/components/schemas/BuildSchemaMetadata'
-          description: The metadata for the schema generation process.
-      type: object
-      required:
-      - extraction_schema
-      - metadata
-      title: BuildSchemaResponse
-    Florence2SAM2IdInstance:
-      properties:
-        id:
-          type: integer
-          title: Id
-        label:
-          type: string
-          title: Label
-        mask:
-          $ref: '#/components/schemas/SegmentationBitMaskRLE'
-        bounding_box:
-          items:
-            anyOf:
-            - type: integer
-            - type: number
-          type: array
-          maxItems: 4
-          minItems: 4
-          title: Bounding Box
-      type: object
-      required:
-      - id
-      - label
-      - mask
-      - bounding_box
-      title: Florence2SAM2IdInstance
-    SpreadsheetParseResponse:
-      properties:
-        markdown:
-          type: string
-          title: Markdown
-          description: Full document as HTML with anchor tags and tables
-        chunks:
-          items:
-            $ref: '#/components/schemas/SpreadsheetChunk'
-          type: array
-          title: Chunks
-          description: List of table chunks (HTML)
-        splits:
-          items:
-            $ref: '#/components/schemas/SpreadsheetSplit'
-          type: array
-          title: Splits
-          description: Sheet-based splits
-        metadata:
-          $ref: '#/components/schemas/SpreadsheetParseMetadata'
-          description: Parsing metadata
-      type: object
-      required:
-      - markdown
-      - chunks
-      - splits
-      - metadata
-      title: SpreadsheetParseResponse
-      description: 'Response from /ade/parse-spreadsheet endpoint.
-
-
-        Similar structure to ParseResponse but without grounding.'
-    SplitV2SegmentTree:
-      additionalProperties:
-        anyOf:
-        - items:
-            $ref: '#/components/schemas/SplitV2SegmentLeafItem'
-          type: array
-        - $ref: '#/components/schemas/SplitV2SegmentTree'
-      type: object
-      title: SplitV2SegmentTree
-      description: 'The classified segments, organized under the categories you submitted.
-
-
-        Each category name maps to either a list of segments or a set of
-
-        subcategories. A category can hold more than one segment when the API
-
-        finds multiple instances of it, each with its own `identifier` and its
-
-        own set of pages.'
-    ParseRequestWithEncryptedPassword:
-      properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: The version of the model to use for parsing.
-        document:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Document
-          description: 'A file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document_url` parameter must be provided.'
-        document_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Document Url
-          description: 'The URL to the file to be parsed. The file can be a PDF or an image. See the list of supported file types here: https://docs.landing.ai/ade/ade-file-types. Either this parameter or the `document` parameter must be provided.'
-        split:
-          anyOf:
-          - $ref: '#/components/schemas/SplitType'
-          - type: 'null'
-          description: If you want to split documents into smaller sections, include the split parameter. Set the parameter to page to split documents at the page level. The splits object in the API output will contain a set of data for each page.
-        password:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Password
-          description: Password for encrypted document files. If the document is password-protected, provide the password to decrypt and process the document. Ignored for unencrypted documents.
-        custom_prompts:
-          anyOf:
-          - type: string
-            contentMediaType: application/json
-            contentSchema:
-              $ref: '#/components/schemas/CustomPrompts'
-          - type: 'null'
-          title: Custom Prompts
-          description: Optional JSON string mapping chunk types to custom parsing prompts. Only the `figure` key is supported, for example '{"figure":"Describe axis labels in detail."}'.
-      type: object
-      title: ParseRequestWithEncryptedPassword
-    routers__tools__florence2_sam2__FormData:
-      properties:
-        image:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Image
-        video:
-          anyOf:
-          - type: string
-            format: binary
-          - type: 'null'
-          title: Video
-        prompts:
-          items:
-            type: string
-          type: array
-          title: Prompts
-        chunk_length:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Chunk Length
-        iou_threshold:
-          type: number
-          maximum: 1.0
-          minimum: 0.1
-          title: Iou Threshold
-          default: 0.6
-        nms_threshold:
-          type: number
-          maximum: 1.0
-          minimum: 0.1
-          title: Nms Threshold
-          default: 1.0
-      type: object
-      required:
-      - prompts
-      title: FormData
+      title: EmbeddingsResponse
   securitySchemes:
     Basic_Auth:
       type: http

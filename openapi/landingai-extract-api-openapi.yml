@@ -634,6 +634,30 @@ paths:
         source: "const axios = require('axios');\n\naxios.get('https://api.ade.landing.ai/v2/extract/jobs/JOB_ID', {\n  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }\n})\n  .then(response => console.log(response.data))\n  .catch(error => console.error(error));"
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      title: ErrorResponse
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Stable snake_case error code (e.g. ``validation_error``, ``unknown_model_version``, ``invalid_url``, ``invalid_api_key``, ``rate_limit_exceeded``).
+        message:
+          type: string
+          description: Human-readable detail.
+    V2ExtractOptions:
+      additionalProperties: false
+      description: Extraction options (``docs/extract-v2-proposal.md`` → Options).
+      properties:
+        strict:
+          default: false
+          description: 'When ``true``, a schema containing fields the model cannot extract fails with a validation error — HTTP 422 on the sync route, or a failed job (``status: "failed"``) on the async ``/jobs`` route. When ``false`` (default), unsupported fields are skipped and extraction continues.'
+          title: Strict
+          type: boolean
+      title: V2ExtractOptions
+      type: object
     V2Billing:
       description: 'Billing summary: the service tier the request ran in and the credits
 
@@ -715,28 +739,4 @@ components:
       - openapi_spec
       - range_units
       title: V2ExtractMetadata
-      type: object
-    ErrorResponse:
-      type: object
-      title: ErrorResponse
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Stable snake_case error code (e.g. ``validation_error``, ``unknown_model_version``, ``invalid_url``, ``invalid_api_key``, ``rate_limit_exceeded``).
-        message:
-          type: string
-          description: Human-readable detail.
-    V2ExtractOptions:
-      additionalProperties: false
-      description: Extraction options (``docs/extract-v2-proposal.md`` → Options).
-      properties:
-        strict:
-          default: false
-          description: 'When ``true``, a schema containing fields the model cannot extract fails with a validation error — HTTP 422 on the sync route, or a failed job (``status: "failed"``) on the async ``/jobs`` route. When ``false`` (default), unsupported fields are skipped and extraction continues.'
-          title: Strict
-          type: boolean
-      title: V2ExtractOptions
       type: object
