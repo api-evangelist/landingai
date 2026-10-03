@@ -157,77 +157,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    MetadataType:
-      type: string
-      enum:
-      - text
-      - number
-      - boolean
-      title: MetadataType
-    BaseResponse_MetadataItem_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/MetadataItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[MetadataItem]
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    MetadataCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        type:
-          $ref: '#/components/schemas/MetadataType'
-        allowMultiple:
-          type: boolean
-          title: Allowmultiple
-        predefinedChoices:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Predefinedchoices
-      type: object
-      required:
-      - name
-      - type
-      - allowMultiple
-      - predefinedChoices
-      title: MetadataCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     MetadataItem:
       properties:
         name:
@@ -260,6 +189,46 @@ components:
       - id
       - valueFlexible
       title: MetadataItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BaseResponse_MetadataItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/MetadataItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[MetadataItem]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     BaseResponse_list_MetadataItem__:
       properties:
         data:
@@ -303,3 +272,34 @@ components:
       - predefinedChoicesAppend
       - valueFlexible
       title: MetadataUpdate
+    MetadataType:
+      type: string
+      enum:
+      - text
+      - number
+      - boolean
+      title: MetadataType
+    MetadataCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/MetadataType'
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        predefinedChoices:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Predefinedchoices
+      type: object
+      required:
+      - name
+      - type
+      - allowMultiple
+      - predefinedChoices
+      title: MetadataCreate

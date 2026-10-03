@@ -105,24 +105,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ClassMap:
-      properties:
-        name:
-          type: string
-          title: Name
-        color:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Color
-        description:
-          type: string
-          title: Description
-          default: ''
-      type: object
-      required:
-      - name
-      title: ClassMap
     ValidationError:
       properties:
         loc:
@@ -144,6 +126,46 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DefectClassResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/LabelClass'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: DefectClassResponse
+    ClassMap:
+      properties:
+        name:
+          type: string
+          title: Name
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+        description:
+          type: string
+          title: Description
+          default: ''
+      type: object
+      required:
+      - name
+      title: ClassMap
     LabelClass:
       properties:
         id:
@@ -173,25 +195,3 @@ components:
       - color
       - description
       title: LabelClass
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DefectClassResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/LabelClass'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: DefectClassResponse

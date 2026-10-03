@@ -162,32 +162,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ModelItem:
-      properties:
-        id:
-          type: string
-          format: uuid4
-          title: Id
-          description: The model ID
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-      type: object
-      required:
-      - id
-      - name
-      title: ModelItem
-    ModelDownloadRequest:
-      properties:
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownloadRequest
     ValidationError:
       properties:
         loc:
@@ -209,6 +183,32 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ModelItem:
+      properties:
+        id:
+          type: string
+          format: uuid4
+          title: Id
+          description: The model ID
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: ModelItem
     ModelDownloadResponse:
       properties:
         data:
@@ -219,15 +219,6 @@ components:
       required:
       - data
       title: ModelDownloadResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ModelResponse:
       properties:
         data:
@@ -238,6 +229,15 @@ components:
       required:
       - data
       title: ModelResponse
+    ModelDownloadRequest:
+      properties:
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownloadRequest
     ModelsResponse:
       properties:
         data:

@@ -291,28 +291,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ErrorMessage:
-      properties:
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - message
-      title: ErrorMessage
-    BaseResponse_list_DeploymentItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DeploymentItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[DeploymentItem]]
     ValidationError:
       properties:
         loc:
@@ -334,6 +312,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     DeploymentItem:
       properties:
         id:
@@ -363,21 +350,6 @@ components:
       - predictionUrl
       - name
       title: DeploymentItem
-    DeploymentUpdateInput:
-      properties:
-        modelId:
-          anyOf:
-          - type: string
-            format: uuid4
-          - type: 'null'
-          title: Modelid
-        threshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Threshold
-      type: object
-      title: DeploymentUpdateInput
     DeploymentInput:
       properties:
         name:
@@ -398,15 +370,43 @@ components:
       required:
       - name
       title: DeploymentInput
-    HTTPValidationError:
+    ErrorMessage:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        message:
+          type: string
+          title: Message
       type: object
-      title: HTTPValidationError
+      required:
+      - message
+      title: ErrorMessage
+    BaseResponse_list_DeploymentItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DeploymentItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[DeploymentItem]]
+    DeploymentUpdateInput:
+      properties:
+        modelId:
+          anyOf:
+          - type: string
+            format: uuid4
+          - type: 'null'
+          title: Modelid
+        threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Threshold
+      type: object
+      title: DeploymentUpdateInput
     BaseResponse_DeploymentItem_:
       properties:
         data:

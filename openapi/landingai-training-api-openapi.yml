@@ -386,6 +386,219 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    MetricsSummary:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The split name
+        classes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ClassMetrics'
+            type: array
+          - type: 'null'
+          title: Classes
+        metrics:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Metric'
+            type: array
+          - type: 'null'
+          title: Metrics
+      type: object
+      required:
+      - name
+      - classes
+      - metrics
+      title: MetricsSummary
+    MetricsSummaryResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MetricsSummary'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: MetricsSummaryResponse
+    SplitPercentages:
+      properties:
+        train:
+          type: integer
+          title: Train
+        dev:
+          type: integer
+          title: Dev
+        test:
+          type: integer
+          title: Test
+      type: object
+      required:
+      - train
+      - dev
+      - test
+      title: SplitPercentages
+    AutoSplitOptions:
+      type: string
+      enum:
+      - all-labeled
+      - without-split
+      title: AutoSplitOptions
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ClassMetrics:
+      properties:
+        id:
+          type: integer
+          title: Id
+          description: The class id
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - id
+      - performance
+      - recall
+      - precision
+      title: ClassMetrics
+    AutoSplitBody:
+      properties:
+        splitPercentages:
+          $ref: '#/components/schemas/SplitPercentages'
+        selectOption:
+          allOf:
+          - $ref: '#/components/schemas/AutoSplitOptions'
+          description: '`all-labeled` takes all labeled images, whether they have a split or not.
+
+            This option modifies the splits, which can be risky and inconvenient if you manually assigned the splits, as it will override your work.
+
+
+            `without-split` only takes the labeled images that do not yet have a split. It does not modify the splits already assigned to the images that previously had splits.'
+      type: object
+      required:
+      - splitPercentages
+      - selectOption
+      title: AutoSplitBody
+    BaseResponse_TrainingStatus_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingStatus'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[TrainingStatus]
+    JobStatus:
+      type: string
+      enum:
+      - CREATED
+      - STARTING
+      - TRAINING
+      - EVALUATING
+      - PUBLISHING
+      - SUCCEEDED
+      - FAILED
+      title: JobStatus
+    BaseResponse_list_TrainingItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TrainingItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TrainingItem]]
+    TrainingResponseData:
+      properties:
+        trainingId:
+          type: string
+          title: Trainingid
+      type: object
+      required:
+      - trainingId
+      title: TrainingResponseData
+    TrainingStatus:
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      type: object
+      required:
+      - status
+      title: TrainingStatus
+    ConfusionMetricsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ConfusionMatrix'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ConfusionMetricsResponse
+    ArchItem:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: ArchItem
+    PredictionItem:
+      properties:
+        count:
+          type: integer
+          title: Count
+        groundTruthClassId:
+          type: integer
+          title: Groundtruthclassid
+        predictedClassId:
+          type: integer
+          title: Predictedclassid
+      type: object
+      required:
+      - count
+      - groundTruthClassId
+      - predictedClassId
+      title: PredictionItem
     ConfusionMatrix:
       properties:
         name:
@@ -419,97 +632,38 @@ components:
       - falsePositivePredictions
       - misclassifications
       title: ConfusionMatrix
-    PredictionItem:
+    HTTPValidationError:
       properties:
-        count:
-          type: integer
-          title: Count
-        groundTruthClassId:
-          type: integer
-          title: Groundtruthclassid
-        predictedClassId:
-          type: integer
-          title: Predictedclassid
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - count
-      - groundTruthClassId
-      - predictedClassId
-      title: PredictionItem
-    TrainItem:
+      title: HTTPValidationError
+    BaseResponse_list_ArchItem__:
       properties:
-        name:
+        data:
           anyOf:
-          - type: string
+          - items:
+              $ref: '#/components/schemas/ArchItem'
+            type: array
           - type: 'null'
-          title: Name
-        model:
-          $ref: '#/components/schemas/TrainItemModel'
-        transforms:
-          $ref: '#/components/schemas/TrainItemTransforms'
+          title: Data
       type: object
       required:
-      - model
-      - transforms
-      title: TrainItem
-    TrainItemModel:
+      - data
+      title: BaseResponse[list[ArchItem]]
+    BaseResponse_TrainingResponseData_:
       properties:
-        architecture:
-          type: string
-          title: Architecture
-        hyperParams:
-          type: object
-          title: Hyperparams
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingResponseData'
+          - type: 'null'
       type: object
       required:
-      - architecture
-      - hyperParams
-      title: TrainItemModel
-    AutoSplitOptions:
-      type: string
-      enum:
-      - all-labeled
-      - without-split
-      title: AutoSplitOptions
-    ClassMetrics:
-      properties:
-        id:
-          type: integer
-          title: Id
-          description: The class id
-        performance:
-          type: number
-          title: Performance
-        recall:
-          type: number
-          title: Recall
-        precision:
-          type: number
-          title: Precision
-      type: object
-      required:
-      - id
-      - performance
-      - recall
-      - precision
-      title: ClassMetrics
-    SplitPercentages:
-      properties:
-        train:
-          type: integer
-          title: Train
-        dev:
-          type: integer
-          title: Dev
-        test:
-          type: integer
-          title: Test
-      type: object
-      required:
-      - train
-      - dev
-      - test
-      title: SplitPercentages
+      - data
+      title: BaseResponse[TrainingResponseData]
     TrainItemTransforms:
       properties:
         preprocessing:
@@ -532,96 +686,19 @@ components:
       required:
       - preprocessing
       title: TrainItemTransforms
-    BaseResponse_TrainingResponseData_:
+    TrainItemModel:
       properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TrainingResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TrainingResponseData]
-    TrainingResponseData:
-      properties:
-        trainingId:
+        architecture:
           type: string
-          title: Trainingid
+          title: Architecture
+        hyperParams:
+          type: object
+          title: Hyperparams
       type: object
       required:
-      - trainingId
-      title: TrainingResponseData
-    TrainingItem:
-      properties:
-        id:
-          type: string
-          title: Id
-        status:
-          $ref: '#/components/schemas/JobStatus'
-      type: object
-      required:
-      - id
-      - status
-      title: TrainingItem
-    AutoSplitBody:
-      properties:
-        splitPercentages:
-          $ref: '#/components/schemas/SplitPercentages'
-        selectOption:
-          allOf:
-          - $ref: '#/components/schemas/AutoSplitOptions'
-          description: '`all-labeled` takes all labeled images, whether they have a split or not.
-
-            This option modifies the splits, which can be risky and inconvenient if you manually assigned the splits, as it will override your work.
-
-
-            `without-split` only takes the labeled images that do not yet have a split. It does not modify the splits already assigned to the images that previously had splits.'
-      type: object
-      required:
-      - splitPercentages
-      - selectOption
-      title: AutoSplitBody
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BaseResponse_list_TrainingItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/TrainingItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[TrainingItem]]
-    TrainingStatus:
-      properties:
-        status:
-          $ref: '#/components/schemas/JobStatus'
-      type: object
-      required:
-      - status
-      title: TrainingStatus
-    JobStatus:
-      type: string
-      enum:
-      - CREATED
-      - STARTING
-      - TRAINING
-      - EVALUATING
-      - PUBLISHING
-      - SUCCEEDED
-      - FAILED
-      title: JobStatus
+      - architecture
+      - hyperParams
+      title: TrainItemModel
     Metric:
       properties:
         name:
@@ -643,108 +720,31 @@ components:
       - recall
       - precision
       title: Metric
-    BaseResponse_list_ArchItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ArchItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[ArchItem]]
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    MetricsSummaryResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MetricsSummary'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: MetricsSummaryResponse
-    MetricsSummary:
+    TrainItem:
       properties:
         name:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Name
-          description: The split name
-        classes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ClassMetrics'
-            type: array
-          - type: 'null'
-          title: Classes
-        metrics:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/Metric'
-            type: array
-          - type: 'null'
-          title: Metrics
+        model:
+          $ref: '#/components/schemas/TrainItemModel'
+        transforms:
+          $ref: '#/components/schemas/TrainItemTransforms'
       type: object
       required:
-      - name
-      - classes
-      - metrics
-      title: MetricsSummary
-    ConfusionMetricsResponse:
+      - model
+      - transforms
+      title: TrainItem
+    TrainingItem:
       properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ConfusionMatrix'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ConfusionMetricsResponse
-    ArchItem:
-      properties:
-        name:
+        id:
           type: string
-          title: Name
+          title: Id
+        status:
+          $ref: '#/components/schemas/JobStatus'
       type: object
       required:
-      - name
-      title: ArchItem
-    BaseResponse_TrainingStatus_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TrainingStatus'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TrainingStatus]
+      - id
+      - status
+      title: TrainingItem
