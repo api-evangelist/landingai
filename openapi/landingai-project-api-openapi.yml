@@ -189,6 +189,36 @@ components:
       - segmentation
       - anomaly-detection
       title: ProjectType
+    IsActiveProject:
+      properties:
+        isActive:
+          type: boolean
+          title: Isactive
+      type: object
+      required:
+      - isActive
+      title: IsActiveProject
+    ProjectInput:
+      properties:
+        name:
+          type: string
+          title: Name
+        projectType:
+          $ref: '#/components/schemas/ProjectType'
+      type: object
+      required:
+      - name
+      - projectType
+      title: ProjectInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -210,24 +240,19 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    ProjectsResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    IsActiveProject:
-      properties:
-        isActive:
-          type: boolean
-          title: Isactive
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ProjectResponseItem'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
       required:
-      - isActive
-      title: IsActiveProject
+      - data
+      title: ProjectsResponse
     ProjectResponseItem:
       properties:
         id:
@@ -253,18 +278,6 @@ components:
       - projectType
       - createdAt
       title: ProjectResponseItem
-    ProjectInput:
-      properties:
-        name:
-          type: string
-          title: Name
-        projectType:
-          $ref: '#/components/schemas/ProjectType'
-      type: object
-      required:
-      - name
-      - projectType
-      title: ProjectInput
     ProjectResponse:
       properties:
         data:
@@ -275,16 +288,3 @@ components:
       required:
       - data
       title: ProjectResponse
-    ProjectsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ProjectResponseItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ProjectsResponse

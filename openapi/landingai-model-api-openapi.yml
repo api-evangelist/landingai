@@ -162,6 +162,69 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ModelItem:
+      properties:
+        id:
+          type: string
+          format: uuid4
+          title: Id
+          description: The model ID
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: ModelItem
+    ModelDownload:
+      properties:
+        downloadUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Downloadurl
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownload
+    ModelsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ModelItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ModelsResponse
+    ModelResponse:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ModelItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: ModelResponse
+    ModelDownloadRequest:
+      properties:
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownloadRequest
     ValidationError:
       properties:
         loc:
@@ -192,23 +255,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ModelItem:
-      properties:
-        id:
-          type: string
-          format: uuid4
-          title: Id
-          description: The model ID
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-      type: object
-      required:
-      - id
-      - name
-      title: ModelItem
     ModelDownloadResponse:
       properties:
         data:
@@ -219,49 +265,3 @@ components:
       required:
       - data
       title: ModelDownloadResponse
-    ModelResponse:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ModelItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: ModelResponse
-    ModelDownloadRequest:
-      properties:
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownloadRequest
-    ModelsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ModelItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ModelsResponse
-    ModelDownload:
-      properties:
-        downloadUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Downloadurl
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownload

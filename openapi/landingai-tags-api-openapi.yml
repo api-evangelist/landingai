@@ -151,6 +151,25 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    BaseResponse_TagItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TagItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[TagItem]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -172,25 +191,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BaseResponse_TagItem_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TagItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TagItem]
     BaseResponse_list_TagItem__:
       properties:
         data:

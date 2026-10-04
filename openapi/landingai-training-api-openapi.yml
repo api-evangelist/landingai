@@ -386,6 +386,147 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ArchItem:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: ArchItem
+    ConfusionMetricsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ConfusionMatrix'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ConfusionMetricsResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    JobStatus:
+      type: string
+      enum:
+      - CREATED
+      - STARTING
+      - TRAINING
+      - EVALUATING
+      - PUBLISHING
+      - SUCCEEDED
+      - FAILED
+      title: JobStatus
+    TrainItemModel:
+      properties:
+        architecture:
+          type: string
+          title: Architecture
+        hyperParams:
+          type: object
+          title: Hyperparams
+      type: object
+      required:
+      - architecture
+      - hyperParams
+      title: TrainItemModel
+    ConfusionMatrix:
+      properties:
+        name:
+          type: string
+          title: Name
+        correctPredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Correctpredictions
+        falseNegativePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsenegativepredictions
+        falsePositivePredictions:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Falsepositivepredictions
+        misclassifications:
+          items:
+            $ref: '#/components/schemas/PredictionItem'
+          type: array
+          title: Misclassifications
+      type: object
+      required:
+      - name
+      - correctPredictions
+      - falseNegativePredictions
+      - falsePositivePredictions
+      - misclassifications
+      title: ConfusionMatrix
+    TrainItemTransforms:
+      properties:
+        preprocessing:
+          items:
+            additionalProperties:
+              type: object
+            type: object
+          type: array
+          title: Preprocessing
+        augmentations:
+          anyOf:
+          - items:
+              additionalProperties:
+                type: object
+              type: object
+            type: array
+          - type: 'null'
+          title: Augmentations
+      type: object
+      required:
+      - preprocessing
+      title: TrainItemTransforms
+    BaseResponse_list_TrainingItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TrainingItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TrainingItem]]
+    AutoSplitOptions:
+      type: string
+      enum:
+      - all-labeled
+      - without-split
+      title: AutoSplitOptions
     MetricsSummary:
       properties:
         name:
@@ -425,72 +566,26 @@ components:
       required:
       - data
       title: MetricsSummaryResponse
-    SplitPercentages:
+    BaseResponse_TrainingStatus_:
       properties:
-        train:
-          type: integer
-          title: Train
-        dev:
-          type: integer
-          title: Dev
-        test:
-          type: integer
-          title: Test
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingStatus'
+          - type: 'null'
       type: object
       required:
-      - train
-      - dev
-      - test
-      title: SplitPercentages
-    AutoSplitOptions:
-      type: string
-      enum:
-      - all-labeled
-      - without-split
-      title: AutoSplitOptions
-    ValidationError:
+      - data
+      title: BaseResponse[TrainingStatus]
+    BaseResponse_TrainingResponseData_:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/TrainingResponseData'
+          - type: 'null'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ClassMetrics:
-      properties:
-        id:
-          type: integer
-          title: Id
-          description: The class id
-        performance:
-          type: number
-          title: Performance
-        recall:
-          type: number
-          title: Recall
-        precision:
-          type: number
-          title: Precision
-      type: object
-      required:
-      - id
-      - performance
-      - recall
-      - precision
-      title: ClassMetrics
+      - data
+      title: BaseResponse[TrainingResponseData]
     AutoSplitBody:
       properties:
         splitPercentages:
@@ -509,49 +604,6 @@ components:
       - splitPercentages
       - selectOption
       title: AutoSplitBody
-    BaseResponse_TrainingStatus_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TrainingStatus'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TrainingStatus]
-    JobStatus:
-      type: string
-      enum:
-      - CREATED
-      - STARTING
-      - TRAINING
-      - EVALUATING
-      - PUBLISHING
-      - SUCCEEDED
-      - FAILED
-      title: JobStatus
-    BaseResponse_list_TrainingItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/TrainingItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[TrainingItem]]
-    TrainingResponseData:
-      properties:
-        trainingId:
-          type: string
-          title: Trainingid
-      type: object
-      required:
-      - trainingId
-      title: TrainingResponseData
     TrainingStatus:
       properties:
         status:
@@ -560,166 +612,23 @@ components:
       required:
       - status
       title: TrainingStatus
-    ConfusionMetricsResponse:
+    SplitPercentages:
       properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ConfusionMatrix'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ConfusionMetricsResponse
-    ArchItem:
-      properties:
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - name
-      title: ArchItem
-    PredictionItem:
-      properties:
-        count:
+        train:
           type: integer
-          title: Count
-        groundTruthClassId:
+          title: Train
+        dev:
           type: integer
-          title: Groundtruthclassid
-        predictedClassId:
+          title: Dev
+        test:
           type: integer
-          title: Predictedclassid
+          title: Test
       type: object
       required:
-      - count
-      - groundTruthClassId
-      - predictedClassId
-      title: PredictionItem
-    ConfusionMatrix:
-      properties:
-        name:
-          type: string
-          title: Name
-        correctPredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Correctpredictions
-        falseNegativePredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Falsenegativepredictions
-        falsePositivePredictions:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Falsepositivepredictions
-        misclassifications:
-          items:
-            $ref: '#/components/schemas/PredictionItem'
-          type: array
-          title: Misclassifications
-      type: object
-      required:
-      - name
-      - correctPredictions
-      - falseNegativePredictions
-      - falsePositivePredictions
-      - misclassifications
-      title: ConfusionMatrix
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BaseResponse_list_ArchItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ArchItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[ArchItem]]
-    BaseResponse_TrainingResponseData_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/TrainingResponseData'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[TrainingResponseData]
-    TrainItemTransforms:
-      properties:
-        preprocessing:
-          items:
-            additionalProperties:
-              type: object
-            type: object
-          type: array
-          title: Preprocessing
-        augmentations:
-          anyOf:
-          - items:
-              additionalProperties:
-                type: object
-              type: object
-            type: array
-          - type: 'null'
-          title: Augmentations
-      type: object
-      required:
-      - preprocessing
-      title: TrainItemTransforms
-    TrainItemModel:
-      properties:
-        architecture:
-          type: string
-          title: Architecture
-        hyperParams:
-          type: object
-          title: Hyperparams
-      type: object
-      required:
-      - architecture
-      - hyperParams
-      title: TrainItemModel
-    Metric:
-      properties:
-        name:
-          type: string
-          title: Name
-        performance:
-          type: number
-          title: Performance
-        recall:
-          type: number
-          title: Recall
-        precision:
-          type: number
-          title: Precision
-      type: object
-      required:
-      - name
-      - performance
-      - recall
-      - precision
-      title: Metric
+      - train
+      - dev
+      - test
+      title: SplitPercentages
     TrainItem:
       properties:
         name:
@@ -748,3 +657,94 @@ components:
       - id
       - status
       title: TrainingItem
+    PredictionItem:
+      properties:
+        count:
+          type: integer
+          title: Count
+        groundTruthClassId:
+          type: integer
+          title: Groundtruthclassid
+        predictedClassId:
+          type: integer
+          title: Predictedclassid
+      type: object
+      required:
+      - count
+      - groundTruthClassId
+      - predictedClassId
+      title: PredictionItem
+    Metric:
+      properties:
+        name:
+          type: string
+          title: Name
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - name
+      - performance
+      - recall
+      - precision
+      title: Metric
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TrainingResponseData:
+      properties:
+        trainingId:
+          type: string
+          title: Trainingid
+      type: object
+      required:
+      - trainingId
+      title: TrainingResponseData
+    ClassMetrics:
+      properties:
+        id:
+          type: integer
+          title: Id
+          description: The class id
+        performance:
+          type: number
+          title: Performance
+        recall:
+          type: number
+          title: Recall
+        precision:
+          type: number
+          title: Precision
+      type: object
+      required:
+      - id
+      - performance
+      - recall
+      - precision
+      title: ClassMetrics
+    BaseResponse_list_ArchItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ArchItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[ArchItem]]

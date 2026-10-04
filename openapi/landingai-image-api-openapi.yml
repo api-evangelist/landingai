@@ -262,46 +262,13 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BaseResponse_Image_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/Image'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[Image]
+    SplitEnum:
+      type: string
+      enum:
+      - train
+      - dev
+      - test
+      title: SplitEnum
     ImageDetail:
       properties:
         id:
@@ -355,59 +322,6 @@ components:
       required:
       - metadata
       title: ImageMetadataReplace
-    ImageTagAssign:
-      properties:
-        tagNames:
-          items:
-            type: string
-          type: array
-          title: Tagnames
-        mediaIds:
-          items:
-            type: integer
-          type: array
-          title: Mediaids
-        allMedia:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Allmedia
-          default: false
-      type: object
-      required:
-      - tagNames
-      - mediaIds
-      title: ImageTagAssign
-    BaseResponse_list_TagItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/TagItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[TagItem]]
-    BaseResponse_ImageMetadata_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ImageMetadata'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[ImageMetadata]
-    SplitEnum:
-      type: string
-      enum:
-      - train
-      - dev
-      - test
-      title: SplitEnum
     ImageMetadata:
       properties:
         metadata:
@@ -432,19 +346,6 @@ components:
       - metadata
       - mediaId
       title: ImageMetadata
-    BaseResponse_list_ImageMetadata__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ImageMetadata'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[ImageMetadata]]
     Image:
       properties:
         id:
@@ -462,6 +363,36 @@ components:
       - name
       - uploadTime
       title: Image
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     BaseResponse_ImageDetail_:
       properties:
         data:
@@ -511,6 +442,97 @@ components:
       - file
       - name
       title: Body_upload_image_v1_projects__project_id__images_post
+    BaseResponse_list_TagItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TagItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[TagItem]]
+    ImageTagAssign:
+      properties:
+        tagNames:
+          items:
+            type: string
+          type: array
+          title: Tagnames
+        mediaIds:
+          items:
+            type: integer
+          type: array
+          title: Mediaids
+        allMedia:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allmedia
+          default: false
+      type: object
+      required:
+      - tagNames
+      - mediaIds
+      title: ImageTagAssign
+    ImageMetadataAssign:
+      properties:
+        metadataAppend:
+          additionalProperties:
+            anyOf:
+            - type: boolean
+            - type: string
+            - type: integer
+            - items:
+                type: string
+              type: array
+            - items:
+                type: integer
+              type: array
+          type: object
+          title: Metadataappend
+        mediaIds:
+          items:
+            type: integer
+          type: array
+          title: Mediaids
+        allMedia:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allmedia
+          default: false
+      type: object
+      required:
+      - metadataAppend
+      - mediaIds
+      title: ImageMetadataAssign
+    BaseResponse_list_ImageMetadata__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ImageMetadata'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: BaseResponse[list[ImageMetadata]]
+    BaseResponse_ImageMetadata_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ImageMetadata'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[ImageMetadata]
     TagItem:
       properties:
         name:
@@ -546,35 +568,13 @@ components:
       - updatedAt
       - color
       title: TagItem
-    ImageMetadataAssign:
+    BaseResponse_Image_:
       properties:
-        metadataAppend:
-          additionalProperties:
-            anyOf:
-            - type: boolean
-            - type: string
-            - type: integer
-            - items:
-                type: string
-              type: array
-            - items:
-                type: integer
-              type: array
-          type: object
-          title: Metadataappend
-        mediaIds:
-          items:
-            type: integer
-          type: array
-          title: Mediaids
-        allMedia:
+        data:
           anyOf:
-          - type: boolean
+          - $ref: '#/components/schemas/Image'
           - type: 'null'
-          title: Allmedia
-          default: false
       type: object
       required:
-      - metadataAppend
-      - mediaIds
-      title: ImageMetadataAssign
+      - data
+      title: BaseResponse[Image]
