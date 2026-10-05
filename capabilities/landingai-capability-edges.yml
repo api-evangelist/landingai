@@ -1,0 +1,36 @@
+slug: landingai
+provider: Landing.ai
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Training
+  spec_file: landingai-training-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /v1/projects/{project_id}/train "Create Training Job"; "Get Training Status"; "Get Confusion
+    Matrix For All Splits"; schemas ConfusionMatrix, ClassMetrics
+  reason: Model training job creation, architecture selection, train/val splits and evaluation metrics
+    are squarely AI/ML model lifecycle (MLOps) operations.
+- tag: Model
+  spec_file: landingai-model-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.78
+  evidence: GET /v1/projects/{project_id}/models "Get Models"; POST /v1/projects/{project_id}/models/{model_id}/download
+    "Get Model Download Url"; schemas ModelItem, ModelDownload
+  reason: Operations list, inspect and export trained ML models from a vision project, which is plainly
+    ML model lifecycle management (AI/ML, MLOps). Not quite 0.95 as the surface is read/download only,
+    covering part of the model lifecycle.
