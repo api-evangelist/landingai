@@ -36,3 +36,30 @@ notes: >-
   Pricing is unified across US and EU as of the 2026-07-17 changelog entry.
   Credit consumption rates per API are documented separately at
   https://docs.landing.ai/dpt3/credit-consumption.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Explore
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Team
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
