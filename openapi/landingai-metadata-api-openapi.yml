@@ -157,30 +157,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    MetadataCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        type:
-          $ref: '#/components/schemas/MetadataType'
-        allowMultiple:
-          type: boolean
-          title: Allowmultiple
-        predefinedChoices:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Predefinedchoices
-      type: object
-      required:
-      - name
-      - type
-      - allowMultiple
-      - predefinedChoices
-      title: MetadataCreate
     MetadataUpdate:
       properties:
         name:
@@ -252,6 +228,30 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    MetadataCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/MetadataType'
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        predefinedChoices:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Predefinedchoices
+      type: object
+      required:
+      - name
+      - type
+      - allowMultiple
+      - predefinedChoices
+      title: MetadataCreate
     ValidationError:
       properties:
         loc:
@@ -273,6 +273,13 @@ components:
       - msg
       - type
       title: ValidationError
+    MetadataType:
+      type: string
+      enum:
+      - text
+      - number
+      - boolean
+      title: MetadataType
     BaseResponse_MetadataItem_:
       properties:
         data:
@@ -283,13 +290,6 @@ components:
       required:
       - data
       title: BaseResponse[MetadataItem]
-    MetadataType:
-      type: string
-      enum:
-      - text
-      - number
-      - boolean
-      title: MetadataType
     BaseResponse_list_MetadataItem__:
       properties:
         data:

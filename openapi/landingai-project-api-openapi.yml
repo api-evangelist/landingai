@@ -181,65 +181,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ProjectType:
-      type: string
-      enum:
-      - classification
-      - object-detection
-      - segmentation
-      - anomaly-detection
-      title: ProjectType
-    IsActiveProject:
-      properties:
-        isActive:
-          type: boolean
-          title: Isactive
-      type: object
-      required:
-      - isActive
-      title: IsActiveProject
-    ProjectInput:
-      properties:
-        name:
-          type: string
-          title: Name
-        projectType:
-          $ref: '#/components/schemas/ProjectType'
-      type: object
-      required:
-      - name
-      - projectType
-      title: ProjectInput
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     ProjectsResponse:
       properties:
         data:
@@ -253,6 +194,15 @@ components:
       required:
       - data
       title: ProjectsResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ProjectResponseItem:
       properties:
         id:
@@ -278,6 +228,27 @@ components:
       - projectType
       - createdAt
       title: ProjectResponseItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ProjectResponse:
       properties:
         data:
@@ -288,3 +259,32 @@ components:
       required:
       - data
       title: ProjectResponse
+    ProjectInput:
+      properties:
+        name:
+          type: string
+          title: Name
+        projectType:
+          $ref: '#/components/schemas/ProjectType'
+      type: object
+      required:
+      - name
+      - projectType
+      title: ProjectInput
+    IsActiveProject:
+      properties:
+        isActive:
+          type: boolean
+          title: Isactive
+      type: object
+      required:
+      - isActive
+      title: IsActiveProject
+    ProjectType:
+      type: string
+      enum:
+      - classification
+      - object-detection
+      - segmentation
+      - anomaly-detection
+      title: ProjectType

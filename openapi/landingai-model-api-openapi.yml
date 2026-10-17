@@ -162,50 +162,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ModelItem:
+    HTTPValidationError:
       properties:
-        id:
-          type: string
-          format: uuid4
-          title: Id
-          description: The model ID
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - id
-      - name
-      title: ModelItem
-    ModelDownload:
-      properties:
-        downloadUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Downloadurl
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownload
-    ModelsResponse:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ModelItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: ModelsResponse
+      title: HTTPValidationError
     ModelResponse:
       properties:
         data:
@@ -216,15 +181,6 @@ components:
       required:
       - data
       title: ModelResponse
-    ModelDownloadRequest:
-      properties:
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - threshold
-      title: ModelDownloadRequest
     ValidationError:
       properties:
         loc:
@@ -246,15 +202,28 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    ModelDownloadRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        threshold:
+          type: number
+          title: Threshold
       type: object
-      title: HTTPValidationError
+      required:
+      - threshold
+      title: ModelDownloadRequest
+    ModelsResponse:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ModelItem'
+            type: array
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - data
+      title: ModelsResponse
     ModelDownloadResponse:
       properties:
         data:
@@ -265,3 +234,34 @@ components:
       required:
       - data
       title: ModelDownloadResponse
+    ModelDownload:
+      properties:
+        downloadUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Downloadurl
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - threshold
+      title: ModelDownload
+    ModelItem:
+      properties:
+        id:
+          type: string
+          format: uuid4
+          title: Id
+          description: The model ID
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: ModelItem

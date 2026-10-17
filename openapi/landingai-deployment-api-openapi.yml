@@ -306,59 +306,6 @@ components:
           title: Threshold
       type: object
       title: DeploymentUpdateInput
-    BaseResponse_DeploymentItem_:
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/DeploymentItem'
-          - type: 'null'
-      type: object
-      required:
-      - data
-      title: BaseResponse[DeploymentItem]
-    BaseResponse_list_DeploymentItem__:
-      properties:
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DeploymentItem'
-            type: array
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - data
-      title: BaseResponse[list[DeploymentItem]]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     DeploymentItem:
       properties:
         id:
@@ -388,15 +335,28 @@ components:
       - predictionUrl
       - name
       title: DeploymentItem
-    ErrorMessage:
+    HTTPValidationError:
       properties:
-        message:
-          type: string
-          title: Message
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BaseResponse_list_DeploymentItem__:
+      properties:
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DeploymentItem'
+            type: array
+          - type: 'null'
+          title: Data
       type: object
       required:
-      - message
-      title: ErrorMessage
+      - data
+      title: BaseResponse[list[DeploymentItem]]
     DeploymentInput:
       properties:
         name:
@@ -417,3 +377,43 @@ components:
       required:
       - name
       title: DeploymentInput
+    BaseResponse_DeploymentItem_:
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/DeploymentItem'
+          - type: 'null'
+      type: object
+      required:
+      - data
+      title: BaseResponse[DeploymentItem]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ErrorMessage:
+      properties:
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - message
+      title: ErrorMessage
